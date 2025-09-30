@@ -111,6 +111,17 @@ const ColorTools = () => {
     }
     setColorPalette(palette)
   }
+  
+  const generateThemePalette = (theme) => {
+    const themes = {
+      sunset: ['#FF6B35', '#F7931E', '#FFD23F', '#FF8C42', '#C73E1D', '#A0522D', '#8B4513', '#D2691E'],
+      ocean: ['#006994', '#13A3C4', '#5FBEAA', '#A8E6CF', '#0077BE', '#4682B4', '#5F9EA0', '#20B2AA'],
+      forest: ['#228B22', '#32CD32', '#90EE90', '#98FB98', '#006400', '#8FBC8F', '#9ACD32', '#ADFF2F'],
+      candy: ['#FF69B4', '#FF1493', '#DA70D6', '#BA55D3', '#9370DB', '#8A2BE2', '#FF00FF', '#EE82EE'],
+      retro: ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#DDA0DD', '#98D8C8', '#F7DC6F']
+    }
+    setColorPalette(themes[theme] || themes.retro)
+  }
 
   const copyToClipboard = async (text) => {
     try {
@@ -228,19 +239,29 @@ const ColorTools = () => {
 
             {activeTab === 'palette' && (
               <div>
-                <div className="flex gap-2 mb-4">
-                  <button
-                    onClick={generatePalette}
-                    className="btn-primary flex-1 font-mono"
-                  >
-                    GENERATE FROM COLOR
-                  </button>
-                  <button
-                    onClick={generateRandomPalette}
-                    className="btn-secondary font-mono"
-                  >
-                    <Shuffle className="h-4 w-4" />
-                  </button>
+                <div className="space-y-2 mb-4">
+                  <div className="flex gap-2">
+                    <button
+                      onClick={generatePalette}
+                      className="btn-primary flex-1 font-mono"
+                    >
+                      FROM COLOR
+                    </button>
+                    <button
+                      onClick={generateRandomPalette}
+                      className="btn-secondary font-mono"
+                    >
+                      <Shuffle className="h-4 w-4" />
+                    </button>
+                  </div>
+                  
+                  <div className="text-xs font-mono font-bold text-black dark:text-white mb-2">🎨 THEME PALETTES:</div>
+                  <div className="grid grid-cols-2 gap-1 text-xs">
+                    <button onClick={() => generateThemePalette('sunset')} className="bg-orange-400 text-black font-mono font-bold py-1 px-2 border-2 border-black hover:bg-orange-300">🌅 SUNSET</button>
+                    <button onClick={() => generateThemePalette('ocean')} className="bg-blue-400 text-black font-mono font-bold py-1 px-2 border-2 border-black hover:bg-blue-300">🌊 OCEAN</button>
+                    <button onClick={() => generateThemePalette('forest')} className="bg-green-400 text-black font-mono font-bold py-1 px-2 border-2 border-black hover:bg-green-300">🌲 FOREST</button>
+                    <button onClick={() => generateThemePalette('candy')} className="bg-pink-400 text-black font-mono font-bold py-1 px-2 border-2 border-black hover:bg-pink-300">🍭 CANDY</button>
+                  </div>
                 </div>
                 
                 {colorPalette.length > 0 && (

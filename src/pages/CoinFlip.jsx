@@ -28,6 +28,41 @@ const CoinFlip = () => {
       setIsFlipping(false)
     }, 2000) // 2 second animation
   }
+  
+  const getStreakInfo = () => {
+    if (history.length === 0) return null
+    
+    let currentStreak = 1
+    let longestStreak = 1
+    let streakType = history[0]
+    
+    for (let i = 1; i < history.length; i++) {
+      if (history[i] === history[i-1]) {
+        currentStreak++
+        if (currentStreak > longestStreak) {
+          longestStreak = currentStreak
+        }
+      } else {
+        currentStreak = 1
+      }
+    }
+    
+    return { currentStreak: history[0] === history[1] ? 2 : 1, longestStreak, streakType }
+  }
+  
+  const getFunFacts = () => {
+    const total = totalFlips
+    if (total === 0) return []
+    
+    const facts = []
+    if (total >= 10) facts.push(`🎯 You've flipped ${total} times! That's dedication!`)
+    if (total >= 50) facts.push(`🏆 Coin flip master! ${total} flips completed!`)
+    if (total >= 100) facts.push(`🚀 Century club! ${total} flips - you're unstoppable!`)
+    if (stats.heads === stats.tails) facts.push(`⚖️ Perfect balance! Equal heads and tails!`)
+    if (Math.abs(stats.heads - stats.tails) >= 10) facts.push(`🎲 Luck is ${stats.heads > stats.tails ? 'heads' : 'tails'} sided today!`)
+    
+    return facts
+  }
 
   const resetStats = () => {
     setHistory([])
@@ -203,7 +238,7 @@ const CoinFlip = () => {
                   <div className="bg-yellow-200 p-3 border-2 border-black">
                     <div className="flex justify-between items-center mb-1">
                       <span className="text-sm font-bold text-black font-mono">
-                        [H] HEADS
+                        👑 [H] HEADS
                       </span>
                       <span className="text-sm text-black font-mono font-bold">
                         {stats.heads} ({headsPercentage}%)
@@ -221,7 +256,7 @@ const CoinFlip = () => {
                   <div className="bg-gray-200 p-3 border-2 border-black">
                     <div className="flex justify-between items-center mb-1">
                       <span className="text-sm font-bold text-black font-mono">
-                        [T] TAILS
+                        🪙 [T] TAILS
                       </span>
                       <span className="text-sm text-black font-mono font-bold">
                         {stats.tails} ({tailsPercentage}%)
@@ -234,6 +269,18 @@ const CoinFlip = () => {
                       ></div>
                     </div>
                   </div>
+                  
+                  {/* Fun Facts */}
+                  {getFunFacts().length > 0 && (
+                    <div className="bg-green-200 p-3 border-2 border-black">
+                      <h4 className="font-bold font-mono text-black mb-2">🎉 FUN FACTS:</h4>
+                      {getFunFacts().map((fact, index) => (
+                        <div key={index} className="text-xs font-mono text-black">
+                          {fact}
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

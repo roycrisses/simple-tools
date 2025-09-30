@@ -19,7 +19,12 @@ const UnitConverter = () => {
         'in': { name: 'Inches', factor: 0.0254 },
         'ft': { name: 'Feet', factor: 0.3048 },
         'yd': { name: 'Yards', factor: 0.9144 },
-        'mi': { name: 'Miles', factor: 1609.344 }
+        'mi': { name: 'Miles', factor: 1609.344 },
+        'banana': { name: '🍌 Bananas (avg 18cm)', factor: 0.18 },
+        'football': { name: '🏈 Football Fields', factor: 109.7 },
+        'eiffel': { name: '🗼 Eiffel Towers', factor: 330 },
+        'giraffe': { name: '🦒 Giraffes (avg 5.5m)', factor: 5.5 },
+        'mouse': { name: '🐭 Mice (avg 9cm)', factor: 0.09 }
       }
     },
     weight: {
@@ -30,7 +35,13 @@ const UnitConverter = () => {
         'kg': { name: 'Kilograms', factor: 1 },
         'oz': { name: 'Ounces', factor: 0.0283495 },
         'lb': { name: 'Pounds', factor: 0.453592 },
-        'ton': { name: 'Tons', factor: 1000 }
+        'ton': { name: 'Tons', factor: 1000 },
+        'elephant': { name: '🐘 Elephants (avg 6000kg)', factor: 6000 },
+        'car': { name: '🚗 Cars (avg 1500kg)', factor: 1500 },
+        'cat': { name: '🐱 Cats (avg 4.5kg)', factor: 4.5 },
+        'hamster': { name: '🐹 Hamsters (avg 120g)', factor: 0.12 },
+        'feather': { name: '🪶 Feathers (avg 0.6g)', factor: 0.0006 },
+        'pizza': { name: '🍕 Pizzas (avg 500g)', factor: 0.5 }
       }
     },
     temperature: {
@@ -50,7 +61,12 @@ const UnitConverter = () => {
         'qt': { name: 'Quarts', factor: 0.946353 },
         'pt': { name: 'Pints', factor: 0.473176 },
         'cup': { name: 'Cups', factor: 0.236588 },
-        'fl_oz': { name: 'Fluid Ounces', factor: 0.0295735 }
+        'fl_oz': { name: 'Fluid Ounces', factor: 0.0295735 },
+        'bathtub': { name: '🛁 Bathtubs (avg 300L)', factor: 300 },
+        'pool': { name: '🏊 Swimming Pools (avg 50000L)', factor: 50000 },
+        'coffee': { name: '☕ Coffee Cups (avg 240ml)', factor: 0.24 },
+        'teaspoon': { name: '🥄 Teaspoons (5ml)', factor: 0.005 },
+        'bucket': { name: '🪣 Buckets (avg 10L)', factor: 10 }
       }
     },
     area: {
@@ -72,7 +88,23 @@ const UnitConverter = () => {
         'kph': { name: 'Kilometers/Hour', factor: 0.277778 },
         'mph': { name: 'Miles/Hour', factor: 0.44704 },
         'fps': { name: 'Feet/Second', factor: 0.3048 },
-        'knot': { name: 'Knots', factor: 0.514444 }
+        'knot': { name: 'Knots', factor: 0.514444 },
+        'cheetah': { name: '🐆 Cheetahs (120 km/h)', factor: 33.33 },
+        'snail': { name: '🐌 Snails (0.03 mph)', factor: 0.0134 },
+        'turtle': { name: '🐢 Turtles (0.17 mph)', factor: 0.076 },
+        'rocket': { name: '🚀 Rockets (11 km/s)', factor: 11000 },
+        'sloth': { name: '🦥 Sloths (0.15 mph)', factor: 0.067 }
+      }
+    },
+    fun: {
+      name: 'FUN STUFF',
+      units: {
+        'hugs': { name: '🤗 Hugs per Day', factor: 1 },
+        'smiles': { name: '😊 Smiles per Hour', factor: 24 },
+        'laughs': { name: '😂 Laughs per Minute', factor: 1440 },
+        'cookies': { name: '🍪 Cookies Eaten', factor: 1 },
+        'naps': { name: '😴 Naps Needed', factor: 0.5 },
+        'coffee_cups': { name: '☕ Coffee Cups', factor: 3 }
       }
     }
   }
@@ -178,7 +210,7 @@ const UnitConverter = () => {
           </h2>
         </div>
         
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-2">
           {Object.entries(conversions).map(([key, category]) => (
             <button
               key={key}

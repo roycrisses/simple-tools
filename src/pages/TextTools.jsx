@@ -17,6 +17,12 @@ const TextTools = () => {
     const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0).length
     const paragraphs = text.split(/\n\s*\n/).filter(p => p.trim().length > 0).length
     const lines = text.split('\n').length
+    
+    // Fun calculations!
+    const typingTime = Math.ceil(words.length / 40) // 40 WPM average typing speed
+    const tweetCount = Math.ceil(characters / 280) // Twitter character limit
+    const coffeeBreaks = Math.ceil(words.length / 500) // Coffee break every 500 words
+    const pizzaSlices = Math.ceil(characters / 100) // 1 pizza slice per 100 characters of energy
 
     setResult({
       words: words.length,
@@ -26,7 +32,11 @@ const TextTools = () => {
       paragraphs,
       lines,
       averageWordsPerSentence: sentences > 0 ? Math.round(words.length / sentences * 10) / 10 : 0,
-      readingTime: Math.ceil(words.length / 200) // Assuming 200 words per minute
+      readingTime: Math.ceil(words.length / 200), // Assuming 200 words per minute
+      typingTime,
+      tweetCount,
+      coffeeBreaks,
+      pizzaSlices
     })
   }
 
@@ -296,7 +306,17 @@ const TextTools = () => {
                   <div>• CHARACTERS (NO SPACES): {result.charactersNoSpaces}</div>
                   <div>• LINES: {result.lines}</div>
                   <div>• AVG WORDS/SENTENCE: {result.averageWordsPerSentence}</div>
-                  <div>• READING TIME: ~{result.readingTime} MIN</div>
+                  <div>• READING TIME: ~{result.readingTime} MIN 📖</div>
+                </div>
+              </div>
+              
+              <div className="bg-yellow-200 p-4 border-4 border-black">
+                <h3 className="font-bold font-mono text-black mb-2">🎉 FUN FACTS:</h3>
+                <div className="text-sm font-mono text-black space-y-1">
+                  <div>⌨️ TYPING TIME: ~{result.typingTime} MIN</div>
+                  <div>🐦 TWITTER POSTS: {result.tweetCount} TWEETS</div>
+                  <div>☕ COFFEE BREAKS NEEDED: {result.coffeeBreaks}</div>
+                  <div>🍕 PIZZA ENERGY: {result.pizzaSlices} SLICES</div>
                 </div>
               </div>
             </div>

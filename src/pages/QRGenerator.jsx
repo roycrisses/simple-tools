@@ -192,7 +192,7 @@ const QRGenerator = () => {
                   maxLength={1000}
                 />
                 <div className="text-sm text-black dark:text-white mt-1 font-mono font-bold">
-                  {text.length}/1000 CHARACTERS
+                  {text.length}/1000 CHARACTERS {text.length > 500 ? '💪 LONG TEXT!' : text.length > 100 ? '📄 GOOD SIZE' : text.length > 0 ? '📝 SHORT & SWEET' : ''}
                 </div>
               </div>
             ) : (
@@ -403,7 +403,13 @@ const QRGenerator = () => {
               {'>> SIZE MATTERS: LARGER = EASIER TO SCAN'}
             </div>
             <div>
-              {'>> UPLOAD IMAGES: EXTRACT TEXT WITH OCR'}
+              {'>> UPLOAD IMAGES: EXTRACT TEXT WITH OCR 📷'}
+            </div>
+            <div>
+              {'>> FUN FACT: QR = QUICK RESPONSE! ⚡'}
+            </div>
+            <div>
+              {'>> CAN STORE 4,296 CHARACTERS MAX! 📊'}
             </div>
           </div>
         </div>
