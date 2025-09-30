@@ -93,13 +93,32 @@ const YouTubeDownloader = () => {
   }
 
   const downloadFile = () => {
-    if (downloadResult) {
-      const link = document.createElement('a')
-      link.href = downloadResult.url
-      link.download = downloadResult.filename
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
+    if (downloadResult && downloadResult.data) {
+      try {
+        // Convert base64 to blob
+        const byteCharacters = atob(downloadResult.data)
+        const byteNumbers = new Array(byteCharacters.length)
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i)
+        }
+        const byteArray = new Uint8Array(byteNumbers)
+        const blob = new Blob([byteArray], { type: downloadResult.mimeType })
+        
+        // Create download link
+        const url = window.URL.createObjectURL(blob)
+        const link = document.createElement('a')
+        link.href = url
+        link.download = downloadResult.filename
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+        
+        // Clean up
+        window.URL.revokeObjectURL(url)
+      } catch (error) {
+        console.error('Error downloading file:', error)
+        setError('Failed to download file. Please try again.')
+      }
     }
   }
 
@@ -110,6 +129,13 @@ const YouTubeDownloader = () => {
     setAudioOnly(false)
     setError('')
     setDownloadResult(null)
+  }
+  
+  const formatFileSize = (bytes) => {
+    if (!bytes) return 'Unknown size'
+    const sizes = ['Bytes', 'KB', 'MB', 'GB']
+    const i = Math.floor(Math.log(bytes) / Math.log(1024))
+    return Math.round(bytes / Math.pow(1024, i) * 100) / 100 + ' ' + sizes[i]
   }
 
   const formatDuration = (seconds) => {
@@ -122,13 +148,6 @@ const YouTubeDownloader = () => {
       return `${hours}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
     }
     return `${minutes}:${secs.toString().padStart(2, '0')}`
-  }
-
-  const formatFileSize = (bytes) => {
-    if (!bytes) return 'Unknown'
-    const sizes = ['Bytes', 'KB', 'MB', 'GB']
-    const i = Math.floor(Math.log(bytes) / Math.log(1024))
-    return Math.round(bytes / Math.pow(1024, i) * 100) / 100 + ' ' + sizes[i]
   }
 
   return (
@@ -333,57 +352,58 @@ const YouTubeDownloader = () => {
               [SUCCESS] DOWNLOAD READY
             </h3>
           </div>
-          
           <div className="retro-alert retro-alert-success flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <div className="w-12 h-12 bg-green-500 border-4 border-black flex items-center justify-center">
                 <Download className="h-6 w-6 text-black" />
               </div>
-              <div>
-                <p className="font-bold text-black font-mono text-lg">
-                  {audioOnly ? 'AUDIO' : 'VIDEO'} FILE READY!
-                </p>
-                <p className="text-sm font-mono text-black">
-                  {downloadResult.filename}
-                </p>
-              </div>
+              {downloadResult && (
+                <div className="bg-green-200 p-4 border-4 border-black">
+                  <h4 className="font-bold font-mono text-black mb-2">
+                    [SUCCESS] DOWNLOAD READY
+                  </h4>
+                  <div className="space-y-2">
+                    <div className="text-sm font-mono text-black">
+                      <strong>FILE:</strong> {downloadResult.filename}
+                    </div>
+                    {downloadResult.filesize && (
+                      <div className="text-sm font-mono text-black">
+                        <strong>SIZE:</strong> {formatFileSize(downloadResult.filesize)}
+                      </div>
+                    )}
+                    <button
+                      onClick={downloadFile}
+                      className="btn-primary w-full font-mono"
+                    >
+                      <Download className="h-4 w-4 mr-2" />
+                      DOWNLOAD FILE
+                    </button>
+                    {downloadResult.message && (
+                      <div className="text-xs font-mono text-black bg-blue-100 p-2 border-2 border-black">
+                        <strong>✅ SUCCESS:</strong> {downloadResult.message}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
-            
-            <button
-              onClick={downloadFile}
-              className="btn-primary flex items-center space-x-2 font-mono"
-            >
-              <Download className="h-4 w-4" />
-              <span>DOWNLOAD</span>
-            </button>
+          </div>
+          
+          <div className="retro-alert retro-alert-warning">
+            <div className="font-mono font-bold text-black space-y-2">
+              <p>
+                {'>> RESPECT COPYRIGHT LAWS AND YOUTUBE TOS'}
+              </p>
+              <p>
+                {'>> FOR PERSONAL/EDUCATIONAL USE ONLY'}
+              </p>
+              <p>
+                {'>> FILES AUTO-DELETED AFTER DOWNLOAD'}
+              </p>
+            </div>
           </div>
         </div>
       )}
-
-      {/* Disclaimer */}
-      <div className="mt-8 card p-6">
-        <div className="bg-red-500 text-white font-bold py-2 px-4 mb-4 border-b-4 border-black">
-          <h3 className="text-lg font-mono">
-            [WARNING] IMPORTANT NOTICE
-          </h3>
-        </div>
-        <div className="retro-alert retro-alert-warning">
-          <div className="font-mono font-bold text-black space-y-2">
-            <p>
-              {'>> RESPECT COPYRIGHT LAWS AND YOUTUBE TOS'}
-            </p>
-            <p>
-              {'>> DOWNLOAD ONLY AUTHORIZED CONTENT'}
-            </p>
-            <p>
-              {'>> FOR PERSONAL/EDUCATIONAL USE ONLY'}
-            </p>
-            <p>
-              {'>> FILES AUTO-DELETED AFTER DOWNLOAD'}
-            </p>
-          </div>
-        </div>
-      </div>
     </div>
   )
 }
