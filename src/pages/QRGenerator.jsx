@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react'
-import { QrCode, Download, Copy, RotateCcw } from 'lucide-react'
+import { QrCode, Download, Copy, RotateCcw, Upload, FileImage } from 'lucide-react'
 import QRCodeLib from 'qrcode'
+import Tesseract from 'tesseract.js'
 
 const QRGenerator = () => {
   const [text, setText] = useState('')
@@ -9,6 +10,10 @@ const QRGenerator = () => {
   const [qrResult, setQrResult] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [uploadedImage, setUploadedImage] = useState(null)
+  const [extractingText, setExtractingText] = useState(false)
+  const [activeTab, setActiveTab] = useState('text') // 'text' or 'image'
+  const fileInputRef = useRef(null)
 
   const generateQR = async () => {
     if (!text.trim()) {
@@ -62,10 +67,58 @@ const QRGenerator = () => {
     }
   }
 
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0]
+    if (file) {
+      if (!file.type.startsWith('image/')) {
+        setError('Please select a valid image file')
+        return
+      }
+      
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        setUploadedImage(e.target.result)
+        setError('')
+        extractTextFromImage(e.target.result)
+      }
+      reader.readAsDataURL(file)
+    }
+  }
+
+  const extractTextFromImage = async (imageDataUrl) => {
+    setExtractingText(true)
+    setError('')
+    
+    try {
+      const { data: { text } } = await Tesseract.recognize(
+        imageDataUrl,
+        'eng',
+        {
+          logger: m => console.log(m) // Optional: log progress
+        }
+      )
+      
+      if (text.trim()) {
+        setText(text.trim())
+      } else {
+        setError('No text found in the image')
+      }
+    } catch (err) {
+      setError('Failed to extract text from image')
+      console.error('OCR Error:', err)
+    } finally {
+      setExtractingText(false)
+    }
+  }
+
   const clearAll = () => {
     setText('')
     setQrResult(null)
     setError('')
+    setUploadedImage(null)
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''
+    }
   }
 
   return (
@@ -101,22 +154,119 @@ const QRGenerator = () => {
             </h2>
           </div>
           
+          {/* Tab Selection */}
+          <div className="flex mb-4 border-4 border-black">
+            <button
+              onClick={() => setActiveTab('text')}
+              className={`flex-1 py-2 px-4 font-mono font-bold transition-colors ${
+                activeTab === 'text'
+                  ? 'bg-yellow-400 text-black'
+                  : 'bg-gray-200 text-black hover:bg-gray-300'
+              }`}
+            >
+              TEXT INPUT
+            </button>
+            <button
+              onClick={() => setActiveTab('image')}
+              className={`flex-1 py-2 px-4 font-mono font-bold transition-colors border-l-4 border-black ${
+                activeTab === 'image'
+                  ? 'bg-yellow-400 text-black'
+                  : 'bg-gray-200 text-black hover:bg-gray-300'
+              }`}
+            >
+              IMAGE UPLOAD
+            </button>
+          </div>
+          
           <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-bold text-black dark:text-white mb-2 font-mono">
-                TEXT OR URL:
-              </label>
-              <textarea
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-                placeholder="ENTER TEXT, URL, OR ANY MESSAGE..."
-                className="input-field h-32 resize-none font-mono"
-                maxLength={1000}
-              />
-              <div className="text-sm text-black dark:text-white mt-1 font-mono font-bold">
-                {text.length}/1000 CHARACTERS
+            {activeTab === 'text' ? (
+              <div>
+                <label className="block text-sm font-bold text-black dark:text-white mb-2 font-mono">
+                  TEXT OR URL:
+                </label>
+                <textarea
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                  placeholder="ENTER TEXT, URL, OR ANY MESSAGE..."
+                  className="input-field h-32 resize-none font-mono"
+                  maxLength={1000}
+                />
+                <div className="text-sm text-black dark:text-white mt-1 font-mono font-bold">
+                  {text.length}/1000 CHARACTERS
+                </div>
               </div>
-            </div>
+            ) : (
+              <div>
+                <label className="block text-sm font-bold text-black dark:text-white mb-2 font-mono">
+                  UPLOAD IMAGE TO EXTRACT TEXT:
+                </label>
+                
+                <div className="border-4 border-black bg-gray-100 dark:bg-gray-600 p-4">
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={handleImageUpload}
+                    accept="image/*"
+                    className="hidden"
+                    id="imageUpload"
+                  />
+                  
+                  <label
+                    htmlFor="imageUpload"
+                    className="cursor-pointer flex flex-col items-center justify-center h-32 border-2 border-dashed border-black bg-white hover:bg-gray-50 transition-colors"
+                  >
+                    {uploadedImage ? (
+                      <div className="flex flex-col items-center">
+                        <img
+                          src={uploadedImage}
+                          alt="Uploaded"
+                          className="max-h-20 max-w-20 object-contain mb-2"
+                        />
+                        <p className="text-sm font-mono font-bold text-black">
+                          CLICK TO CHANGE IMAGE
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="flex flex-col items-center">
+                        <FileImage className="h-8 w-8 text-black mb-2" />
+                        <p className="text-sm font-mono font-bold text-black">
+                          CLICK TO UPLOAD IMAGE
+                        </p>
+                        <p className="text-xs font-mono text-black mt-1">
+                          JPG, PNG, GIF, etc.
+                        </p>
+                      </div>
+                    )}
+                  </label>
+                </div>
+                
+                {extractingText && (
+                  <div className="retro-alert retro-alert-warning font-mono font-bold">
+                    <div className="flex items-center space-x-2">
+                      <div className="retro-spinner"></div>
+                      <span>EXTRACTING TEXT FROM IMAGE...</span>
+                    </div>
+                  </div>
+                )}
+                
+                {text && (
+                  <div>
+                    <label className="block text-sm font-bold text-black dark:text-white mb-2 font-mono">
+                      EXTRACTED TEXT:
+                    </label>
+                    <textarea
+                      value={text}
+                      onChange={(e) => setText(e.target.value)}
+                      className="input-field h-32 resize-none font-mono"
+                      maxLength={1000}
+                    />
+                    <div className="text-sm text-black dark:text-white mt-1 font-mono font-bold">
+                      {text.length}/1000 CHARACTERS
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
 
             <div className="grid grid-cols-2 gap-4">
               <div>
@@ -253,7 +403,7 @@ const QRGenerator = () => {
               {'>> SIZE MATTERS: LARGER = EASIER TO SCAN'}
             </div>
             <div>
-              {'>> ADD CONTEXT: INCLUDE INSTRUCTIONS'}
+              {'>> UPLOAD IMAGES: EXTRACT TEXT WITH OCR'}
             </div>
           </div>
         </div>
