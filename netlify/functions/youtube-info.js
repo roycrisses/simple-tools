@@ -66,66 +66,135 @@ exports.handler = async (event, context) => {
         formats: []
       };
 
-      // Process available formats
+      // Process available formats with priority for ORIGINAL QUALITY
       if (videoInfo.formats && Array.isArray(videoInfo.formats)) {
-        // Filter and sort formats
-        const videoFormats = videoInfo.formats
-          .filter(format => format.vcodec && format.vcodec !== 'none')
-          .sort((a, b) => (b.height || 0) - (a.height || 0))
-          .slice(0, 5); // Top 5 video formats
+        // Add BEST QUALITY options first (these will download original quality)
+        result.formats.push({
+          format_id: "best",
+          ext: "mp4",
+          quality: "🏆 ORIGINAL QUALITY (Best Available)",
+          filesize: 0,
+          vcodec: "best",
+          acodec: "best",
+          type: "video",
+          priority: 1
+        });
+        
+        result.formats.push({
+          format_id: "bestvideo+bestaudio/best",
+          ext: "mp4", 
+          quality: "🎬 HIGHEST VIDEO + AUDIO",
+          filesize: 0,
+          vcodec: "best",
+          acodec: "best",
+          type: "video",
+          priority: 2
+        });
 
+        // Filter and sort video formats by quality (HIGHEST FIRST)
+        const videoFormats = videoInfo.formats
+          .filter(format => format.vcodec && format.vcodec !== 'none' && format.height)
+          .sort((a, b) => {
+            // Sort by resolution first, then by fps, then by filesize
+            if (b.height !== a.height) return (b.height || 0) - (a.height || 0);
+            if (b.fps !== a.fps) return (b.fps || 0) - (a.fps || 0);
+            return (b.filesize || 0) - (a.filesize || 0);
+          })
+          .slice(0, 8); // Top 8 video formats
+
+        // Filter and sort audio formats by quality (HIGHEST FIRST)
         const audioFormats = videoInfo.formats
           .filter(format => format.acodec && format.acodec !== 'none' && (!format.vcodec || format.vcodec === 'none'))
           .sort((a, b) => (b.abr || 0) - (a.abr || 0))
-          .slice(0, 3); // Top 3 audio formats
+          .slice(0, 5); // Top 5 audio formats
 
-        // Add video formats
-        videoFormats.forEach(format => {
+        // Add specific video formats with quality indicators
+        videoFormats.forEach((format, index) => {
+          const quality = format.height >= 2160 ? '4K UHD' :
+                         format.height >= 1440 ? '1440p QHD' :
+                         format.height >= 1080 ? '1080p FHD' :
+                         format.height >= 720 ? '720p HD' :
+                         format.height >= 480 ? '480p SD' :
+                         format.height >= 360 ? '360p' :
+                         format.height >= 240 ? '240p' : `${format.height}p`;
+          
+          const fps = format.fps ? ` ${format.fps}fps` : '';
+          const codec = format.vcodec ? ` (${format.vcodec.split('.')[0].toUpperCase()})` : '';
+          
           result.formats.push({
             format_id: format.format_id,
             ext: format.ext || 'mp4',
-            quality: `${format.height || 'Unknown'}p ${format.fps ? format.fps + 'fps' : ''}`.trim(),
+            quality: `📹 ${quality}${fps}${codec}`,
             filesize: format.filesize || 0,
             vcodec: format.vcodec,
             acodec: format.acodec,
-            type: 'video'
+            type: 'video',
+            priority: index + 10
           });
         });
 
-        // Add audio formats
-        audioFormats.forEach(format => {
+        // Add best audio option
+        result.formats.push({
+          format_id: "bestaudio",
+          ext: "mp3",
+          quality: "🎵 BEST AUDIO QUALITY",
+          filesize: 0,
+          vcodec: "none",
+          acodec: "best",
+          type: "audio",
+          priority: 3
+        });
+
+        // Add specific audio formats
+        audioFormats.forEach((format, index) => {
           result.formats.push({
             format_id: format.format_id,
             ext: format.ext || 'mp3',
-            quality: `Audio Only (${format.abr || 'Unknown'}kbps)`,
+            quality: `🎧 Audio Only (${format.abr || 'Unknown'}kbps)`,
             filesize: format.filesize || 0,
             vcodec: 'none',
             acodec: format.acodec,
-            type: 'audio'
+            type: 'audio',
+            priority: index + 20
           });
         });
+        
+        // Sort formats by priority (best quality first)
+        result.formats.sort((a, b) => (a.priority || 999) - (b.priority || 999));
       }
 
-      // If no formats found, add default ones
+      // If no formats found, add default high-quality ones
       if (result.formats.length === 0) {
         result.formats = [
           {
             format_id: "best",
             ext: "mp4",
-            quality: "Best Quality",
+            quality: "🏆 Best Quality Available",
             filesize: 0,
-            vcodec: "unknown",
-            acodec: "unknown",
-            type: "video"
+            vcodec: "best",
+            acodec: "best",
+            type: "video",
+            priority: 1
+          },
+          {
+            format_id: "bestvideo+bestaudio/best",
+            ext: "mp4",
+            quality: "🎬 Best Video + Audio Merge",
+            filesize: 0,
+            vcodec: "best",
+            acodec: "best",
+            type: "video",
+            priority: 2
           },
           {
             format_id: "bestaudio",
             ext: "mp3",
-            quality: "Best Audio",
+            quality: "🎵 Best Audio Quality",
             filesize: 0,
             vcodec: "none",
-            acodec: "unknown",
-            type: "audio"
+            acodec: "best",
+            type: "audio",
+            priority: 3
           }
         ];
       }

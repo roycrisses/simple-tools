@@ -59,32 +59,41 @@ exports.handler = async (event, context) => {
     const outputTemplate = path.join(tempDir, `%(title)s_${timestamp}.%(ext)s`);
     
     try {
-      // Configure download options
-      const downloadOptions = {
-        format: format_id,
-        output: outputTemplate,
-        restrictFilenames: true,
-        noPlaylist: true,
-        extractFlat: false
-      };
-
-      // Add audio-specific options if needed
-      if (audio_only || format_id.includes('audio') || format_id === 'bestaudio') {
-        downloadOptions.extractAudio = true;
-        downloadOptions.audioFormat = 'mp3';
-        downloadOptions.audioQuality = '192K';
-      }
-
-      // Download the video/audio
-      console.log('Starting download with options:', downloadOptions);
-      const downloadResult = await ytDlpWrap.exec([
+      // Configure download options for HIGHEST QUALITY
+      let downloadArgs = [
         url,
-        '--format', format_id,
         '--output', outputTemplate,
         '--restrict-filenames',
         '--no-playlist',
-        ...(audio_only ? ['--extract-audio', '--audio-format', 'mp3', '--audio-quality', '192K'] : [])
-      ]);
+        '--no-warnings'
+      ];
+
+      // Handle different format types for ORIGINAL QUALITY
+      if (format_id === 'best') {
+        // Download the absolute best quality available
+        downloadArgs.push('--format', 'best');
+      } else if (format_id === 'bestvideo+bestaudio/best') {
+        // Download best video and audio separately, then merge
+        downloadArgs.push('--format', 'bestvideo+bestaudio/best');
+        downloadArgs.push('--merge-output-format', 'mp4');
+      } else if (format_id === 'bestaudio' || audio_only) {
+        // Download best audio quality
+        downloadArgs.push('--format', 'bestaudio');
+        downloadArgs.push('--extract-audio');
+        downloadArgs.push('--audio-format', 'mp3');
+        downloadArgs.push('--audio-quality', '0'); // Best audio quality (0 = best)
+      } else {
+        // Download specific format
+        downloadArgs.push('--format', format_id);
+      }
+
+      // Add additional quality options
+      downloadArgs.push('--embed-metadata');
+      downloadArgs.push('--add-metadata');
+
+      // Download the video/audio
+      console.log('Starting ORIGINAL QUALITY download with args:', downloadArgs);
+      const downloadResult = await ytDlpWrap.exec(downloadArgs);
 
       // Find the downloaded file
       const files = fs.readdirSync(tempDir).filter(file => 
