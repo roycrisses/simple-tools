@@ -1,8 +1,6 @@
 
 import React, { useState } from 'react'
 import { Download, Play, Music, RotateCcw, ExternalLink } from 'lucide-react'
-import { httpsCallable } from 'firebase/functions'
-import { functions } from '../config/firebase'
 
 const YouTubeDownloader = () => {
   const [url, setUrl] = useState('')
@@ -33,20 +31,29 @@ const YouTubeDownloader = () => {
     setDownloadResult(null)
 
     try {
-      // Call Firebase Function
-      const getYouTubeInfo = httpsCallable(functions, 'getYouTubeInfo')
-      const result = await getYouTubeInfo({ url })
+      // Call Netlify Function
+      const response = await fetch('/.netlify/functions/youtube-info', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ url })
+      })
       
-      if (result.data.success) {
-        setVideoInfo(result.data)
+      const result = await response.json()
+      
+      if (result.success) {
+        setVideoInfo(result)
         // Auto-select first format
-        if (result.data.formats && result.data.formats.length > 0) {
-          setSelectedFormat(result.data.formats[0].format_id)
+        if (result.formats && result.formats.length > 0) {
+          setSelectedFormat(result.formats[0].format_id)
         }
+      } else {
+        setError(result.error || 'Failed to get video information')
       }
     } catch (err) {
-      console.error('Firebase function error:', err)
-      setError('Failed to get video information. Make sure Firebase is configured.')
+      console.error('Netlify function error:', err)
+      setError('Failed to connect to server. Please try again.')
     } finally {
       setLoading(false)
     }
@@ -57,20 +64,29 @@ const YouTubeDownloader = () => {
     setError('')
 
     try {
-      // Call Firebase Function
-      const downloadYouTube = httpsCallable(functions, 'downloadYouTube')
-      const result = await downloadYouTube({ 
-        url, 
-        format_id: selectedFormat, 
-        audio_only: audioOnly 
+      // Call Netlify Function
+      const response = await fetch('/.netlify/functions/youtube-download', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          url, 
+          format_id: selectedFormat, 
+          audio_only: audioOnly 
+        })
       })
       
-      if (result.data.success) {
-        setDownloadResult(result.data)
+      const result = await response.json()
+      
+      if (result.success) {
+        setDownloadResult(result)
+      } else {
+        setError(result.error || 'Failed to download video')
       }
     } catch (err) {
-      console.error('Firebase function error:', err)
-      setError('Failed to download video. Make sure Firebase is configured.')
+      console.error('Netlify function error:', err)
+      setError('Failed to connect to server. Please try again.')
     } finally {
       setDownloading(false)
     }

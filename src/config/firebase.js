@@ -4,14 +4,13 @@ import { getFunctions } from 'firebase/functions'
 import { getStorage } from 'firebase/storage'
 
 // Your Firebase configuration
-// Replace with your actual Firebase config from Firebase Console
 const firebaseConfig = {
-  apiKey: "your-api-key-here",
-  authDomain: "your-project-id.firebaseapp.com",
-  projectId: "your-project-id",
-  storageBucket: "your-project-id.appspot.com",
-  messagingSenderId: "your-sender-id",
-  appId: "your-app-id"
+  apiKey: "AIzaSyDq53w_wSJp2kJ4RYLWwcD4HVDb7l4lA0c",
+  authDomain: "simple-tools-backend.firebaseapp.com",
+  projectId: "simple-tools-backend",
+  storageBucket: "simple-tools-backend.firebasestorage.app",
+  messagingSenderId: "732310734401",
+  appId: "1:732310734401:web:52bd414e79c583875968c0"
 }
 
 // Initialize Firebase
