@@ -93,31 +93,33 @@ const YouTubeDownloader = () => {
   }
 
   const downloadFile = () => {
-    if (downloadResult && downloadResult.data) {
-      try {
-        // Convert base64 to blob
-        const byteCharacters = atob(downloadResult.data)
-        const byteNumbers = new Array(byteCharacters.length)
-        for (let i = 0; i < byteCharacters.length; i++) {
-          byteNumbers[i] = byteCharacters.charCodeAt(i)
+    if (downloadResult) {
+      if (downloadResult.data) {
+        // Handle binary file download (if yt-dlp was available)
+        try {
+          const byteCharacters = atob(downloadResult.data)
+          const byteNumbers = new Array(byteCharacters.length)
+          for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i)
+          }
+          const byteArray = new Uint8Array(byteNumbers)
+          const blob = new Blob([byteArray], { type: downloadResult.mimeType })
+          
+          const url = window.URL.createObjectURL(blob)
+          const link = document.createElement('a')
+          link.href = url
+          link.download = downloadResult.filename
+          document.body.appendChild(link)
+          link.click()
+          document.body.removeChild(link)
+          window.URL.revokeObjectURL(url)
+        } catch (error) {
+          console.error('Error downloading file:', error)
+          setError('Failed to download file. Please try again.')
         }
-        const byteArray = new Uint8Array(byteNumbers)
-        const blob = new Blob([byteArray], { type: downloadResult.mimeType })
-        
-        // Create download link
-        const url = window.URL.createObjectURL(blob)
-        const link = document.createElement('a')
-        link.href = url
-        link.download = downloadResult.filename
-        document.body.appendChild(link)
-        link.click()
-        document.body.removeChild(link)
-        
-        // Clean up
-        window.URL.revokeObjectURL(url)
-      } catch (error) {
-        console.error('Error downloading file:', error)
-        setError('Failed to download file. Please try again.')
+      } else if (downloadResult.downloadUrl) {
+        // Handle redirect-based download
+        window.open(downloadResult.downloadUrl, '_blank')
       }
     }
   }
@@ -129,6 +131,10 @@ const YouTubeDownloader = () => {
     setAudioOnly(false)
     setError('')
     setDownloadResult(null)
+  }
+
+  const openAlternativeService = (serviceUrl) => {
+    window.open(serviceUrl, '_blank')
   }
   
   const formatFileSize = (bytes) => {
@@ -347,47 +353,75 @@ const YouTubeDownloader = () => {
         <div className="card p-6">
           <div className="bg-green-500 text-black font-bold py-2 px-4 mb-4 border-b-4 border-black">
             <h3 className="text-lg font-mono">
-              [SUCCESS] DOWNLOAD READY
+              [SUCCESS] DOWNLOAD OPTIONS
             </h3>
           </div>
-          <div className="retro-alert retro-alert-success flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-green-500 border-4 border-black flex items-center justify-center">
-                <Download className="h-6 w-6 text-black" />
-              </div>
-              {downloadResult && (
-                <div className="bg-green-200 p-4 border-4 border-black">
-                  <h4 className="font-bold font-mono text-black mb-2">
-                    [SUCCESS] DOWNLOAD READY
-                  </h4>
-                  <div className="space-y-2">
-                    <div className="text-sm font-mono text-black">
-                      <strong>FILE:</strong> {downloadResult.filename}
-                    </div>
-                    {downloadResult.filesize && (
-                      <div className="text-sm font-mono text-black">
-                        <strong>SIZE:</strong> {formatFileSize(downloadResult.filesize)}
-                      </div>
-                    )}
-                    <button
-                      onClick={downloadFile}
-                      className="btn-primary w-full font-mono"
-                    >
-                      <Download className="h-4 w-4 mr-2" />
-                      DOWNLOAD FILE
-                    </button>
-                    {downloadResult.message && (
-                      <div className="text-xs font-mono text-black bg-blue-100 p-2 border-2 border-black">
-                        <strong>✅ SUCCESS:</strong> {downloadResult.message}
-                      </div>
-                    )}
-                  </div>
+          
+          <div className="space-y-4">
+            {/* Primary Download Button */}
+            <div className="bg-green-200 p-4 border-4 border-black">
+              <h4 className="font-bold font-mono text-black mb-3">
+                [PRIMARY] DOWNLOAD METHOD
+              </h4>
+              <button
+                onClick={downloadFile}
+                className="btn-primary w-full font-mono mb-2"
+              >
+                <Download className="h-4 w-4 mr-2" />
+                OPEN VIDEO IN NEW TAB
+              </button>
+              {downloadResult.message && (
+                <div className="text-xs font-mono text-black bg-blue-100 p-2 border-2 border-black">
+                  <strong>✅ SUCCESS:</strong> {downloadResult.message}
                 </div>
               )}
             </div>
+
+            {/* Instructions */}
+            {downloadResult.instructions && (
+              <div className="bg-blue-200 p-4 border-4 border-black">
+                <h4 className="font-bold font-mono text-black mb-3">
+                  [INFO] DOWNLOAD INSTRUCTIONS
+                </h4>
+                <div className="space-y-2 text-sm font-mono text-black">
+                  <p>• {downloadResult.instructions.method1}</p>
+                  <p>• {downloadResult.instructions.method2}</p>
+                  <p>• {downloadResult.instructions.method3}</p>
+                  {downloadResult.instructions.note && (
+                    <p className="text-xs bg-yellow-100 p-2 border-2 border-black mt-2">
+                      <strong>NOTE:</strong> {downloadResult.instructions.note}
+                    </p>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Alternative Services */}
+            {downloadResult.alternativeServices && (
+              <div className="bg-purple-200 p-4 border-4 border-black">
+                <h4 className="font-bold font-mono text-black mb-3">
+                  [ALTERNATIVE] DOWNLOAD SERVICES
+                </h4>
+                <div className="space-y-2">
+                  {downloadResult.alternativeServices.map((service, index) => (
+                    <button
+                      key={index}
+                      onClick={() => openAlternativeService(service.url)}
+                      className="btn-secondary w-full font-mono text-left flex items-center justify-between"
+                    >
+                      <div>
+                        <div className="font-bold">{service.name}</div>
+                        <div className="text-xs">{service.description}</div>
+                      </div>
+                      <ExternalLink className="h-4 w-4" />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
           
-          <div className="retro-alert retro-alert-warning">
+          <div className="retro-alert retro-alert-warning mt-4">
             <div className="font-mono font-bold text-black space-y-2">
               <p>
                 {'>> RESPECT COPYRIGHT LAWS AND YOUTUBE TOS'}
@@ -396,7 +430,7 @@ const YouTubeDownloader = () => {
                 {'>> FOR PERSONAL/EDUCATIONAL USE ONLY'}
               </p>
               <p>
-                {'>> FILES AUTO-DELETED AFTER DOWNLOAD'}
+                {'>> USE OFFICIAL YOUTUBE PREMIUM FOR OFFLINE VIEWING'}
               </p>
             </div>
           </div>
