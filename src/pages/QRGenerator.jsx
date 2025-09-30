@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { QrCode, Download, Copy, RotateCcw } from 'lucide-react'
-import axios from 'axios'
+import QRCodeLib from 'qrcode'
 
 const QRGenerator = () => {
   const [text, setText] = useState('')
@@ -20,22 +20,23 @@ const QRGenerator = () => {
     setError('')
 
     try {
-      const formData = new FormData()
-      formData.append('text', text)
-      formData.append('size', size.toString())
-      formData.append('border', border.toString())
-
-      const response = await axios.post('/api/qr-generate', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+      // Generate QR code client-side
+      const qrDataURL = await QRCodeLib.toDataURL(text, {
+        width: size * 20, // Convert size to pixels
+        margin: border,
+        color: {
+          dark: '#000000',
+          light: '#FFFFFF'
+        }
       })
-
-      if (response.data.success) {
-        setQrResult(response.data)
-      }
+      
+      setQrResult({
+        success: true,
+        url: qrDataURL,
+        filename: `qr-code-${Date.now()}.png`
+      })
     } catch (err) {
-      setError(err.response?.data?.detail || 'Failed to generate QR code')
+      setError('Failed to generate QR code')
     } finally {
       setLoading(false)
     }
@@ -68,107 +69,119 @@ const QRGenerator = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className="text-center mb-8">
-        <div className="flex items-center justify-center space-x-3 mb-4">
-          <QrCode className="h-8 w-8 text-primary-600 dark:text-primary-400" />
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
-            QR Code Generator
-          </h1>
+    <div className="max-w-4xl mx-auto p-4">
+      {/* Retro Window Header */}
+      <div className="retro-window mb-8">
+        <div className="retro-window-header">
+          <div className="flex items-center space-x-3">
+            <QrCode className="h-6 w-6" />
+            <span className="text-lg font-bold">QR CODE GENERATOR v1.0</span>
+          </div>
+          <div className="retro-window-controls">
+            <div className="retro-window-control control-minimize"></div>
+            <div className="retro-window-control control-maximize"></div>
+            <div className="retro-window-control control-close"></div>
+          </div>
         </div>
-        <p className="text-lg text-gray-600 dark:text-gray-300">
-          Convert any text, URL, or message into a QR code instantly
-        </p>
+        <div className="p-6 bg-gray-100 dark:bg-gray-700">
+          <div className="text-center mb-6">
+            <p className="text-lg font-bold text-black dark:text-white font-mono">
+              {'>> CONVERT ANY TEXT, URL, OR MESSAGE INTO A QR CODE INSTANTLY <<'}
+            </p>
+          </div>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Input Section */}
         <div className="card p-6">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-            Enter Your Content
-          </h2>
+          <div className="bg-blue-500 text-white font-bold py-2 px-4 mb-4 border-b-4 border-black">
+            <h2 className="text-xl font-mono">
+              [INPUT] ENTER YOUR CONTENT
+            </h2>
+          </div>
           
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Text or URL
+              <label className="block text-sm font-bold text-black dark:text-white mb-2 font-mono">
+                TEXT OR URL:
               </label>
               <textarea
                 value={text}
                 onChange={(e) => setText(e.target.value)}
-                placeholder="Enter text, URL, or any message..."
-                className="input-field h-32 resize-none"
+                placeholder="ENTER TEXT, URL, OR ANY MESSAGE..."
+                className="input-field h-32 resize-none font-mono"
                 maxLength={1000}
               />
-              <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                {text.length}/1000 characters
+              <div className="text-sm text-black dark:text-white mt-1 font-mono font-bold">
+                {text.length}/1000 CHARACTERS
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Size
+                <label className="block text-sm font-bold text-black dark:text-white mb-2 font-mono">
+                  SIZE:
                 </label>
                 <select
                   value={size}
                   onChange={(e) => setSize(parseInt(e.target.value))}
-                  className="input-field"
+                  className="input-field font-mono font-bold"
                 >
-                  <option value={5}>Small (5)</option>
-                  <option value={10}>Medium (10)</option>
-                  <option value={15}>Large (15)</option>
-                  <option value={20}>Extra Large (20)</option>
+                  <option value={5}>SMALL (5)</option>
+                  <option value={10}>MEDIUM (10)</option>
+                  <option value={15}>LARGE (15)</option>
+                  <option value={20}>EXTRA LARGE (20)</option>
                 </select>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Border
+                <label className="block text-sm font-bold text-black dark:text-white mb-2 font-mono">
+                  BORDER:
                 </label>
                 <select
                   value={border}
                   onChange={(e) => setBorder(parseInt(e.target.value))}
-                  className="input-field"
+                  className="input-field font-mono font-bold"
                 >
-                  <option value={1}>Thin (1)</option>
-                  <option value={4}>Normal (4)</option>
-                  <option value={8}>Thick (8)</option>
+                  <option value={1}>THIN (1)</option>
+                  <option value={4}>NORMAL (4)</option>
+                  <option value={8}>THICK (8)</option>
                 </select>
               </div>
             </div>
 
             {error && (
-              <div className="p-3 bg-red-100 dark:bg-red-900/30 border border-red-300 dark:border-red-700 rounded-lg text-red-700 dark:text-red-300">
-                {error}
+              <div className="retro-alert retro-alert-error font-mono font-bold">
+                ERROR: {error}
               </div>
             )}
 
-            <div className="flex flex-col sm:flex-row gap-3">
+            <div className="flex flex-col sm:flex-row gap-4">
               <button
                 onClick={generateQR}
                 disabled={loading || !text.trim()}
-                className="btn-primary flex-1 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="btn-primary flex-1 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed font-mono"
               >
                 {loading ? (
                   <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                    <span>Generating...</span>
+                    <div className="retro-spinner"></div>
+                    <span>GENERATING...</span>
                   </>
                 ) : (
                   <>
                     <QrCode className="h-4 w-4" />
-                    <span>Generate QR</span>
+                    <span>GENERATE QR</span>
                   </>
                 )}
               </button>
 
               <button
                 onClick={clearAll}
-                className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-xl font-medium transition-colors duration-200 flex items-center justify-center space-x-2"
+                className="btn-secondary flex items-center justify-center space-x-2 font-mono px-4 py-2"
               >
                 <RotateCcw className="h-4 w-4" />
-                <span>Clear</span>
+                <span>CLEAR</span>
               </button>
             </div>
           </div>
@@ -176,13 +189,15 @@ const QRGenerator = () => {
 
         {/* Result Section */}
         <div className="card p-6">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-            Generated QR Code
-          </h2>
+          <div className="bg-green-500 text-black font-bold py-2 px-4 mb-4 border-b-4 border-black">
+            <h2 className="text-xl font-mono">
+              [OUTPUT] GENERATED QR CODE
+            </h2>
+          </div>
           
           {qrResult ? (
             <div className="space-y-4">
-              <div className="bg-white p-4 rounded-xl border-2 border-gray-200 dark:border-gray-600 flex items-center justify-center">
+              <div className="bg-white p-4 border-4 border-black flex items-center justify-center" style={{boxShadow: '4px 4px 0px #000, 8px 8px 0px rgba(0,0,0,0.3)'}}>
                 <img
                   src={qrResult.url}
                   alt="Generated QR Code"
@@ -190,29 +205,29 @@ const QRGenerator = () => {
                 />
               </div>
               
-              <div className="flex flex-col sm:flex-row gap-3">
+              <div className="flex flex-col sm:flex-row gap-4">
                 <button
                   onClick={downloadQR}
-                  className="btn-primary flex-1 flex items-center justify-center space-x-2"
+                  className="btn-primary flex-1 flex items-center justify-center space-x-2 font-mono"
                 >
                   <Download className="h-4 w-4" />
-                  <span>Download</span>
+                  <span>DOWNLOAD</span>
                 </button>
                 
                 <button
                   onClick={copyToClipboard}
-                  className="btn-secondary flex items-center justify-center space-x-2"
+                  className="btn-secondary flex items-center justify-center space-x-2 font-mono"
                 >
                   <Copy className="h-4 w-4" />
-                  <span>Copy Text</span>
+                  <span>COPY TEXT</span>
                 </button>
               </div>
             </div>
           ) : (
-            <div className="flex flex-col items-center justify-center h-64 text-gray-500 dark:text-gray-400">
-              <QrCode className="h-16 w-16 mb-4 opacity-50" />
-              <p className="text-center">
-                Enter some text and click "Generate QR" to create your QR code
+            <div className="flex flex-col items-center justify-center h-64 bg-gray-200 dark:bg-gray-600 border-4 border-black">
+              <QrCode className="h-16 w-16 mb-4 text-black dark:text-white" />
+              <p className="text-center font-mono font-bold text-black dark:text-white">
+                ENTER SOME TEXT AND CLICK "GENERATE QR" TO CREATE YOUR QR CODE
               </p>
             </div>
           )}
@@ -221,21 +236,25 @@ const QRGenerator = () => {
 
       {/* Tips Section */}
       <div className="mt-8 card p-6">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-          💡 Tips for Better QR Codes
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-600 dark:text-gray-300">
-          <div>
-            <strong>• Keep it simple:</strong> Shorter text creates cleaner QR codes
-          </div>
-          <div>
-            <strong>• Test before use:</strong> Always scan your QR code to verify it works
-          </div>
-          <div>
-            <strong>• Size matters:</strong> Larger sizes are easier to scan from distance
-          </div>
-          <div>
-            <strong>• Add context:</strong> Include instructions near your QR code
+        <div className="bg-purple-500 text-white font-bold py-2 px-4 mb-4 border-b-4 border-black">
+          <h3 className="text-lg font-mono">
+            [TIPS] BETTER QR CODES
+          </h3>
+        </div>
+        <div className="retro-alert retro-alert-warning">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-black font-mono font-bold">
+            <div>
+              {'>> KEEP IT SIMPLE: SHORTER TEXT = CLEANER CODES'}
+            </div>
+            <div>
+              {'>> TEST BEFORE USE: ALWAYS SCAN TO VERIFY'}
+            </div>
+            <div>
+              {'>> SIZE MATTERS: LARGER = EASIER TO SCAN'}
+            </div>
+            <div>
+              {'>> ADD CONTEXT: INCLUDE INSTRUCTIONS'}
+            </div>
           </div>
         </div>
       </div>

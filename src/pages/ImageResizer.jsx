@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react'
 import { Image as ImageIcon, Upload, Download, RotateCcw, Maximize2 } from 'lucide-react'
-import axios from 'axios'
 
 const ImageResizer = () => {
   const [selectedFile, setSelectedFile] = useState(null)
@@ -68,7 +67,7 @@ const ImageResizer = () => {
     }
   }
 
-  const resizeImage = async () => {
+  const resizeImage = () => {
     if (!selectedFile || !width || !height) {
       setError('Please select an image and enter dimensions')
       return
@@ -77,27 +76,41 @@ const ImageResizer = () => {
     setLoading(true)
     setError('')
 
-    try {
-      const formData = new FormData()
-      formData.append('file', selectedFile)
-      formData.append('width', width)
-      formData.append('height', height)
-      formData.append('maintain_aspect', maintainAspect.toString())
-
-      const response = await axios.post('/api/image-resize', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+    // Create a canvas to resize the image client-side
+    const canvas = document.createElement('canvas')
+    const ctx = canvas.getContext('2d')
+    const img = new Image()
+    
+    img.onload = () => {
+      const targetWidth = parseInt(width)
+      const targetHeight = parseInt(height)
+      
+      canvas.width = targetWidth
+      canvas.height = targetHeight
+      
+      // Draw the resized image
+      ctx.drawImage(img, 0, 0, targetWidth, targetHeight)
+      
+      // Convert to data URL
+      const resizedDataURL = canvas.toDataURL('image/png')
+      
+      setResult({
+        success: true,
+        url: resizedDataURL,
+        filename: `resized-${selectedFile.name.split('.')[0]}-${targetWidth}x${targetHeight}.png`,
+        original_size: { width: img.width, height: img.height },
+        new_size: { width: targetWidth, height: targetHeight }
       })
-
-      if (response.data.success) {
-        setResult(response.data)
-      }
-    } catch (err) {
-      setError(err.response?.data?.detail || 'Failed to resize image')
-    } finally {
+      
       setLoading(false)
     }
+    
+    img.onerror = () => {
+      setError('Failed to resize image')
+      setLoading(false)
+    }
+    
+    img.src = preview
   }
 
   const downloadImage = () => {

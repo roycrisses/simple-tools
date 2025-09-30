@@ -31,59 +31,21 @@ const YouTubeDownloader = () => {
     setVideoInfo(null)
     setDownloadResult(null)
 
-    try {
-      const formData = new FormData()
-      formData.append('url', url)
-
-      const response = await axios.post('/api/youtube-info', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
-
-      if (response.data.success) {
-        setVideoInfo(response.data)
-        // Auto-select first format
-        if (response.data.formats && response.data.formats.length > 0) {
-          setSelectedFormat(response.data.formats[0].format_id)
-        }
-      }
-    } catch (err) {
-      setError(err.response?.data?.detail || 'Failed to get video information')
-    } finally {
+    // Show message that this feature requires backend
+    setTimeout(() => {
+      setError('YouTube downloading requires a backend server. This feature is currently disabled for the static version.')
       setLoading(false)
-    }
+    }, 1000)
   }
 
   const downloadVideo = async () => {
-    if (!videoInfo || !selectedFormat) {
-      setError('Please select a format first')
-      return
-    }
-
     setDownloading(true)
     setError('')
 
-    try {
-      const formData = new FormData()
-      formData.append('url', url)
-      formData.append('format_id', selectedFormat)
-      formData.append('audio_only', audioOnly.toString())
-
-      const response = await axios.post('/api/youtube-download', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
-
-      if (response.data.success) {
-        setDownloadResult(response.data)
-      }
-    } catch (err) {
-      setError(err.response?.data?.detail || 'Failed to download video')
-    } finally {
+    setTimeout(() => {
+      setError('YouTube downloading requires a backend server. This feature is currently disabled for the static version.')
       setDownloading(false)
-    }
+    }, 1000)
   }
 
   const downloadFile = () => {

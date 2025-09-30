@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Coins, RotateCcw, TrendingUp } from 'lucide-react'
-import axios from 'axios'
 
 const CoinFlip = () => {
   const [result, setResult] = useState(null)
@@ -8,33 +7,26 @@ const CoinFlip = () => {
   const [history, setHistory] = useState([])
   const [stats, setStats] = useState({ heads: 0, tails: 0 })
 
-  const flipCoin = async () => {
+  const flipCoin = () => {
     setIsFlipping(true)
     
     // Add animation delay
-    setTimeout(async () => {
-      try {
-        const response = await axios.post('/api/coin-flip')
-        
-        if (response.data.success) {
-          const newResult = response.data.result
-          setResult(newResult)
-          
-          // Update history (keep last 10 flips)
-          setHistory(prev => [newResult, ...prev.slice(0, 9)])
-          
-          // Update stats
-          setStats(prev => ({
-            ...prev,
-            [newResult]: prev[newResult] + 1
-          }))
-        }
-      } catch (err) {
-        console.error('Error flipping coin:', err)
-      } finally {
-        setIsFlipping(false)
-      }
-    }, 1500) // 1.5 second animation
+    setTimeout(() => {
+      // Generate random result client-side
+      const newResult = Math.random() < 0.5 ? 'heads' : 'tails'
+      setResult(newResult)
+      
+      // Update history (keep last 10 flips)
+      setHistory(prev => [newResult, ...prev.slice(0, 9)])
+      
+      // Update stats
+      setStats(prev => ({
+        ...prev,
+        [newResult]: prev[newResult] + 1
+      }))
+      
+      setIsFlipping(false)
+    }, 2000) // 2 second animation
   }
 
   const resetStats = () => {
@@ -48,47 +40,67 @@ const CoinFlip = () => {
   const tailsPercentage = totalFlips > 0 ? ((stats.tails / totalFlips) * 100).toFixed(1) : 0
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className="text-center mb-8">
-        <div className="flex items-center justify-center space-x-3 mb-4">
-          <Coins className="h-8 w-8 text-primary-600 dark:text-primary-400" />
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
-            Coin Flip
-          </h1>
+    <div className="max-w-4xl mx-auto p-4">
+      {/* Retro Window Header */}
+      <div className="retro-window mb-8">
+        <div className="retro-window-header">
+          <div className="flex items-center space-x-3">
+            <Coins className="h-6 w-6" />
+            <span className="text-lg font-bold">COIN FLIP SIMULATOR v1.0</span>
+          </div>
+          <div className="retro-window-controls">
+            <div className="retro-window-control control-minimize"></div>
+            <div className="retro-window-control control-maximize"></div>
+            <div className="retro-window-control control-close"></div>
+          </div>
         </div>
-        <p className="text-lg text-gray-600 dark:text-gray-300">
-          Make quick decisions with a virtual coin flip
-        </p>
+        <div className="p-6 bg-gray-100 dark:bg-gray-700">
+          <div className="text-center mb-6">
+            <p className="text-lg font-bold text-black dark:text-white font-mono">
+              {'>> MAKE QUICK DECISIONS WITH A VIRTUAL COIN FLIP <<'}
+            </p>
+          </div>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Main Coin Flip Section */}
         <div className="lg:col-span-2">
           <div className="card p-8 text-center">
+            <div className="bg-blue-500 text-white font-bold py-2 px-4 mb-6 border-b-4 border-black">
+              <h2 className="text-xl font-mono">
+                [FLIP] COIN SIMULATOR
+              </h2>
+            </div>
             <div className="mb-8">
-              {/* Coin Animation */}
+              {/* Retro Coin Animation */}
               <div className="relative mx-auto w-48 h-48 mb-8">
                 <div
-                  className={`absolute inset-0 rounded-full border-8 border-primary-500 flex items-center justify-center text-6xl font-bold transition-all duration-1500 ${
+                  className={`absolute inset-0 border-8 border-black flex items-center justify-center text-6xl font-bold font-mono transition-all duration-500 ${
                     isFlipping
-                      ? 'animate-spin transform rotate-[1800deg]'
-                      : result
-                      ? 'transform rotate-0'
+                      ? 'animate-bounce'
                       : 'transform rotate-0'
                   } ${
                     result === 'heads'
-                      ? 'bg-gradient-to-br from-yellow-400 to-yellow-600 text-yellow-900'
+                      ? 'bg-yellow-400 text-black'
                       : result === 'tails'
-                      ? 'bg-gradient-to-br from-gray-400 to-gray-600 text-gray-900'
-                      : 'bg-gradient-to-br from-beige-200 to-beige-400 text-beige-800'
+                      ? 'bg-gray-400 text-black'
+                      : 'bg-blue-300 text-black'
                   }`}
+                  style={{
+                    boxShadow: '8px 8px 0px #000, 16px 16px 0px rgba(0,0,0,0.3)',
+                    transform: isFlipping ? 'rotateY(1800deg)' : 'rotateY(0deg)',
+                    transition: 'transform 2s ease-in-out, background-color 0.3s'
+                  }}
                 >
                   {isFlipping ? (
-                    <div className="animate-pulse">?</div>
+                    <div className="animate-pulse text-black font-mono">?</div>
                   ) : result ? (
-                    result === 'heads' ? '👑' : '🪙'
+                    <div className="font-mono text-black">
+                      {result === 'heads' ? 'H' : 'T'}
+                    </div>
                   ) : (
-                    '🪙'
+                    <div className="font-mono text-black">?</div>
                   )}
                 </div>
               </div>
@@ -96,55 +108,55 @@ const CoinFlip = () => {
               {/* Result Display */}
               <div className="mb-6">
                 {result && !isFlipping && (
-                  <div className="space-y-2">
-                    <h2 className="text-4xl font-bold text-gray-900 dark:text-white capitalize">
-                      {result}!
+                  <div className="retro-alert retro-alert-success">
+                    <h2 className="text-4xl font-bold text-black font-mono capitalize">
+                      {result.toUpperCase()}!
                     </h2>
-                    <p className="text-lg text-gray-600 dark:text-gray-300">
-                      {result === 'heads' ? 'You got heads!' : 'You got tails!'}
+                    <p className="text-lg text-black font-mono font-bold">
+                      {result === 'heads' ? 'YOU GOT HEADS!' : 'YOU GOT TAILS!'}
                     </p>
                   </div>
                 )}
                 
                 {isFlipping && (
-                  <div className="space-y-2">
-                    <h2 className="text-4xl font-bold text-gray-900 dark:text-white">
-                      Flipping...
+                  <div className="retro-alert retro-alert-warning">
+                    <h2 className="text-4xl font-bold text-black font-mono">
+                      FLIPPING...
                     </h2>
-                    <p className="text-lg text-gray-600 dark:text-gray-300">
-                      The coin is in the air!
+                    <p className="text-lg text-black font-mono font-bold">
+                      THE COIN IS IN THE AIR!
                     </p>
                   </div>
                 )}
                 
                 {!result && !isFlipping && (
-                  <div className="space-y-2">
-                    <h2 className="text-4xl font-bold text-gray-900 dark:text-white">
-                      Ready to Flip?
+                  <div className="bg-gray-200 dark:bg-gray-600 p-4 border-3 border-black">
+                    <h2 className="text-4xl font-bold text-black dark:text-white font-mono">
+                      READY TO FLIP?
                     </h2>
-                    <p className="text-lg text-gray-600 dark:text-gray-300">
-                      Click the button below to flip the coin
+                    <p className="text-lg text-black dark:text-white font-mono font-bold">
+                      CLICK THE BUTTON BELOW TO FLIP THE COIN
                     </p>
                   </div>
                 )}
               </div>
 
               {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="flex flex-col sm:flex-row gap-6 justify-center">
                 <button
                   onClick={flipCoin}
                   disabled={isFlipping}
-                  className="btn-primary px-8 py-4 text-lg flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="btn-primary px-8 py-4 text-lg flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed font-mono"
                 >
                   {isFlipping ? (
                     <>
-                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                      <span>Flipping...</span>
+                      <div className="retro-spinner"></div>
+                      <span>FLIPPING...</span>
                     </>
                   ) : (
                     <>
                       <Coins className="h-5 w-5" />
-                      <span>Flip Coin</span>
+                      <span>FLIP COIN</span>
                     </>
                   )}
                 </button>
@@ -153,10 +165,10 @@ const CoinFlip = () => {
                   <button
                     onClick={resetStats}
                     disabled={isFlipping}
-                    className="px-6 py-4 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-xl font-medium transition-colors duration-200 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="btn-secondary flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed font-mono px-6 py-4"
                   >
                     <RotateCcw className="h-5 w-5" />
-                    <span>Reset</span>
+                    <span>RESET</span>
                   </button>
                 )}
               </div>
@@ -169,55 +181,55 @@ const CoinFlip = () => {
           {/* Statistics */}
           {totalFlips > 0 && (
             <div className="card p-6">
-              <div className="flex items-center space-x-2 mb-4">
-                <TrendingUp className="h-5 w-5 text-primary-600 dark:text-primary-400" />
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                  Statistics
+              <div className="bg-green-500 text-black font-bold py-2 px-4 mb-4 border-b-4 border-black">
+                <h3 className="text-lg font-mono flex items-center space-x-2">
+                  <TrendingUp className="h-5 w-5" />
+                  <span>[STATS] STATISTICS</span>
                 </h3>
               </div>
               
               <div className="space-y-4">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-gray-900 dark:text-white">
+                <div className="text-center bg-blue-300 p-3 border-3 border-black">
+                  <div className="text-2xl font-bold text-black font-mono">
                     {totalFlips}
                   </div>
-                  <div className="text-sm text-gray-600 dark:text-gray-300">
-                    Total Flips
+                  <div className="text-sm text-black font-mono font-bold">
+                    TOTAL FLIPS
                   </div>
                 </div>
 
                 <div className="space-y-3">
                   {/* Heads */}
-                  <div>
+                  <div className="bg-yellow-200 p-3 border-2 border-black">
                     <div className="flex justify-between items-center mb-1">
-                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                        👑 Heads
+                      <span className="text-sm font-bold text-black font-mono">
+                        [H] HEADS
                       </span>
-                      <span className="text-sm text-gray-600 dark:text-gray-400">
+                      <span className="text-sm text-black font-mono font-bold">
                         {stats.heads} ({headsPercentage}%)
                       </span>
                     </div>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                    <div className="w-full bg-gray-600 border-2 border-black h-4">
                       <div
-                        className="bg-yellow-500 h-2 rounded-full transition-all duration-300"
+                        className="bg-yellow-500 h-full border-r-2 border-black transition-all duration-300"
                         style={{ width: `${headsPercentage}%` }}
                       ></div>
                     </div>
                   </div>
 
                   {/* Tails */}
-                  <div>
+                  <div className="bg-gray-200 p-3 border-2 border-black">
                     <div className="flex justify-between items-center mb-1">
-                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                        🪙 Tails
+                      <span className="text-sm font-bold text-black font-mono">
+                        [T] TAILS
                       </span>
-                      <span className="text-sm text-gray-600 dark:text-gray-400">
+                      <span className="text-sm text-black font-mono font-bold">
                         {stats.tails} ({tailsPercentage}%)
                       </span>
                     </div>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                    <div className="w-full bg-gray-600 border-2 border-black h-4">
                       <div
-                        className="bg-gray-500 h-2 rounded-full transition-all duration-300"
+                        className="bg-gray-400 h-full border-r-2 border-black transition-all duration-300"
                         style={{ width: `${tailsPercentage}%` }}
                       ></div>
                     </div>
@@ -230,29 +242,31 @@ const CoinFlip = () => {
           {/* Recent History */}
           {history.length > 0 && (
             <div className="card p-6">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                Recent Flips
-              </h3>
+              <div className="bg-purple-500 text-white font-bold py-2 px-4 mb-4 border-b-4 border-black">
+                <h3 className="text-lg font-mono">
+                  [HISTORY] RECENT FLIPS
+                </h3>
+              </div>
               
-              <div className="space-y-2">
+              <div className="space-y-2 bg-gray-50 dark:bg-gray-800 p-2 border-3 border-black max-h-48 overflow-y-auto">
                 {history.map((flip, index) => (
                   <div
                     key={index}
-                    className={`flex items-center justify-between p-3 rounded-lg ${
+                    className={`flex items-center justify-between p-3 border-2 border-black ${
                       index === 0 && result
-                        ? 'bg-primary-50 dark:bg-primary-900/30 border border-primary-200 dark:border-primary-700'
-                        : 'bg-gray-50 dark:bg-gray-700'
+                        ? 'bg-green-300'
+                        : flip === 'heads' ? 'bg-yellow-200' : 'bg-gray-200'
                     }`}
                   >
                     <div className="flex items-center space-x-3">
-                      <span className="text-lg">
-                        {flip === 'heads' ? '👑' : '🪙'}
+                      <span className="text-lg font-mono font-bold text-black">
+                        {flip === 'heads' ? '[H]' : '[T]'}
                       </span>
-                      <span className="font-medium text-gray-900 dark:text-white capitalize">
-                        {flip}
+                      <span className="font-bold text-black font-mono capitalize">
+                        {flip.toUpperCase()}
                       </span>
                     </div>
-                    <span className="text-sm text-gray-500 dark:text-gray-400">
+                    <span className="text-sm text-black font-mono font-bold">
                       #{history.length - index}
                     </span>
                   </div>
@@ -262,23 +276,27 @@ const CoinFlip = () => {
           )}
 
           {/* Tips */}
-          <div className="card p-6 bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-700">
-            <h3 className="text-lg font-semibold text-blue-800 dark:text-blue-200 mb-3">
-              💡 Did You Know?
-            </h3>
-            <div className="text-sm text-blue-700 dark:text-blue-300 space-y-2">
-              <p>
-                • A fair coin has a 50% chance of landing on either side
-              </p>
-              <p>
-                • Coin flips are used in sports to determine who goes first
-              </p>
-              <p>
-                • The probability doesn't change based on previous results
-              </p>
-              <p>
-                • Perfect for making unbiased decisions!
-              </p>
+          <div className="card p-6">
+            <div className="bg-red-500 text-white font-bold py-2 px-4 mb-4 border-b-4 border-black">
+              <h3 className="text-lg font-mono">
+                [INFO] DID YOU KNOW?
+              </h3>
+            </div>
+            <div className="retro-alert retro-alert-warning">
+              <div className="text-sm text-black font-mono font-bold space-y-2">
+                <p>
+                  {'>> A FAIR COIN HAS 50% CHANCE FOR EACH SIDE'}
+                </p>
+                <p>
+                  {'>> COIN FLIPS DETERMINE WHO GOES FIRST IN SPORTS'}
+                </p>
+                <p>
+                  {'>> PROBABILITY DOESN\'T CHANGE FROM PREVIOUS RESULTS'}
+                </p>
+                <p>
+                  {'>> PERFECT FOR MAKING UNBIASED DECISIONS!'}
+                </p>
+              </div>
             </div>
           </div>
         </div>
