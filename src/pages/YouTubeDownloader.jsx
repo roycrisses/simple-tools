@@ -118,9 +118,28 @@ const YouTubeDownloader = () => {
           setError('Failed to download file. Please try again.')
         }
       } else if (downloadResult.downloadUrl) {
-        // Handle redirect-based download
-        window.open(downloadResult.downloadUrl, '_blank')
+        // Handle direct download
+        try {
+          // Create a temporary link element for download
+          const link = document.createElement('a')
+          link.href = downloadResult.downloadUrl
+          link.download = downloadResult.filename || `youtube_video.${audioOnly ? 'mp3' : 'mp4'}`
+          link.target = '_blank'
+          
+          // Add to DOM, click, and remove
+          document.body.appendChild(link)
+          link.click()
+          document.body.removeChild(link)
+        } catch (error) {
+          console.error('Error initiating download:', error)
+          // Fallback to opening in new tab
+          window.open(downloadResult.downloadUrl, '_blank')
+        }
+      } else {
+        setError('Download method not available. Please try again.')
       }
+    } else {
+      setError('No download result available. Please try downloading again.')
     }
   }
 
@@ -133,9 +152,6 @@ const YouTubeDownloader = () => {
     setDownloadResult(null)
   }
 
-  const openAlternativeService = (serviceUrl) => {
-    window.open(serviceUrl, '_blank')
-  }
   
   const formatFileSize = (bytes) => {
     if (!bytes) return 'Unknown size'
@@ -339,7 +355,7 @@ const YouTubeDownloader = () => {
                 ) : (
                   <>
                     <Download className="h-4 w-4" />
-                    <span>DOWNLOAD {audioOnly ? 'AUDIO' : 'VIDEO'}</span>
+                    <span>GET DOWNLOAD OPTIONS</span>
                   </>
                 )}
               </button>
@@ -368,7 +384,7 @@ const YouTubeDownloader = () => {
                 className="btn-primary w-full font-mono mb-2"
               >
                 <Download className="h-4 w-4 mr-2" />
-                OPEN VIDEO IN NEW TAB
+                DOWNLOAD {audioOnly ? 'AUDIO' : 'VIDEO'} FILE
               </button>
               {downloadResult.message && (
                 <div className="text-xs font-mono text-black bg-blue-100 p-2 border-2 border-black">
@@ -381,12 +397,10 @@ const YouTubeDownloader = () => {
             {downloadResult.instructions && (
               <div className="bg-blue-200 p-4 border-4 border-black">
                 <h4 className="font-bold font-mono text-black mb-3">
-                  [INFO] DOWNLOAD INSTRUCTIONS
+                  [INFO] DOWNLOAD STATUS
                 </h4>
                 <div className="space-y-2 text-sm font-mono text-black">
-                  <p>• {downloadResult.instructions.method1}</p>
-                  <p>• {downloadResult.instructions.method2}</p>
-                  <p>• {downloadResult.instructions.method3}</p>
+                  <p>• {downloadResult.instructions.method}</p>
                   {downloadResult.instructions.note && (
                     <p className="text-xs bg-yellow-100 p-2 border-2 border-black mt-2">
                       <strong>NOTE:</strong> {downloadResult.instructions.note}
@@ -396,29 +410,6 @@ const YouTubeDownloader = () => {
               </div>
             )}
 
-            {/* Alternative Services */}
-            {downloadResult.alternativeServices && (
-              <div className="bg-purple-200 p-4 border-4 border-black">
-                <h4 className="font-bold font-mono text-black mb-3">
-                  [ALTERNATIVE] DOWNLOAD SERVICES
-                </h4>
-                <div className="space-y-2">
-                  {downloadResult.alternativeServices.map((service, index) => (
-                    <button
-                      key={index}
-                      onClick={() => openAlternativeService(service.url)}
-                      className="btn-secondary w-full font-mono text-left flex items-center justify-between"
-                    >
-                      <div>
-                        <div className="font-bold">{service.name}</div>
-                        <div className="text-xs">{service.description}</div>
-                      </div>
-                      <ExternalLink className="h-4 w-4" />
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
           </div>
           
           <div className="retro-alert retro-alert-warning mt-4">
