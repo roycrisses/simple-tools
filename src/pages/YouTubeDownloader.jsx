@@ -1,7 +1,8 @@
 
 import React, { useState } from 'react'
 import { Download, Play, Music, RotateCcw, ExternalLink } from 'lucide-react'
-import axios from 'axios'
+import { httpsCallable } from 'firebase/functions'
+import { functions } from '../config/firebase'
 
 const YouTubeDownloader = () => {
   const [url, setUrl] = useState('')
@@ -31,21 +32,48 @@ const YouTubeDownloader = () => {
     setVideoInfo(null)
     setDownloadResult(null)
 
-    // Show message that this feature requires backend
-    setTimeout(() => {
-      setError('YouTube downloading requires a backend server. This feature is currently disabled for the static version.')
+    try {
+      // Call Firebase Function
+      const getYouTubeInfo = httpsCallable(functions, 'getYouTubeInfo')
+      const result = await getYouTubeInfo({ url })
+      
+      if (result.data.success) {
+        setVideoInfo(result.data)
+        // Auto-select first format
+        if (result.data.formats && result.data.formats.length > 0) {
+          setSelectedFormat(result.data.formats[0].format_id)
+        }
+      }
+    } catch (err) {
+      console.error('Firebase function error:', err)
+      setError('Failed to get video information. Make sure Firebase is configured.')
+    } finally {
       setLoading(false)
-    }, 1000)
+    }
   }
 
   const downloadVideo = async () => {
     setDownloading(true)
     setError('')
 
-    setTimeout(() => {
-      setError('YouTube downloading requires a backend server. This feature is currently disabled for the static version.')
+    try {
+      // Call Firebase Function
+      const downloadYouTube = httpsCallable(functions, 'downloadYouTube')
+      const result = await downloadYouTube({ 
+        url, 
+        format_id: selectedFormat, 
+        audio_only: audioOnly 
+      })
+      
+      if (result.data.success) {
+        setDownloadResult(result.data)
+      }
+    } catch (err) {
+      console.error('Firebase function error:', err)
+      setError('Failed to download video. Make sure Firebase is configured.')
+    } finally {
       setDownloading(false)
-    }, 1000)
+    }
   }
 
   const downloadFile = () => {
