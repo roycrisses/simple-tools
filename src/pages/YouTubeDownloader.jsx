@@ -266,7 +266,7 @@ const YouTubeDownloader = () => {
                   id="audioOnly"
                   checked={audioOnly}
                   onChange={(e) => setAudioOnly(e.target.checked)}
-                  className="retro-radio"
+                  className="retro-checkbox"
                 />
                 <label htmlFor="audioOnly" className="font-bold text-black flex items-center space-x-2 font-mono">
                   <Music className="h-4 w-4" />
@@ -284,13 +284,11 @@ const YouTubeDownloader = () => {
               </h3>
             </div>
             
-            <div className="space-y-2 max-h-64 overflow-y-auto bg-gray-50 dark:bg-gray-800 p-2 border-4 border-black">
+            <div className="space-y-3 max-h-64 overflow-y-auto bg-gray-50 dark:bg-gray-800 p-4 border-4 border-black">
               {videoInfo.formats?.map((format) => (
                 <label
                   key={format.format_id}
-                  className={`retro-format-option ${
-                    selectedFormat === format.format_id ? 'selected' : ''
-                  }`}
+                  className={`retro-format-option ${selectedFormat === format.format_id ? 'selected' : ''}`}
                 >
                   <input
                     type="radio"
@@ -298,20 +296,20 @@ const YouTubeDownloader = () => {
                     value={format.format_id}
                     checked={selectedFormat === format.format_id}
                     onChange={(e) => setSelectedFormat(e.target.value)}
-                    className="retro-radio mr-3"
+                    className="retro-radio mt-1 flex-shrink-0"
                   />
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between">
-                      <span className="font-bold text-black dark:text-white font-mono">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="font-bold text-black dark:text-white font-mono truncate">
                         {format.quality} ({format.ext?.toUpperCase()})
                       </span>
                       {format.filesize && (
-                        <span className="text-sm font-bold text-black dark:text-white font-mono">
+                        <span className="text-sm font-bold text-black dark:text-white font-mono ml-2 flex-shrink-0">
                           {formatFileSize(format.filesize)}
                         </span>
                       )}
                     </div>
-                    <div className="text-xs font-mono text-black dark:text-white">
+                    <div className="text-xs font-mono text-black dark:text-white opacity-75">
                       {format.vcodec !== 'none' && `VIDEO: ${format.vcodec.toUpperCase()}`}
                       {format.vcodec !== 'none' && format.acodec !== 'none' && ' | '}
                       {format.acodec !== 'none' && `AUDIO: ${format.acodec.toUpperCase()}`}
