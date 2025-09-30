@@ -6,6 +6,10 @@ import QRGenerator from './pages/QRGenerator'
 import ImageResizer from './pages/ImageResizer'
 import YouTubeDownloader from './pages/YouTubeDownloader'
 import CoinFlip from './pages/CoinFlip'
+import PDFTools from './pages/PDFTools'
+import TextTools from './pages/TextTools'
+import ColorTools from './pages/ColorTools'
+import UnitConverter from './pages/UnitConverter'
 import About from './pages/About'
 
 function App() {
@@ -43,6 +47,10 @@ function App() {
             <Route path="/image-resizer" element={<ImageResizer />} />
             <Route path="/youtube-downloader" element={<YouTubeDownloader />} />
             <Route path="/coin-flip" element={<CoinFlip />} />
+            <Route path="/pdf-tools" element={<PDFTools />} />
+            <Route path="/text-tools" element={<TextTools />} />
+            <Route path="/color-tools" element={<ColorTools />} />
+            <Route path="/unit-converter" element={<UnitConverter />} />
             <Route path="/about" element={<About />} />
           </Routes>
         </main>

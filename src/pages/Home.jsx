@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { QrCode, Image, Download, Coins, ArrowRight } from 'lucide-react'
+import { QrCode, Image, Download, Coins, FileText, Type, Palette, Calculator, ArrowRight } from 'lucide-react'
 
 const Home = () => {
   const tools = [
@@ -34,6 +34,38 @@ const Home = () => {
       button: 'Flip Coin',
       icon: Coins,
       path: '/coin-flip',
+      color: 'secondary'
+    },
+    {
+      name: 'PDF Tools',
+      description: 'Merge, split, and convert PDF files',
+      button: 'PDF Tools',
+      icon: FileText,
+      path: '/pdf-tools',
+      color: 'primary'
+    },
+    {
+      name: 'Text Tools',
+      description: 'Word count, case converter, and more',
+      button: 'Text Tools',
+      icon: Type,
+      path: '/text-tools',
+      color: 'secondary'
+    },
+    {
+      name: 'Color Tools',
+      description: 'Color picker, palette generator',
+      button: 'Color Tools',
+      icon: Palette,
+      path: '/color-tools',
+      color: 'primary'
+    },
+    {
+      name: 'Unit Converter',
+      description: 'Length, weight, temperature, and more',
+      button: 'Convert',
+      icon: Calculator,
+      path: '/unit-converter',
       color: 'secondary'
     }
   ]
@@ -88,7 +120,7 @@ const Home = () => {
           </div>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {tools.map((tool, index) => {
             const IconComponent = tool.icon
             return (
