@@ -200,10 +200,31 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## 📞 Support
 
 If you encounter any issues or have suggestions:
-- Open an issue on GitHub
-- Email us at contact@simpletools.com
+- Open an issue on [GitHub](https://github.com/roycrisses/simple-tools-website/issues)
+- Email me at krishna21karki@gmail.com
 - Check the documentation
+
+## 👨‍💻 Developer
+
+**Krishna Karki**
+- 🎓 IT Student from Kathmandu, Nepal
+- 🏢 Life tech PVT LTD
+- 📧 krishna21karki@gmail.com
+- 🐙 [GitHub Profile](https://github.com/roycrisses)
+- 💼 [Portfolio](https://github.com/roycrisses/portfolio)
+
+## 🚀 Quick Deploy
+
+### Frontend
+- **Netlify**: Connect your GitHub repo and deploy automatically
+- **Vercel**: Import project from GitHub for instant deployment
+- **GitHub Pages**: Enable in repository settings
+
+### Backend
+- **Railway**: Connect GitHub repo and deploy FastAPI backend
+- **Heroku**: Use the included Procfile for easy deployment
+- **Render**: Deploy with automatic builds from GitHub
 
 ---
 
-Made with ❤️ for the community. Keep it simple, keep it free!
+Made with ❤️ by Krishna Karki. Keep it simple, keep it free!
