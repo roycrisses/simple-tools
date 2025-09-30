@@ -4,28 +4,193 @@
 
 @layer base {
   html {
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'Courier New', 'Monaco', monospace;
   }
   
   body {
-    @apply bg-beige-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300;
+    @apply bg-gray-300 dark:bg-gray-800 text-gray-900 dark:text-gray-100;
+    background-image: 
+      radial-gradient(circle at 25% 25%, #f0f0f0 2px, transparent 2px),
+      radial-gradient(circle at 75% 75%, #e0e0e0 1px, transparent 1px);
+    background-size: 20px 20px;
   }
 }
 
 @layer components {
+  /* Retro 3D Button Styles */
   .btn-primary {
-    @apply bg-primary-500 hover:bg-primary-600 text-white font-medium py-2 px-4 rounded-xl transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50;
+    @apply bg-blue-400 text-black font-bold py-3 px-6 relative transition-all duration-150;
+    border: 3px solid #000;
+    box-shadow: 
+      4px 4px 0px #000,
+      8px 8px 0px rgba(0,0,0,0.3);
+    transform: translate(-4px, -4px);
+  }
+  
+  .btn-primary:hover {
+    @apply bg-blue-300;
+    transform: translate(-2px, -2px);
+    box-shadow: 
+      2px 2px 0px #000,
+      4px 4px 0px rgba(0,0,0,0.3);
+  }
+  
+  .btn-primary:active {
+    @apply bg-blue-500;
+    transform: translate(0px, 0px);
+    box-shadow: 
+      1px 1px 0px #000,
+      2px 2px 0px rgba(0,0,0,0.3);
   }
   
   .btn-secondary {
-    @apply bg-secondary-500 hover:bg-secondary-600 text-white font-medium py-2 px-4 rounded-xl transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:ring-opacity-50;
+    @apply bg-yellow-400 text-black font-bold py-3 px-6 relative transition-all duration-150;
+    border: 3px solid #000;
+    box-shadow: 
+      4px 4px 0px #000,
+      8px 8px 0px rgba(0,0,0,0.3);
+    transform: translate(-4px, -4px);
   }
   
+  .btn-secondary:hover {
+    @apply bg-yellow-300;
+    transform: translate(-2px, -2px);
+    box-shadow: 
+      2px 2px 0px #000,
+      4px 4px 0px rgba(0,0,0,0.3);
+  }
+  
+  .btn-secondary:active {
+    @apply bg-yellow-500;
+    transform: translate(0px, 0px);
+    box-shadow: 
+      1px 1px 0px #000,
+      2px 2px 0px rgba(0,0,0,0.3);
+  }
+  
+  /* Retro 3D Card Styles */
   .card {
-    @apply bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-beige-200 dark:border-gray-700;
+    @apply bg-gray-100 dark:bg-gray-700 relative;
+    border: 4px solid #000;
+    box-shadow: 
+      6px 6px 0px #000,
+      12px 12px 0px rgba(0,0,0,0.4);
+    transform: translate(-6px, -6px);
   }
   
+  .card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 
+      3px 3px 0px #000,
+      6px 6px 0px rgba(0,0,0,0.4);
+  }
+  
+  /* Retro Window Style */
+  .retro-window {
+    @apply bg-gray-200 dark:bg-gray-600 relative;
+    border: 4px solid #000;
+    box-shadow: 
+      8px 8px 0px #000,
+      16px 16px 0px rgba(0,0,0,0.3);
+    transform: translate(-8px, -8px);
+  }
+  
+  .retro-window-header {
+    @apply bg-blue-500 text-white font-bold py-2 px-4 flex items-center justify-between;
+    border-bottom: 3px solid #000;
+  }
+  
+  .retro-window-controls {
+    @apply flex space-x-2;
+  }
+  
+  .retro-window-control {
+    @apply w-5 h-5 rounded-full border-2 border-black;
+  }
+  
+  .control-close { @apply bg-red-400; }
+  .control-minimize { @apply bg-yellow-400; }
+  .control-maximize { @apply bg-green-400; }
+  
+  /* Retro Input Fields */
   .input-field {
-    @apply w-full px-4 py-3 border border-beige-300 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-200;
+    @apply w-full px-4 py-3 bg-white dark:bg-gray-200 text-black font-mono font-bold;
+    border: 3px solid #000;
+    box-shadow: 
+      inset 3px 3px 0px rgba(0,0,0,0.3),
+      2px 2px 0px #000;
+  }
+  
+  .input-field:focus {
+    @apply outline-none;
+    box-shadow: 
+      inset 3px 3px 0px rgba(0,0,0,0.3),
+      2px 2px 0px #000,
+      0 0 0 3px #3b82f6;
+  }
+  
+  /* Retro Radio/Checkbox */
+  .retro-radio {
+    @apply appearance-none w-5 h-5 bg-white border-3 border-black relative;
+    box-shadow: inset 2px 2px 0px rgba(0,0,0,0.3);
+  }
+  
+  .retro-radio:checked {
+    @apply bg-green-400;
+  }
+  
+  .retro-radio:checked::after {
+    content: '✓';
+    @apply absolute inset-0 flex items-center justify-center text-black font-bold text-sm;
+  }
+  
+  /* Retro Progress/Loading */
+  .retro-spinner {
+    @apply w-6 h-6 border-3 border-black border-t-transparent;
+    animation: retro-spin 1s linear infinite;
+  }
+  
+  @keyframes retro-spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  /* Retro Alert Boxes */
+  .retro-alert {
+    @apply relative p-4;
+    border: 3px solid #000;
+    box-shadow: 
+      4px 4px 0px #000,
+      8px 8px 0px rgba(0,0,0,0.3);
+    transform: translate(-4px, -4px);
+  }
+  
+  .retro-alert-error {
+    @apply bg-red-300 text-black;
+  }
+  
+  .retro-alert-success {
+    @apply bg-green-300 text-black;
+  }
+  
+  .retro-alert-warning {
+    @apply bg-yellow-300 text-black;
+  }
+  
+  /* Retro Format Selection */
+  .retro-format-option {
+    @apply p-3 bg-gray-100 dark:bg-gray-600 border-2 border-black cursor-pointer transition-all duration-150;
+    box-shadow: 2px 2px 0px rgba(0,0,0,0.3);
+  }
+  
+  .retro-format-option:hover {
+    @apply bg-gray-200 dark:bg-gray-500;
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0px rgba(0,0,0,0.3);
+  }
+  
+  .retro-format-option.selected {
+    @apply bg-green-300 dark:bg-green-400;
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.3);
   }
 }

@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react'
 import { Download, Play, Music, RotateCcw, ExternalLink } from 'lucide-react'
 import axios from 'axios'
@@ -125,24 +126,36 @@ const YouTubeDownloader = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className="text-center mb-8">
-        <div className="flex items-center justify-center space-x-3 mb-4">
-          <Download className="h-8 w-8 text-primary-600 dark:text-primary-400" />
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
-            YouTube Downloader
-          </h1>
+    <div className="max-w-4xl mx-auto p-4">
+      {/* Retro Window Header */}
+      <div className="retro-window mb-8">
+        <div className="retro-window-header">
+          <div className="flex items-center space-x-3">
+            <Download className="h-6 w-6" />
+            <span className="text-lg font-bold">YOUTUBE DOWNLOADER v2.0</span>
+          </div>
+          <div className="retro-window-controls">
+            <div className="retro-window-control control-minimize"></div>
+            <div className="retro-window-control control-maximize"></div>
+            <div className="retro-window-control control-close"></div>
+          </div>
         </div>
-        <p className="text-lg text-gray-600 dark:text-gray-300">
-          Download YouTube videos and audio in various formats and qualities
-        </p>
+        <div className="p-6 bg-gray-100 dark:bg-gray-700">
+          <div className="text-center mb-6">
+            <p className="text-lg font-bold text-black dark:text-white font-mono">
+              {'>> DOWNLOAD YOUTUBE VIDEOS AND AUDIO IN VARIOUS FORMATS <<'}
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* URL Input Section */}
       <div className="card p-6 mb-8">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-          Enter YouTube URL
-        </h2>
+        <div className="bg-blue-500 text-white font-bold py-2 px-4 mb-4 border-b-4 border-black">
+          <h2 className="text-xl font-mono">
+            [INPUT] YOUTUBE URL
+          </h2>
+        </div>
         
         <div className="space-y-4">
           <div>
@@ -156,36 +169,36 @@ const YouTubeDownloader = () => {
           </div>
 
           {error && (
-            <div className="p-3 bg-red-100 dark:bg-red-900/30 border border-red-300 dark:border-red-700 rounded-lg text-red-700 dark:text-red-300">
-              {error}
+            <div className="retro-alert retro-alert-error font-mono font-bold">
+              ERROR: {error}
             </div>
           )}
 
-          <div className="flex flex-col sm:flex-row gap-3">
+          <div className="flex flex-col sm:flex-row gap-4">
             <button
               onClick={getVideoInfo}
               disabled={loading || !url.trim()}
-              className="btn-primary flex-1 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn-primary flex-1 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed font-mono"
             >
               {loading ? (
                 <>
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                  <span>Getting Info...</span>
+                  <div className="retro-spinner"></div>
+                  <span>LOADING...</span>
                 </>
               ) : (
                 <>
                   <Play className="h-4 w-4" />
-                  <span>Get Video Info</span>
+                  <span>GET INFO</span>
                 </>
               )}
             </button>
 
             <button
               onClick={clearAll}
-              className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-xl font-medium transition-colors duration-200 flex items-center justify-center space-x-2"
+              className="btn-secondary flex items-center justify-center space-x-2 font-mono"
             >
               <RotateCcw className="h-4 w-4" />
-              <span>Clear</span>
+              <span>RESET</span>
             </button>
           </div>
         </div>
@@ -196,39 +209,43 @@ const YouTubeDownloader = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
           {/* Video Details */}
           <div className="card p-6">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-              Video Information
-            </h3>
+            <div className="bg-green-500 text-black font-bold py-2 px-4 mb-4 border-b-4 border-black">
+              <h3 className="text-lg font-mono">
+                [INFO] VIDEO DATA
+              </h3>
+            </div>
             
             <div className="space-y-4">
               {videoInfo.thumbnail && (
-                <img
-                  src={videoInfo.thumbnail}
-                  alt="Video thumbnail"
-                  className="w-full rounded-lg"
-                />
+                <div className="border-4 border-black">
+                  <img
+                    src={videoInfo.thumbnail}
+                    alt="Video thumbnail"
+                    className="w-full"
+                  />
+                </div>
               )}
               
-              <div>
-                <h4 className="font-medium text-gray-900 dark:text-white mb-2">
+              <div className="bg-gray-200 dark:bg-gray-600 p-3 border-3 border-black font-mono">
+                <h4 className="font-bold text-black dark:text-white mb-2">
                   {videoInfo.title}
                 </h4>
-                <p className="text-sm text-gray-600 dark:text-gray-300">
-                  Duration: {formatDuration(videoInfo.duration)}
+                <p className="text-sm text-black dark:text-white font-bold">
+                  DURATION: {formatDuration(videoInfo.duration)}
                 </p>
               </div>
 
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-3 bg-yellow-200 p-3 border-3 border-black">
                 <input
                   type="checkbox"
                   id="audioOnly"
                   checked={audioOnly}
                   onChange={(e) => setAudioOnly(e.target.checked)}
-                  className="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  className="retro-radio"
                 />
-                <label htmlFor="audioOnly" className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center space-x-2">
+                <label htmlFor="audioOnly" className="font-bold text-black flex items-center space-x-2 font-mono">
                   <Music className="h-4 w-4" />
-                  <span>Audio only (MP3)</span>
+                  <span>AUDIO ONLY (MP3)</span>
                 </label>
               </div>
             </div>
@@ -236,18 +253,18 @@ const YouTubeDownloader = () => {
 
           {/* Format Selection */}
           <div className="card p-6">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-              Select Format & Quality
-            </h3>
+            <div className="bg-purple-500 text-white font-bold py-2 px-4 mb-4 border-b-4 border-black">
+              <h3 className="text-lg font-mono">
+                [SELECT] FORMAT & QUALITY
+              </h3>
+            </div>
             
-            <div className="space-y-3 max-h-64 overflow-y-auto">
+            <div className="space-y-2 max-h-64 overflow-y-auto bg-gray-50 dark:bg-gray-800 p-2 border-3 border-black">
               {videoInfo.formats?.map((format) => (
                 <label
                   key={format.format_id}
-                  className={`flex items-center p-3 rounded-lg border cursor-pointer transition-colors duration-200 ${
-                    selectedFormat === format.format_id
-                      ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
-                      : 'border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
+                  className={`retro-format-option ${
+                    selectedFormat === format.format_id ? 'selected' : ''
                   }`}
                 >
                   <input
@@ -256,44 +273,44 @@ const YouTubeDownloader = () => {
                     value={format.format_id}
                     checked={selectedFormat === format.format_id}
                     onChange={(e) => setSelectedFormat(e.target.value)}
-                    className="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    className="retro-radio mr-3"
                   />
-                  <div className="ml-3 flex-1">
+                  <div className="flex-1">
                     <div className="flex items-center justify-between">
-                      <span className="font-medium text-gray-900 dark:text-white">
+                      <span className="font-bold text-black dark:text-white font-mono">
                         {format.quality} ({format.ext?.toUpperCase()})
                       </span>
                       {format.filesize && (
-                        <span className="text-sm text-gray-500 dark:text-gray-400">
+                        <span className="text-sm font-bold text-black dark:text-white font-mono">
                           {formatFileSize(format.filesize)}
                         </span>
                       )}
                     </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-300">
-                      {format.vcodec !== 'none' && `Video: ${format.vcodec}`}
+                    <div className="text-xs font-mono text-black dark:text-white">
+                      {format.vcodec !== 'none' && `VIDEO: ${format.vcodec.toUpperCase()}`}
                       {format.vcodec !== 'none' && format.acodec !== 'none' && ' | '}
-                      {format.acodec !== 'none' && `Audio: ${format.acodec}`}
+                      {format.acodec !== 'none' && `AUDIO: ${format.acodec.toUpperCase()}`}
                     </div>
                   </div>
                 </label>
               ))}
             </div>
 
-            <div className="mt-4">
+            <div className="mt-6">
               <button
                 onClick={downloadVideo}
                 disabled={downloading || !selectedFormat}
-                className="btn-primary w-full flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="btn-primary w-full flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed font-mono"
               >
                 {downloading ? (
                   <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                    <span>Downloading...</span>
+                    <div className="retro-spinner"></div>
+                    <span>DOWNLOADING...</span>
                   </>
                 ) : (
                   <>
                     <Download className="h-4 w-4" />
-                    <span>Download {audioOnly ? 'Audio' : 'Video'}</span>
+                    <span>DOWNLOAD {audioOnly ? 'AUDIO' : 'VIDEO'}</span>
                   </>
                 )}
               </button>
@@ -305,20 +322,22 @@ const YouTubeDownloader = () => {
       {/* Download Result */}
       {downloadResult && (
         <div className="card p-6">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-            Download Ready
-          </h3>
+          <div className="bg-green-500 text-black font-bold py-2 px-4 mb-4 border-b-4 border-black">
+            <h3 className="text-lg font-mono">
+              [SUCCESS] DOWNLOAD READY
+            </h3>
+          </div>
           
-          <div className="flex items-center justify-between p-4 bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-700 rounded-lg">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-green-100 dark:bg-green-900/50 rounded-full flex items-center justify-center">
-                <Download className="h-5 w-5 text-green-600 dark:text-green-400" />
+          <div className="retro-alert retro-alert-success flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <div className="w-12 h-12 bg-green-500 border-3 border-black flex items-center justify-center">
+                <Download className="h-6 w-6 text-black" />
               </div>
               <div>
-                <p className="font-medium text-green-800 dark:text-green-200">
-                  Your {audioOnly ? 'audio' : 'video'} is ready!
+                <p className="font-bold text-black font-mono text-lg">
+                  {audioOnly ? 'AUDIO' : 'VIDEO'} FILE READY!
                 </p>
-                <p className="text-sm text-green-600 dark:text-green-300">
+                <p className="text-sm font-mono text-black">
                   {downloadResult.filename}
                 </p>
               </div>
@@ -326,33 +345,37 @@ const YouTubeDownloader = () => {
             
             <button
               onClick={downloadFile}
-              className="btn-primary flex items-center space-x-2"
+              className="btn-primary flex items-center space-x-2 font-mono"
             >
               <Download className="h-4 w-4" />
-              <span>Download File</span>
+              <span>DOWNLOAD</span>
             </button>
           </div>
         </div>
       )}
 
       {/* Disclaimer */}
-      <div className="mt-8 card p-6 bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-700">
-        <h3 className="text-lg font-semibold text-yellow-800 dark:text-yellow-200 mb-3">
-          ⚠️ Important Notice
-        </h3>
-        <div className="text-sm text-yellow-700 dark:text-yellow-300 space-y-2">
-          <p>
-            • Please respect copyright laws and YouTube's Terms of Service
-          </p>
-          <p>
-            • Only download content you have permission to download
-          </p>
-          <p>
-            • This tool is for personal use and educational purposes only
-          </p>
-          <p>
-            • Downloaded files are temporarily stored and automatically deleted
-          </p>
+      <div className="mt-8 card p-6">
+        <div className="bg-red-500 text-white font-bold py-2 px-4 mb-4 border-b-4 border-black">
+          <h3 className="text-lg font-mono">
+            [WARNING] IMPORTANT NOTICE
+          </h3>
+        </div>
+        <div className="retro-alert retro-alert-warning">
+          <div className="font-mono font-bold text-black space-y-2">
+            <p>
+              {'>> RESPECT COPYRIGHT LAWS AND YOUTUBE TOS'}
+            </p>
+            <p>
+              {'>> DOWNLOAD ONLY AUTHORIZED CONTENT'}
+            </p>
+            <p>
+              {'>> FOR PERSONAL/EDUCATIONAL USE ONLY'}
+            </p>
+            <p>
+              {'>> FILES AUTO-DELETED AFTER DOWNLOAD'}
+            </p>
+          </div>
         </div>
       </div>
     </div>

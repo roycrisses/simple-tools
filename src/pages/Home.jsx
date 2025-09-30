@@ -39,75 +39,83 @@ const Home = () => {
   ]
 
   return (
-    <div className="max-w-6xl mx-auto">
-      {/* Hero Section */}
-      <div className="text-center mb-16">
-        <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-          Simple Tools for{' '}
-          <span className="text-primary-600 dark:text-primary-400">Daily Use</span>
-        </h1>
-        <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
-          Quick, free, and easy-to-use utilities for everyone. No registration required, completely free forever.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <a
-            href="#tools"
-            className="btn-primary inline-flex items-center justify-center space-x-2 text-lg px-8 py-4"
-          >
-            <span>Explore Tools</span>
-            <ArrowRight className="h-5 w-5" />
-          </a>
-          <Link
-            to="/about"
-            className="inline-flex items-center justify-center space-x-2 text-lg px-8 py-4 border-2 border-primary-500 text-primary-600 dark:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-xl font-medium transition-colors duration-200"
-          >
-            <span>Learn More</span>
-          </Link>
+    <div className="max-w-6xl mx-auto p-4">
+      {/* Retro Hero Section */}
+      <div className="retro-window mb-12">
+        <div className="retro-window-header">
+          <div className="flex items-center space-x-3">
+            <span className="text-lg font-bold">SIMPLE TOOLS v1.0</span>
+          </div>
+          <div className="retro-window-controls">
+            <div className="retro-window-control control-minimize"></div>
+            <div className="retro-window-control control-maximize"></div>
+            <div className="retro-window-control control-close"></div>
+          </div>
+        </div>
+        <div className="p-8 bg-gray-100 dark:bg-gray-700 text-center">
+          <h1 className="text-4xl md:text-6xl font-bold text-black dark:text-white mb-6 font-mono">
+            SIMPLE TOOLS FOR{' '}
+            <span className="text-blue-600 dark:text-blue-400">DAILY USE</span>
+          </h1>
+          <p className="text-xl md:text-2xl text-black dark:text-white mb-8 max-w-3xl mx-auto font-mono font-bold">
+            {'>> QUICK, FREE, AND EASY-TO-USE UTILITIES FOR EVERYONE <<'}
+          </p>
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <a
+              href="#tools"
+              className="btn-primary inline-flex items-center justify-center space-x-2 text-lg px-8 py-4 font-mono"
+            >
+              <span>EXPLORE TOOLS</span>
+              <ArrowRight className="h-5 w-5" />
+            </a>
+            <Link
+              to="/about"
+              className="btn-secondary inline-flex items-center justify-center space-x-2 text-lg px-8 py-4 font-mono"
+            >
+              <span>LEARN MORE</span>
+            </Link>
+          </div>
         </div>
       </div>
 
       {/* Tools Section */}
       <section id="tools" className="mb-16">
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 dark:text-white mb-12">
-          Available Tools
-        </h2>
+        <div className="card p-6 mb-8">
+          <div className="bg-green-500 text-black font-bold py-2 px-4 mb-4 border-b-4 border-black">
+            <h2 className="text-3xl md:text-4xl font-mono text-center">
+              [TOOLS] AVAILABLE UTILITIES
+            </h2>
+          </div>
+        </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {tools.map((tool, index) => {
             const IconComponent = tool.icon
             return (
-              <div key={index} className="card p-8 group hover:scale-105 transition-transform duration-300">
+              <div key={index} className="card p-8 group">
                 <div className="flex items-start space-x-4">
-                  <div className={`p-3 rounded-xl ${
+                  <div className={`p-4 border-3 border-black ${
                     tool.color === 'primary' 
-                      ? 'bg-primary-100 dark:bg-primary-900/30' 
-                      : 'bg-secondary-100 dark:bg-secondary-900/30'
+                      ? 'bg-blue-400' 
+                      : 'bg-yellow-400'
                   }`}>
-                    <IconComponent className={`h-8 w-8 ${
-                      tool.color === 'primary'
-                        ? 'text-primary-600 dark:text-primary-400'
-                        : 'text-secondary-600 dark:text-secondary-400'
-                    }`} />
+                    <IconComponent className="h-8 w-8 text-black" />
                   </div>
                   
                   <div className="flex-1">
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                      {tool.name}
+                    <h3 className="text-xl font-bold text-black dark:text-white mb-2 font-mono">
+                      {tool.name.toUpperCase()}
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    <p className="text-black dark:text-white mb-4 font-mono">
                       {tool.description}
                     </p>
                     
                     <Link
                       to={tool.path}
-                      className={`inline-flex items-center space-x-2 font-medium transition-colors duration-200 ${
-                        tool.color === 'primary'
-                          ? 'text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300'
-                          : 'text-secondary-600 dark:text-secondary-400 hover:text-secondary-700 dark:hover:text-secondary-300'
-                      }`}
+                      className={`btn-${tool.color} inline-flex items-center space-x-2 font-mono`}
                     >
-                      <span>{tool.button}</span>
-                      <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
+                      <span>{tool.button.toUpperCase()}</span>
+                      <ArrowRight className="h-4 w-4" />
                     </Link>
                   </div>
                 </div>
@@ -119,44 +127,48 @@ const Home = () => {
 
       {/* Features Section */}
       <section className="text-center">
-        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">
-          Why Choose Our Tools?
-        </h2>
+        <div className="card p-6 mb-8">
+          <div className="bg-purple-500 text-white font-bold py-2 px-4 mb-4 border-b-4 border-black">
+            <h2 className="text-3xl font-mono">
+              [FEATURES] WHY CHOOSE OUR TOOLS?
+            </h2>
+          </div>
+        </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="p-6">
-            <div className="w-16 h-16 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-2xl">🚀</span>
+          <div className="card p-6">
+            <div className="w-20 h-20 bg-blue-400 border-4 border-black flex items-center justify-center mx-auto mb-4">
+              <span className="text-3xl">🚀</span>
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-              Fast & Simple
+            <h3 className="text-xl font-bold text-black dark:text-white mb-2 font-mono">
+              FAST & SIMPLE
             </h3>
-            <p className="text-gray-600 dark:text-gray-300">
-              No complex setup or registration. Just upload, process, and download.
+            <p className="text-black dark:text-white font-mono">
+              NO COMPLEX SETUP OR REGISTRATION. JUST UPLOAD, PROCESS, AND DOWNLOAD.
             </p>
           </div>
           
-          <div className="p-6">
-            <div className="w-16 h-16 bg-secondary-100 dark:bg-secondary-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-2xl">🔒</span>
+          <div className="card p-6">
+            <div className="w-20 h-20 bg-yellow-400 border-4 border-black flex items-center justify-center mx-auto mb-4">
+              <span className="text-3xl">🔒</span>
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-              Privacy First
+            <h3 className="text-xl font-bold text-black dark:text-white mb-2 font-mono">
+              PRIVACY FIRST
             </h3>
-            <p className="text-gray-600 dark:text-gray-300">
-              Your files are processed locally and never stored on our servers.
+            <p className="text-black dark:text-white font-mono">
+              YOUR FILES ARE PROCESSED LOCALLY AND NEVER STORED ON OUR SERVERS.
             </p>
           </div>
           
-          <div className="p-6">
-            <div className="w-16 h-16 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-2xl">💯</span>
+          <div className="card p-6">
+            <div className="w-20 h-20 bg-green-400 border-4 border-black flex items-center justify-center mx-auto mb-4">
+              <span className="text-3xl">💯</span>
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-              Completely Free
+            <h3 className="text-xl font-bold text-black dark:text-white mb-2 font-mono">
+              COMPLETELY FREE
             </h3>
-            <p className="text-gray-600 dark:text-gray-300">
-              All tools are free to use with no hidden costs or premium features.
+            <p className="text-black dark:text-white font-mono">
+              ALL TOOLS ARE FREE TO USE WITH NO HIDDEN COSTS OR PREMIUM FEATURES.
             </p>
           </div>
         </div>
