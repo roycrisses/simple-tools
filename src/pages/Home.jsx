@@ -94,7 +94,7 @@ const Home = () => {
             return (
               <div key={index} className="card p-8 group">
                 <div className="flex items-start space-x-4">
-                  <div className={`p-4 border-3 border-black ${
+                  <div className={`p-4 border-4 border-black ${
                     tool.color === 'primary' 
                       ? 'bg-blue-400' 
                       : 'bg-yellow-400'

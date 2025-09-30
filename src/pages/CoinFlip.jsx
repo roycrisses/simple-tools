@@ -130,7 +130,7 @@ const CoinFlip = () => {
                 )}
                 
                 {!result && !isFlipping && (
-                  <div className="bg-gray-200 dark:bg-gray-600 p-4 border-3 border-black">
+                  <div className="bg-gray-200 dark:bg-gray-600 p-4 border-4 border-black">
                     <h2 className="text-4xl font-bold text-black dark:text-white font-mono">
                       READY TO FLIP?
                     </h2>
@@ -189,7 +189,7 @@ const CoinFlip = () => {
               </div>
               
               <div className="space-y-4">
-                <div className="text-center bg-blue-300 p-3 border-3 border-black">
+                <div className="text-center bg-blue-300 p-3 border-4 border-black">
                   <div className="text-2xl font-bold text-black font-mono">
                     {totalFlips}
                   </div>
@@ -248,7 +248,7 @@ const CoinFlip = () => {
                 </h3>
               </div>
               
-              <div className="space-y-2 bg-gray-50 dark:bg-gray-800 p-2 border-3 border-black max-h-48 overflow-y-auto">
+              <div className="space-y-2 bg-gray-50 dark:bg-gray-800 p-2 border-4 border-black max-h-48 overflow-y-auto">
                 {history.map((flip, index) => (
                   <div
                     key={index}

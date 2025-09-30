@@ -188,7 +188,7 @@ const YouTubeDownloader = () => {
                 </div>
               )}
               
-              <div className="bg-gray-200 dark:bg-gray-600 p-3 border-3 border-black font-mono">
+              <div className="bg-gray-200 dark:bg-gray-600 p-3 border-4 border-black font-mono">
                 <h4 className="font-bold text-black dark:text-white mb-2">
                   {videoInfo.title}
                 </h4>
@@ -197,7 +197,7 @@ const YouTubeDownloader = () => {
                 </p>
               </div>
 
-              <div className="flex items-center space-x-3 bg-yellow-200 p-3 border-3 border-black">
+              <div className="flex items-center space-x-3 bg-yellow-200 p-3 border-4 border-black">
                 <input
                   type="checkbox"
                   id="audioOnly"
@@ -221,7 +221,7 @@ const YouTubeDownloader = () => {
               </h3>
             </div>
             
-            <div className="space-y-2 max-h-64 overflow-y-auto bg-gray-50 dark:bg-gray-800 p-2 border-3 border-black">
+            <div className="space-y-2 max-h-64 overflow-y-auto bg-gray-50 dark:bg-gray-800 p-2 border-4 border-black">
               {videoInfo.formats?.map((format) => (
                 <label
                   key={format.format_id}
@@ -292,7 +292,7 @@ const YouTubeDownloader = () => {
           
           <div className="retro-alert retro-alert-success flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-green-500 border-3 border-black flex items-center justify-center">
+              <div className="w-12 h-12 bg-green-500 border-4 border-black flex items-center justify-center">
                 <Download className="h-6 w-6 text-black" />
               </div>
               <div>
