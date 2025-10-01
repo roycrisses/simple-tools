@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
+import Layout from './components/Layout'
 import Home from './pages/Home'
 import QRGenerator from './pages/QRGenerator'
 import ImageResizer from './pages/ImageResizer'
@@ -40,19 +41,21 @@ function App() {
     <Router>
       <div className="min-h-screen bg-beige-50 dark:bg-gray-900 transition-colors duration-300">
         <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
-        <main className="container mx-auto px-4 py-8">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/qr-generator" element={<QRGenerator />} />
-            <Route path="/image-resizer" element={<ImageResizer />} />
-            <Route path="/youtube-downloader" element={<YouTubeDownloader />} />
-            <Route path="/coin-flip" element={<CoinFlip />} />
-            <Route path="/pdf-tools" element={<PDFTools />} />
-            <Route path="/text-tools" element={<TextTools />} />
-            <Route path="/color-tools" element={<ColorTools />} />
-            <Route path="/unit-converter" element={<UnitConverter />} />
-            <Route path="/about" element={<About />} />
-          </Routes>
+        <main className="py-8">
+          <Layout>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/qr-generator" element={<QRGenerator />} />
+              <Route path="/image-resizer" element={<ImageResizer />} />
+              <Route path="/youtube-downloader" element={<YouTubeDownloader />} />
+              <Route path="/coin-flip" element={<CoinFlip />} />
+              <Route path="/pdf-tools" element={<PDFTools />} />
+              <Route path="/text-tools" element={<TextTools />} />
+              <Route path="/color-tools" element={<ColorTools />} />
+              <Route path="/unit-converter" element={<UnitConverter />} />
+              <Route path="/about" element={<About />} />
+            </Routes>
+          </Layout>
         </main>
       </div>
     </Router>
