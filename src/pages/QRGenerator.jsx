@@ -11,6 +11,7 @@ const QRGenerator = () => {
   const [error, setError] = useState('')
   const [uploadedImage, setUploadedImage] = useState(null)
   const [processingImage, setProcessingImage] = useState(false)
+  const [uploadingToHost, setUploadingToHost] = useState(false)
   const [activeTab, setActiveTab] = useState('text') // 'text' or 'image'
   const fileInputRef = useRef(null)
 
@@ -33,15 +34,24 @@ const QRGenerator = () => {
       let filename = `qr-code-${Date.now()}.png`
       
       if (activeTab === 'image' && uploadedImage) {
-        // Compress the image to fit in QR code
-        dataToEncode = await compressImageForQR(uploadedImage)
-        filename = `qr-code-image-${Date.now()}.png`
+        setUploadingToHost(true)
         
-        // Check if compressed image is still too large
-        if (dataToEncode.length > 2000) {
-          setError('Image is still too large even after compression. Try a smaller image or use text mode.')
+        try {
+          // Upload image to hosting service and get URL
+          const imageUrl = await uploadImageToHost(uploadedImage)
+          dataToEncode = imageUrl
+          filename = `qr-code-image-${Date.now()}.png`
+          
+          // Update text to show the URL that will be encoded
+          setText(`Image URL: ${imageUrl}`)
+          
+        } catch (uploadError) {
+          setError('Failed to upload image. Please try again or use text mode.')
           setLoading(false)
+          setUploadingToHost(false)
           return
+        } finally {
+          setUploadingToHost(false)
         }
       }
       
@@ -106,29 +116,37 @@ const QRGenerator = () => {
     }
   }
 
-  const compressImageForQR = (imageDataUrl) => {
-    return new Promise((resolve) => {
-      const canvas = document.createElement('canvas')
-      const ctx = canvas.getContext('2d')
-      const img = new Image()
+  const uploadImageToHost = async (imageDataUrl) => {
+    try {
+      // Convert data URL to blob
+      const response = await fetch(imageDataUrl)
+      const blob = await response.blob()
       
-      img.onload = () => {
-        // Compress to a very small size to fit in QR code
-        const maxSize = 32 // Very small thumbnail
-        const ratio = Math.min(maxSize / img.width, maxSize / img.height)
-        
-        canvas.width = img.width * ratio
-        canvas.height = img.height * ratio
-        
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
-        
-        // Convert to base64 with high compression
-        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.1)
-        resolve(compressedDataUrl)
+      // Create form data
+      const formData = new FormData()
+      formData.append('image', blob)
+      
+      // Upload to ImgBB using your API key
+      const apiKey = '15e11b72ae8aba63233d22d2e90198f5'
+      
+      // Real ImgBB upload
+      const uploadResponse = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
+        method: 'POST',
+        body: formData
+      })
+      
+      const result = await uploadResponse.json()
+      
+      if (result.success) {
+        return result.data.url
+      } else {
+        throw new Error(`Upload failed: ${result.error?.message || 'Unknown error'}`)
       }
       
-      img.src = imageDataUrl
-    })
+    } catch (error) {
+      console.error('Image upload error:', error)
+      throw new Error('Failed to upload image to hosting service')
+    }
   }
 
 
@@ -222,7 +240,7 @@ const QRGenerator = () => {
                   UPLOAD IMAGE TO CONVERT TO QR:
                 </label>
                 <div className="text-xs text-gray-600 dark:text-gray-400 mb-2 font-mono">
-                  ⚠️ NOTE: Images will be compressed to fit QR code limits. For best results, use small images.
+                  📤 NOTE: Images will be uploaded to hosting service and QR will contain the image URL.
                 </div>
                 
                 <div className="border-4 border-black bg-gray-100 dark:bg-gray-600 p-4">
@@ -264,11 +282,11 @@ const QRGenerator = () => {
                   </label>
                 </div>
                 
-                {processingImage && (
+                {uploadingToHost && (
                   <div className="retro-alert retro-alert-warning font-mono font-bold">
                     <div className="flex items-center space-x-2">
                       <div className="retro-spinner"></div>
-                      <span>CONVERTING IMAGE TO QR CODE...</span>
+                      <span>UPLOADING IMAGE TO HOSTING SERVICE...</span>
                     </div>
                   </div>
                 )}
@@ -332,10 +350,10 @@ const QRGenerator = () => {
                 disabled={loading || (activeTab === 'text' && !text.trim()) || (activeTab === 'image' && !uploadedImage)}
                 className="btn-primary flex-1 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed font-mono"
               >
-                {loading || processingImage ? (
+                {loading || uploadingToHost ? (
                   <>
                     <div className="retro-spinner"></div>
-                    <span>{activeTab === 'image' ? 'CONVERTING...' : 'GENERATING...'}</span>
+                    <span>{activeTab === 'image' ? (uploadingToHost ? 'UPLOADING...' : 'GENERATING...') : 'GENERATING...'}</span>
                   </>
                 ) : (
                   <>
@@ -422,7 +440,7 @@ const QRGenerator = () => {
               {'>> SIZE MATTERS: LARGER = EASIER TO SCAN'}
             </div>
             <div>
-              {'>> UPLOAD IMAGES: AUTO-COMPRESSED FOR QR 📷'}
+              {'>> UPLOAD IMAGES: CREATES URL FOR QR 📷'}
             </div>
             <div>
               {'>> FUN FACT: QR = QUICK RESPONSE! ⚡'}
