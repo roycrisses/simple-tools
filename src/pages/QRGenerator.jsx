@@ -33,8 +33,16 @@ const QRGenerator = () => {
       let filename = `qr-code-${Date.now()}.png`
       
       if (activeTab === 'image' && uploadedImage) {
-        dataToEncode = uploadedImage
+        // Compress the image to fit in QR code
+        dataToEncode = await compressImageForQR(uploadedImage)
         filename = `qr-code-image-${Date.now()}.png`
+        
+        // Check if compressed image is still too large
+        if (dataToEncode.length > 2000) {
+          setError('Image is still too large even after compression. Try a smaller image or use text mode.')
+          setLoading(false)
+          return
+        }
       }
       
       // Generate QR code client-side
@@ -96,6 +104,31 @@ const QRGenerator = () => {
       }
       reader.readAsDataURL(file)
     }
+  }
+
+  const compressImageForQR = (imageDataUrl) => {
+    return new Promise((resolve) => {
+      const canvas = document.createElement('canvas')
+      const ctx = canvas.getContext('2d')
+      const img = new Image()
+      
+      img.onload = () => {
+        // Compress to a very small size to fit in QR code
+        const maxSize = 32 // Very small thumbnail
+        const ratio = Math.min(maxSize / img.width, maxSize / img.height)
+        
+        canvas.width = img.width * ratio
+        canvas.height = img.height * ratio
+        
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+        
+        // Convert to base64 with high compression
+        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.1)
+        resolve(compressedDataUrl)
+      }
+      
+      img.src = imageDataUrl
+    })
   }
 
 
@@ -188,6 +221,9 @@ const QRGenerator = () => {
                 <label className="block text-sm font-bold text-black dark:text-white mb-2 font-mono">
                   UPLOAD IMAGE TO CONVERT TO QR:
                 </label>
+                <div className="text-xs text-gray-600 dark:text-gray-400 mb-2 font-mono">
+                  ⚠️ NOTE: Images will be compressed to fit QR code limits. For best results, use small images.
+                </div>
                 
                 <div className="border-4 border-black bg-gray-100 dark:bg-gray-600 p-4">
                   <input
@@ -386,7 +422,7 @@ const QRGenerator = () => {
               {'>> SIZE MATTERS: LARGER = EASIER TO SCAN'}
             </div>
             <div>
-              {'>> UPLOAD IMAGES: CONVERT DIRECTLY TO QR 📷'}
+              {'>> UPLOAD IMAGES: AUTO-COMPRESSED FOR QR 📷'}
             </div>
             <div>
               {'>> FUN FACT: QR = QUICK RESPONSE! ⚡'}
