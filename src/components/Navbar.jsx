@@ -8,7 +8,7 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
 
   const navigation = [
     { name: 'Home', href: '/' },
-    { name: 'Tools', href: '/#tools' },
+    { name: 'Tools', href: '/tools' },
     { name: 'About', href: '/about' },
   ]
 

@@ -93,13 +93,13 @@ const Home = () => {
             {'>> QUICK, FREE, AND EASY-TO-USE UTILITIES FOR EVERYONE <<'}
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <a
-              href="#tools"
+            <Link
+              to="/tools"
               className="btn-primary inline-flex items-center justify-center space-x-2 text-lg px-8 py-4 font-mono"
             >
               <span>EXPLORE TOOLS</span>
               <ArrowRight className="h-5 w-5" />
-            </a>
+            </Link>
             <Link
               to="/about"
               className="btn-secondary inline-flex items-center justify-center space-x-2 text-lg px-8 py-4 font-mono"
