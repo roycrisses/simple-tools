@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { QrCode, Download, Copy, RotateCcw, Upload, FileImage } from 'lucide-react'
 import QRCodeLib from 'qrcode'
-import Tesseract from 'tesseract.js'
 
 const QRGenerator = () => {
   const [text, setText] = useState('')
@@ -11,13 +10,18 @@ const QRGenerator = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [uploadedImage, setUploadedImage] = useState(null)
-  const [extractingText, setExtractingText] = useState(false)
+  const [processingImage, setProcessingImage] = useState(false)
   const [activeTab, setActiveTab] = useState('text') // 'text' or 'image'
   const fileInputRef = useRef(null)
 
   const generateQR = async () => {
-    if (!text.trim()) {
+    if (activeTab === 'text' && !text.trim()) {
       setError('Please enter some text or URL')
+      return
+    }
+    
+    if (activeTab === 'image' && !uploadedImage) {
+      setError('Please upload an image first')
       return
     }
 
@@ -25,8 +29,16 @@ const QRGenerator = () => {
     setError('')
 
     try {
+      let dataToEncode = text
+      let filename = `qr-code-${Date.now()}.png`
+      
+      if (activeTab === 'image' && uploadedImage) {
+        dataToEncode = uploadedImage
+        filename = `qr-code-image-${Date.now()}.png`
+      }
+      
       // Generate QR code client-side
-      const qrDataURL = await QRCodeLib.toDataURL(text, {
+      const qrDataURL = await QRCodeLib.toDataURL(dataToEncode, {
         width: size * 20, // Convert size to pixels
         margin: border,
         color: {
@@ -38,10 +50,10 @@ const QRGenerator = () => {
       setQrResult({
         success: true,
         url: qrDataURL,
-        filename: `qr-code-${Date.now()}.png`
+        filename: filename
       })
     } catch (err) {
-      setError('Failed to generate QR code')
+      setError(`Failed to generate QR code: ${err.message}`)
     } finally {
       setLoading(false)
     }
@@ -79,37 +91,13 @@ const QRGenerator = () => {
       reader.onload = (e) => {
         setUploadedImage(e.target.result)
         setError('')
-        extractTextFromImage(e.target.result)
+        // Set a placeholder text to indicate image is ready
+        setText('Image ready for QR conversion')
       }
       reader.readAsDataURL(file)
     }
   }
 
-  const extractTextFromImage = async (imageDataUrl) => {
-    setExtractingText(true)
-    setError('')
-    
-    try {
-      const { data: { text } } = await Tesseract.recognize(
-        imageDataUrl,
-        'eng',
-        {
-          logger: m => console.log(m) // Optional: log progress
-        }
-      )
-      
-      if (text.trim()) {
-        setText(text.trim())
-      } else {
-        setError('No text found in the image')
-      }
-    } catch (err) {
-      setError('Failed to extract text from image')
-      console.error('OCR Error:', err)
-    } finally {
-      setExtractingText(false)
-    }
-  }
 
   const clearAll = () => {
     setText('')
@@ -139,7 +127,7 @@ const QRGenerator = () => {
         <div className="p-6 bg-gray-100 dark:bg-gray-700">
           <div className="text-center mb-6">
             <p className="text-lg font-bold text-black dark:text-white font-mono">
-              {'>> CONVERT ANY TEXT, URL, OR MESSAGE INTO A QR CODE INSTANTLY <<'}
+              {'>> CONVERT TEXT, URLS, OR IMAGES INTO QR CODES INSTANTLY <<'}
             </p>
           </div>
         </div>
@@ -198,7 +186,7 @@ const QRGenerator = () => {
             ) : (
               <div>
                 <label className="block text-sm font-bold text-black dark:text-white mb-2 font-mono">
-                  UPLOAD IMAGE TO EXTRACT TEXT:
+                  UPLOAD IMAGE TO CONVERT TO QR:
                 </label>
                 
                 <div className="border-4 border-black bg-gray-100 dark:bg-gray-600 p-4">
@@ -240,29 +228,24 @@ const QRGenerator = () => {
                   </label>
                 </div>
                 
-                {extractingText && (
+                {processingImage && (
                   <div className="retro-alert retro-alert-warning font-mono font-bold">
                     <div className="flex items-center space-x-2">
                       <div className="retro-spinner"></div>
-                      <span>EXTRACTING TEXT FROM IMAGE...</span>
+                      <span>CONVERTING IMAGE TO QR CODE...</span>
                     </div>
                   </div>
                 )}
                 
-                {text && (
-                  <div>
-                    <label className="block text-sm font-bold text-black dark:text-white mb-2 font-mono">
-                      EXTRACTED TEXT:
-                    </label>
-                    <textarea
-                      value={text}
-                      onChange={(e) => setText(e.target.value)}
-                      className="input-field h-32 resize-none font-mono"
-                      maxLength={1000}
-                    />
-                    <div className="text-sm text-black dark:text-white mt-1 font-mono font-bold">
-                      {text.length}/1000 CHARACTERS
-                    </div>
+                {uploadedImage && !qrResult && (
+                  <div className="retro-alert retro-alert-info font-mono font-bold">
+                    📷 IMAGE UPLOADED! CLICK "CONVERT TO QR" TO GENERATE QR CODE
+                  </div>
+                )}
+                
+                {uploadedImage && qrResult && (
+                  <div className="retro-alert retro-alert-success font-mono font-bold">
+                    ✅ IMAGE SUCCESSFULLY CONVERTED TO QR CODE!
                   </div>
                 )}
               </div>
@@ -310,18 +293,18 @@ const QRGenerator = () => {
             <div className="flex flex-col sm:flex-row gap-4">
               <button
                 onClick={generateQR}
-                disabled={loading || !text.trim()}
+                disabled={loading || (activeTab === 'text' && !text.trim()) || (activeTab === 'image' && !uploadedImage)}
                 className="btn-primary flex-1 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed font-mono"
               >
-                {loading ? (
+                {loading || processingImage ? (
                   <>
                     <div className="retro-spinner"></div>
-                    <span>GENERATING...</span>
+                    <span>{activeTab === 'image' ? 'CONVERTING...' : 'GENERATING...'}</span>
                   </>
                 ) : (
                   <>
                     <QrCode className="h-4 w-4" />
-                    <span>GENERATE QR</span>
+                    <span>{activeTab === 'image' ? 'CONVERT TO QR' : 'GENERATE QR'}</span>
                   </>
                 )}
               </button>
@@ -403,7 +386,7 @@ const QRGenerator = () => {
               {'>> SIZE MATTERS: LARGER = EASIER TO SCAN'}
             </div>
             <div>
-              {'>> UPLOAD IMAGES: EXTRACT TEXT WITH OCR 📷'}
+              {'>> UPLOAD IMAGES: CONVERT DIRECTLY TO QR 📷'}
             </div>
             <div>
               {'>> FUN FACT: QR = QUICK RESPONSE! ⚡'}

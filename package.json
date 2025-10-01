@@ -11,6 +11,7 @@
     "install-functions": "node install-functions.js"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.3.3",
     "axios": "^1.3.0",
     "firebase": "^12.3.0",
     "lucide-react": "^0.263.1",

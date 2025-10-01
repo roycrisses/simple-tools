@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Heart, Shield, Zap, Users, Github, Mail } from 'lucide-react'
+import EmailModal from '../components/EmailModal'
 
 const About = () => {
+  const [isEmailModalOpen, setIsEmailModalOpen] = useState(false)
   const features = [
     {
       icon: Zap,
@@ -236,13 +238,13 @@ const About = () => {
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <a
-            href="mailto:contact@simpletools.com"
+          <button
+            onClick={() => setIsEmailModalOpen(true)}
             className="inline-flex items-center justify-center space-x-2 px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white font-medium rounded-xl transition-colors duration-200"
           >
             <Mail className="h-4 w-4" />
             <span>Send Email</span>
-          </a>
+          </button>
           
           <a
             href="https://github.com/simpletools"
@@ -255,6 +257,12 @@ const About = () => {
           </a>
         </div>
       </div>
+      
+      {/* Email Modal */}
+      <EmailModal 
+        isOpen={isEmailModalOpen} 
+        onClose={() => setIsEmailModalOpen(false)} 
+      />
     </div>
   )
 }
