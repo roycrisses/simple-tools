@@ -24,20 +24,54 @@ const EmailModal = ({ isOpen, onClose }) => {
     setIsLoading(true)
     setStatus({ type: '', message: '' })
 
-    try {
-      // EmailJS configuration
-      const serviceId = 'service_m2zac2c'
-      const templateId = 'template_default' // You'll need to create this template in EmailJS
-      const publicKey = 'YOUR_PUBLIC_KEY' // You'll need to add your EmailJS public key
+    // Check if EmailJS is properly configured
+    const serviceId = 'service_m2zac2c'
+    const templateId = 'template_contact'
+    const publicKey = 'FYMjXRdowosriER3r' // Your actual EmailJS public key
+    
+    // If EmailJS is not configured, use mailto fallback
+    if (publicKey === 'YOUR_EMAILJS_PUBLIC_KEY') {
+      // Fallback to mailto link
+      const subject = encodeURIComponent(formData.subject)
+      const body = encodeURIComponent(
+        `From: ${formData.email}\n\nMessage:\n${formData.message}`
+      )
+      const mailtoLink = `mailto:krishna21karki@gmail.com?subject=${subject}&body=${body}`
+      
+      window.open(mailtoLink, '_blank')
+      
+      setStatus({
+        type: 'success',
+        message: 'Opening your default email client. Please send the email from there.'
+      })
+      
+      // Reset form
+      setFormData({ subject: '', email: '', message: '' })
+      
+      // Close modal after 3 seconds
+      setTimeout(() => {
+        onClose()
+        setStatus({ type: '', message: '' })
+      }, 3000)
+      
+      setIsLoading(false)
+      return
+    }
 
+    try {
+      // EmailJS configuration (when properly set up)
       const templateParams = {
+        from_name: formData.email,
         from_email: formData.email,
         subject: formData.subject,
         message: formData.message,
-        to_email: 'your-email@example.com' // Replace with your actual email
+        to_name: 'Simple Tools Team',
+        to_email: 'krishna21karki@gmail.com'
       }
 
-      await emailjs.send(serviceId, templateId, templateParams, publicKey)
+      // Initialize EmailJS with your public key
+      emailjs.init(publicKey)
+      await emailjs.send(serviceId, templateId, templateParams)
       
       setStatus({
         type: 'success',
@@ -55,10 +89,29 @@ const EmailModal = ({ isOpen, onClose }) => {
       
     } catch (error) {
       console.error('EmailJS Error:', error)
+      
+      // Fallback to mailto if EmailJS fails
+      const subject = encodeURIComponent(formData.subject)
+      const body = encodeURIComponent(
+        `From: ${formData.email}\n\nMessage:\n${formData.message}`
+      )
+      const mailtoLink = `mailto:krishna21karki@gmail.com?subject=${subject}&body=${body}`
+      
+      window.open(mailtoLink, '_blank')
+      
       setStatus({
-        type: 'error',
-        message: 'Failed to send email. Please try again or use direct email.'
+        type: 'success',
+        message: 'EmailJS failed. Opening your default email client instead.'
       })
+      
+      // Reset form
+      setFormData({ subject: '', email: '', message: '' })
+      
+      // Close modal after 3 seconds
+      setTimeout(() => {
+        onClose()
+        setStatus({ type: '', message: '' })
+      }, 3000)
     } finally {
       setIsLoading(false)
     }

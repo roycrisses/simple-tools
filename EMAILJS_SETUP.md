@@ -1,9 +1,19 @@
-# EmailJS Setup Instructions
+# EmailJS Setup Instructions - FIXED WITH FALLBACK
 
-## Overview
-The EmailJS functionality has been implemented with service ID `service_m2zac2c`. To complete the setup, you need to configure EmailJS with your account details.
+## Current Status: ✅ WORKING WITH MAILTO FALLBACK
 
-## Steps to Complete Setup
+The email functionality now works in two modes:
+1. **EmailJS Mode** (when properly configured) - Sends emails directly through EmailJS
+2. **Fallback Mode** (current) - Opens user's default email client with pre-filled content
+
+## Current Behavior
+Since EmailJS is not fully configured yet, the system automatically uses **mailto fallback**:
+- User fills out the form
+- Clicks "Send Email" 
+- Their default email client opens with the message pre-filled
+- User just needs to click "Send" in their email client
+
+## To Enable Direct EmailJS Sending
 
 ### 1. EmailJS Account Setup
 1. Go to [EmailJS.com](https://www.emailjs.com/) and create an account
@@ -12,24 +22,24 @@ The EmailJS functionality has been implemented with service ID `service_m2zac2c`
 
 ### 2. Create Email Template
 1. In your EmailJS dashboard, create a new email template
-2. Use template ID: `template_default` (or update the code with your preferred ID)
+2. Use template ID: `template_contact`
 3. Template variables to include:
+   - `{{from_name}}` - Sender's name/email
    - `{{from_email}}` - Sender's email
    - `{{subject}}` - Email subject
    - `{{message}}` - Email message content
+   - `{{to_name}}` - Your name (Simple Tools Team)
    - `{{to_email}}` - Your receiving email
 
 ### 3. Update Configuration
-Update the following values in `src/components/EmailModal.jsx`:
+Update the following value in `src/components/EmailModal.jsx`:
 
 ```javascript
-// Line ~28-30: Update these values
-const serviceId = 'service_m2zac2c'  // Keep this as is
-const templateId = 'YOUR_TEMPLATE_ID'  // Replace with your template ID
-const publicKey = 'YOUR_PUBLIC_KEY'    // Replace with your EmailJS public key
+// Line 30: Replace this line
+const publicKey = 'YOUR_EMAILJS_PUBLIC_KEY' // Replace with actual key
 
-// Line ~34: Update with your email
-to_email: 'your-email@example.com'     // Replace with your actual email
+// With your actual EmailJS public key:
+const publicKey = 'your_actual_public_key_here'
 ```
 
 ### 4. Get Your Public Key
