@@ -1,0 +1,27 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://simple-tools.netlify.app/sitemap.xml
+
+# Disallow temporary files and backend endpoints
+Disallow: /temp/
+Disallow: /api/
+Disallow: /*.json$
+Disallow: /*.log$
+
+# Allow important pages for indexing
+Allow: /
+Allow: /tools
+Allow: /qr-generator
+Allow: /image-resizer
+Allow: /youtube-downloader
+Allow: /coin-flip
+Allow: /pdf-tools
+Allow: /text-tools
+Allow: /color-tools
+Allow: /unit-converter
+Allow: /about
+Allow: /contact
+Allow: /privacy-policy
+Allow: /terms-of-service

@@ -247,7 +247,7 @@ const About = () => {
           </button>
           
           <a
-            href="https://github.com/simpletools"
+            href="https://github.com/roycrisses"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center space-x-2 px-6 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 font-medium rounded-xl transition-colors duration-200"
