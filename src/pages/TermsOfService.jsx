@@ -180,7 +180,7 @@ const TermsOfService = () => {
             <ul className="list-disc pl-6 text-gray-700 dark:text-gray-300 mb-4">
               <li><strong>Email:</strong> krishna21karki@gmail.com</li>
               <li><strong>Developer:</strong> Krishna Karki</li>
-              <li><strong>Company:</strong> Life tech PVT LTD</li>
+              <li><strong>Company:</strong> Leapfrog PVT LTD</li>
             </ul>
           </section>
 

@@ -72,7 +72,7 @@ const Contact = () => {
                   <h3 className="font-semibold text-gray-900 dark:text-white">Location</h3>
                   <p className="text-gray-600 dark:text-gray-300">Kathmandu, Nepal</p>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Life tech PVT LTD
+                    Leapfrog PVT LTD
                   </p>
                 </div>
               </div>
@@ -130,7 +130,7 @@ const Contact = () => {
                   🎓 IT Student from Kathmandu, Nepal
                 </p>
                 <p className="text-gray-600 dark:text-gray-300">
-                  🏢 Life tech PVT LTD
+                  🏢 Leapfrog PVT LTD
                 </p>
               </div>
               <div>

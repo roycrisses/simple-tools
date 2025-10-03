@@ -140,7 +140,7 @@ const Footer = () => {
                 <strong>Krishna Karki</strong>
               </p>
               <p>IT Student, Kathmandu</p>
-              <p>Life tech PVT LTD</p>
+              <p>Leapfrog PVT LTD</p>
               <a
                 href="mailto:krishna21karki@gmail.com"
                 className="text-primary-600 dark:text-primary-400 hover:underline"

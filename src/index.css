@@ -3,8 +3,19 @@
 @tailwind utilities;
 
 @layer base {
+  /* Smooth theme transitions */
   html {
     font-family: 'Courier New', 'Monaco', monospace;
+    transition: color-scheme 0.3s ease;
+  }
+  
+  /* Prevent flash of unstyled content */
+  html.dark {
+    color-scheme: dark;
+  }
+  
+  html:not(.dark) {
+    color-scheme: light;
   }
   
   body {
@@ -13,6 +24,14 @@
       radial-gradient(circle at 25% 25%, #f0f0f0 2px, transparent 2px),
       radial-gradient(circle at 75% 75%, #e0e0e0 1px, transparent 1px);
     background-size: 20px 20px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  /* Dark mode background pattern */
+  .dark body {
+    background-image: 
+      radial-gradient(circle at 25% 25%, #374151 2px, transparent 2px),
+      radial-gradient(circle at 75% 75%, #4b5563 1px, transparent 1px);
   }
 }
 
@@ -76,6 +95,7 @@
       6px 6px 0px #000,
       12px 12px 0px rgba(0,0,0,0.4);
     transform: translate(-6px, -6px);
+    min-height: 280px; /* Ensure consistent card heights */
   }
   
   .card:hover {

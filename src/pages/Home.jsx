@@ -120,12 +120,13 @@ const Home = () => {
           </div>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {tools.map((tool, index) => {
             const IconComponent = tool.icon
             return (
-              <div key={index} className="card p-8 group">
-                <div className="flex items-start space-x-4">
+              <div key={index} className="card p-6 group h-full flex flex-col">
+                {/* Icon Section - Fixed at top */}
+                <div className="flex justify-center mb-4">
                   <div className={`p-4 border-4 border-black ${
                     tool.color === 'primary' 
                       ? 'bg-blue-400' 
@@ -133,18 +134,22 @@ const Home = () => {
                   }`}>
                     <IconComponent className="h-8 w-8 text-black" />
                   </div>
+                </div>
+                
+                {/* Content Section - Flexible */}
+                <div className="flex-1 flex flex-col text-center">
+                  <h3 className="text-base font-bold text-black dark:text-white mb-3 font-mono leading-tight min-h-[3rem] flex items-center justify-center">
+                    {tool.name.toUpperCase()}
+                  </h3>
+                  <p className="text-sm text-black dark:text-white mb-6 font-mono flex-1 leading-relaxed min-h-[4rem] flex items-start justify-center text-center">
+                    {tool.description}
+                  </p>
                   
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold text-black dark:text-white mb-2 font-mono">
-                      {tool.name.toUpperCase()}
-                    </h3>
-                    <p className="text-black dark:text-white mb-4 font-mono">
-                      {tool.description}
-                    </p>
-                    
+                  {/* Button Section - Fixed at bottom */}
+                  <div className="mt-auto">
                     <Link
                       to={tool.path}
-                      className={`btn-${tool.color} inline-flex items-center space-x-2 font-mono`}
+                      className={`btn-${tool.color} inline-flex items-center justify-center space-x-2 font-mono w-full py-3 px-4 text-sm`}
                     >
                       <span>{tool.button.toUpperCase()}</span>
                       <ArrowRight className="h-4 w-4" />

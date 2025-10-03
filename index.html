@@ -29,6 +29,24 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
+    <!-- Theme Detection Script (prevents flash) -->
+    <script>
+      (function() {
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const isDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
+        
+        if (isDark) {
+          document.documentElement.classList.add('dark');
+          // Update theme-color for dark mode
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#1f2937');
+        } else {
+          // Light mode theme color
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f97316');
+        }
+      })();
+    </script>
+
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7749661318330944"
          crossorigin="anonymous"></script>

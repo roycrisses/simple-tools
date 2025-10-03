@@ -45,11 +45,12 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
               </Link>
             ))}
             
-            {/* Theme Toggle */}
+            {/* Theme Toggle - Automatically detects system preference */}
             <button
               onClick={toggleDarkMode}
               className="p-2 rounded-lg bg-beige-100 dark:bg-gray-700 hover:bg-beige-200 dark:hover:bg-gray-600 transition-colors duration-200"
               aria-label="Toggle dark mode"
+              title={`Switch to ${darkMode ? 'light' : 'dark'} mode`}
             >
               {darkMode ? (
                 <Sun className="h-5 w-5 text-yellow-500" />
@@ -65,6 +66,7 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
               onClick={toggleDarkMode}
               className="p-2 rounded-lg bg-beige-100 dark:bg-gray-700 hover:bg-beige-200 dark:hover:bg-gray-600 transition-colors duration-200"
               aria-label="Toggle dark mode"
+              title={`Switch to ${darkMode ? 'light' : 'dark'} mode`}
             >
               {darkMode ? (
                 <Sun className="h-5 w-5 text-yellow-500" />

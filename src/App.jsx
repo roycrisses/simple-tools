@@ -19,26 +19,70 @@ import PrivacyPolicy from './pages/PrivacyPolicy'
 import TermsOfService from './pages/TermsOfService'
 
 function App() {
-  const [darkMode, setDarkMode] = useState(false)
+  // Initialize with system preference to avoid flash
+  const [darkMode, setDarkMode] = useState(() => {
+    // Check if we're in browser environment
+    if (typeof window !== 'undefined') {
+      const savedTheme = localStorage.getItem('theme')
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+      return savedTheme === 'dark' || (!savedTheme && prefersDark)
+    }
+    return false
+  })
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme')
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
     
-    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-      setDarkMode(true)
+    // Determine if dark mode should be active
+    const shouldBeDark = savedTheme === 'dark' || (!savedTheme && prefersDark)
+    
+    // Update state and DOM
+    setDarkMode(shouldBeDark)
+    if (shouldBeDark) {
       document.documentElement.classList.add('dark')
+      document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#1f2937')
+    } else {
+      document.documentElement.classList.remove('dark')
+      document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#f97316')
     }
+
+    // Listen for system theme changes
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    const handleChange = (e) => {
+      // Only update if user hasn't manually set a preference
+      if (!localStorage.getItem('theme')) {
+        setDarkMode(e.matches)
+        if (e.matches) {
+          document.documentElement.classList.add('dark')
+          document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#1f2937')
+        } else {
+          document.documentElement.classList.remove('dark')
+          document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#f97316')
+        }
+      }
+    }
+
+    mediaQuery.addEventListener('change', handleChange)
+    
+    // Cleanup listener
+    return () => mediaQuery.removeEventListener('change', handleChange)
   }, [])
 
   const toggleDarkMode = () => {
-    setDarkMode(!darkMode)
-    if (!darkMode) {
+    const newDarkMode = !darkMode
+    setDarkMode(newDarkMode)
+    
+    if (newDarkMode) {
       document.documentElement.classList.add('dark')
       localStorage.setItem('theme', 'dark')
+      // Update theme-color for dark mode
+      document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#1f2937')
     } else {
       document.documentElement.classList.remove('dark')
       localStorage.setItem('theme', 'light')
+      // Update theme-color for light mode
+      document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#f97316')
     }
   }
 
