@@ -26,8 +26,8 @@ const Contact = () => {
     setSubmitStatus('')
 
     // EmailJS configuration using your existing setup
-    const serviceId = 'service_m2zac2c'
-    const templateId = 'template_nzlbwsk' // Contact Us template from your dashboard
+    const serviceId = 'service_w5spkcw' // Correct service ID from your dashboard
+    const templateId = 'template_nz8wexk' // Contact Us template from your dashboard
     const publicKey = 'FYMjXRdowosriER3r'
 
     try {
@@ -49,9 +49,20 @@ const Contact = () => {
 
       console.log('Sending email with params:', templateParams)
       
-      // Send email directly through EmailJS
+      // Send main email to you
       const result = await emailjs.send(serviceId, templateId, templateParams)
-      console.log('Email sent successfully:', result)
+      console.log('Main email sent successfully:', result)
+      
+      // Send auto-reply to user
+      const autoReplyParams = {
+        to_email: formData.email,
+        to_name: formData.name,
+        from_name: 'Krishna Karki',
+        from_email: 'krishna21karki@gmail.com'
+      }
+      
+      const autoReplyResult = await emailjs.send(serviceId, 'template_fqj0w4', autoReplyParams)
+      console.log('Auto-reply sent successfully:', autoReplyResult)
       
       setSubmitStatus('success')
       
