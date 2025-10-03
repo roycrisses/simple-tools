@@ -70,20 +70,27 @@ const EmailModal = ({ isOpen, onClose }) => {
       const contactResult = await emailjs.send(serviceId, templates.contactUs, contactParams)
       console.log('Contact Email Success:', contactResult)
       
-      // Send auto-reply email to the user
-      try {
-        const autoReplyParams = TEMPLATE_PARAMS.autoReply(formData)
-        console.log('Sending auto-reply with params:', autoReplyParams)
-        
-        const autoReplyResult = await emailjs.send(serviceId, templates.autoReply, autoReplyParams)
-        console.log('Auto-Reply Success:', autoReplyResult)
-        
-        setStatus({
-          type: 'success',
-          message: 'Email sent successfully! You should receive a confirmation email shortly.'
-        })
-      } catch (autoReplyError) {
-        console.warn('Auto-reply failed, but main email was sent:', autoReplyError)
+      // Try to send auto-reply email (optional)
+      if (templates.autoReply) {
+        try {
+          const autoReplyParams = TEMPLATE_PARAMS.autoReply(formData)
+          console.log('Sending auto-reply with params:', autoReplyParams)
+          
+          const autoReplyResult = await emailjs.send(serviceId, templates.autoReply, autoReplyParams)
+          console.log('Auto-Reply Success:', autoReplyResult)
+          
+          setStatus({
+            type: 'success',
+            message: 'Email sent successfully! You should receive a confirmation email shortly.'
+          })
+        } catch (autoReplyError) {
+          console.warn('Auto-reply failed, but main email was sent:', autoReplyError)
+          setStatus({
+            type: 'success',
+            message: 'Email sent successfully! Thank you for reaching out.'
+          })
+        }
+      } else {
         setStatus({
           type: 'success',
           message: 'Email sent successfully! Thank you for reaching out.'

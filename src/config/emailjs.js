@@ -3,8 +3,8 @@ export const EMAILJS_CONFIG = {
   serviceId: 'service_m2zac2c',
   publicKey: 'FYMjXRdowosriER3r',
   templates: {
-    contactUs: 'template_nz8wexk',    // Contact Us template
-    autoReply: 'template_fojt0w4'     // Auto-Reply template
+    contactUs: 'template_nzlbwsk',    // Working Contact Us template
+    autoReply: 'template_fojt0w4'     // Auto-Reply template (optional)
   },
   recipientEmail: 'krishna21karki@gmail.com',
   recipientName: 'Krishna Karki'
