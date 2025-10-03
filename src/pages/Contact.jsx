@@ -27,14 +27,14 @@ const Contact = () => {
 
     // EmailJS configuration using your existing setup
     const serviceId = 'service_m2zac2c'
-    const templateId = 'template_nzlbwsk'
+    const templateId = 'template_nzlbwsk' // Contact Us template from your dashboard
     const publicKey = 'FYMjXRdowosriER3r'
 
     try {
       // Initialize EmailJS
       emailjs.init(publicKey)
       
-      // Prepare template parameters
+      // Prepare template parameters - using exact same format as working EmailModal
       const templateParams = {
         from_name: formData.name,
         from_email: formData.email,
@@ -65,6 +65,11 @@ const Contact = () => {
       
     } catch (error) {
       console.error('Email sending failed:', error)
+      console.error('Error details:', {
+        message: error.message,
+        text: error.text,
+        status: error.status
+      })
       setSubmitStatus('error')
     } finally {
       setIsSubmitting(false)
