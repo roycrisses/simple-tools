@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { X, Send, Mail } from 'lucide-react'
-import emailjs from '@emailjs/browser'
-import { EMAILJS_CONFIG, TEMPLATE_PARAMS } from '../config/emailjs'
+import { emailService } from '../services/emailService'
 
 const EmailModal = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
@@ -25,113 +24,66 @@ const EmailModal = ({ isOpen, onClose }) => {
     setIsLoading(true)
     setStatus({ type: '', message: '' })
 
-    // Check if EmailJS is properly configured
-    const { serviceId, publicKey, templates, recipientEmail } = EMAILJS_CONFIG
-    
-    console.log('EmailJS Configuration:', { serviceId, templates, publicKey })
-    
-    // If EmailJS is not configured, use mailto fallback
-    if (publicKey === 'YOUR_EMAILJS_PUBLIC_KEY') {
-      // Fallback to mailto link
-      const subject = encodeURIComponent(formData.subject)
-      const body = encodeURIComponent(
-        `From: ${formData.email}\n\nMessage:\n${formData.message}`
-      )
-      const mailtoLink = `mailto:${recipientEmail}?subject=${subject}&body=${body}`
-      
-      window.open(mailtoLink, '_blank')
+    try {
+      // Use the new EmailJS CDN service
+      await emailService.sendContactEmail(formData)
       
       setStatus({
         type: 'success',
-        message: 'Opening your default email client. Please send the email from there.'
+        message: 'Email sent successfully! Thank you for reaching out.'
       })
       
       // Reset form
       setFormData({ subject: '', email: '', message: '' })
       
-      // Close modal after 3 seconds
+      // Close modal after 2 seconds
       setTimeout(() => {
         onClose()
         setStatus({ type: '', message: '' })
-      }, 3000)
-      
-      setIsLoading(false)
-      return
-    }
-
-    try {
-      // Initialize EmailJS with your public key first
-      emailjs.init(publicKey)
-      
-      // Send main contact email
-      const contactParams = TEMPLATE_PARAMS.contactUs(formData)
-      console.log('Sending contact email with params:', contactParams)
-      
-      const contactResult = await emailjs.send(serviceId, templates.contactUs, contactParams)
-      console.log('Contact Email Success:', contactResult)
-      
-      // Try to send auto-reply email (optional)
-      if (templates.autoReply) {
-        try {
-          const autoReplyParams = TEMPLATE_PARAMS.autoReply(formData)
-          console.log('Sending auto-reply with params:', autoReplyParams)
-          
-          const autoReplyResult = await emailjs.send(serviceId, templates.autoReply, autoReplyParams)
-          console.log('Auto-Reply Success:', autoReplyResult)
-          
-          setStatus({
-            type: 'success',
-            message: 'Email sent successfully! You should receive a confirmation email shortly.'
-          })
-        } catch (autoReplyError) {
-          console.warn('Auto-reply failed, but main email was sent:', autoReplyError)
-          setStatus({
-            type: 'success',
-            message: 'Email sent successfully! Thank you for reaching out.'
-          })
-        }
-      } else {
-        setStatus({
-          type: 'success',
-          message: 'Email sent successfully! Thank you for reaching out.'
-        })
-      }
-      
-      // Reset form
-      setFormData({ subject: '', email: '', message: '' })
-      
-      // Close modal after 3 seconds
-      setTimeout(() => {
-        onClose()
-        setStatus({ type: '', message: '' })
-      }, 3000)
+      }, 2000)
       
     } catch (error) {
-      console.error('EmailJS Error Details:', error)
+      console.error('Email sending failed:', error)
       
-      // Show specific error message
-      let errorMessage = 'Email sending failed. '
-      if (error.text) {
-        errorMessage += `Error: ${error.text}`
-      } else if (error.message) {
-        errorMessage += `Error: ${error.message}`
-      } else {
-        errorMessage += 'Please check your internet connection and try again.'
+      // Try mailto fallback
+      try {
+        emailService.openMailtoFallback(formData)
+        setStatus({
+          type: 'success',
+          message: 'Opening your default email client. Please send the email from there.'
+        })
+        
+        // Reset form
+        setFormData({ subject: '', email: '', message: '' })
+        
+        // Close modal after 3 seconds
+        setTimeout(() => {
+          onClose()
+          setStatus({ type: '', message: '' })
+        }, 3000)
+        
+      } catch (fallbackError) {
+        // Show error message
+        let errorMessage = 'Email sending failed. '
+        if (error.text) {
+          errorMessage += `Error: ${error.text}`
+        } else if (error.message) {
+          errorMessage += `Error: ${error.message}`
+        } else {
+          errorMessage += 'Please try again or contact us directly.'
+        }
+        
+        setStatus({
+          type: 'error',
+          message: errorMessage
+        })
+        
+        // Close modal after 4 seconds
+        setTimeout(() => {
+          onClose()
+          setStatus({ type: '', message: '' })
+        }, 4000)
       }
-      
-      setStatus({
-        type: 'error',
-        message: errorMessage
-      })
-      
-      // Reset form
-      setFormData({ subject: '', email: '', message: '' })
-      
-      // Close modal after 3 seconds
-      setTimeout(() => {
-        onClose()
-        setStatus({ type: '', message: '' })
-      }, 3000)
     } finally {
       setIsLoading(false)
     }
