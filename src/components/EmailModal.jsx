@@ -26,8 +26,10 @@ const EmailModal = ({ isOpen, onClose }) => {
 
     // Check if EmailJS is properly configured
     const serviceId = 'service_m2zac2c'
-    const templateId = 'template_contact' // You'll need to create this template in EmailJS
+    const templateId = 'template_zqnraj' // Using your existing "Contact Us" template
     const publicKey = 'FYMjXRdowosriER3r' // Your actual EmailJS public key
+    
+    console.log('EmailJS Configuration:', { serviceId, templateId, publicKey })
     
     // If EmailJS is not configured, use mailto fallback
     if (publicKey === 'YOUR_EMAILJS_PUBLIC_KEY') {
@@ -59,6 +61,9 @@ const EmailModal = ({ isOpen, onClose }) => {
     }
 
     try {
+      // Initialize EmailJS with your public key first
+      emailjs.init(publicKey)
+      
       // EmailJS configuration (when properly set up)
       const templateParams = {
         from_name: formData.email,
@@ -69,9 +74,11 @@ const EmailModal = ({ isOpen, onClose }) => {
         to_email: 'krishna21karki@gmail.com'
       }
 
-      // Initialize EmailJS with your public key
-      emailjs.init(publicKey)
-      await emailjs.send(serviceId, templateId, templateParams)
+      console.log('Attempting to send email with params:', templateParams)
+      
+      // Send email using your existing "Contact Us" template
+      const result = await emailjs.send(serviceId, templateId, templateParams)
+      console.log('EmailJS Success:', result)
       
       setStatus({
         type: 'success',
@@ -88,7 +95,7 @@ const EmailModal = ({ isOpen, onClose }) => {
       }, 2000)
       
     } catch (error) {
-      console.error('EmailJS Error:', error)
+      console.error('EmailJS Error (all attempts failed):', error)
       
       // Fallback to mailto if EmailJS fails
       const subject = encodeURIComponent(formData.subject)
