@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-import { Mail, MapPin, Phone, Clock, Send, Github, Linkedin } from 'lucide-react'
-import EmailModal from '../components/EmailModal'
+import { Mail, MapPin, Phone, Clock, Send, Github, Linkedin, CheckCircle, AlertCircle } from 'lucide-react'
+import emailjs from '@emailjs/browser'
 
 const Contact = () => {
-  const [isEmailModalOpen, setIsEmailModalOpen] = useState(false)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -23,8 +22,53 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    // Open EmailJS modal instead of simulating submission
-    setIsEmailModalOpen(true)
+    setIsSubmitting(true)
+    setSubmitStatus('')
+
+    // EmailJS configuration using your existing setup
+    const serviceId = 'service_m2zac2c'
+    const templateId = 'template_nzlbwsk'
+    const publicKey = 'FYMjXRdowosriER3r'
+
+    try {
+      // Initialize EmailJS
+      emailjs.init(publicKey)
+      
+      // Prepare template parameters
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        user_email: formData.email,
+        user_name: formData.name,
+        subject: formData.subject,
+        message: formData.message,
+        reply_to: formData.email,
+        to_name: 'Krishna Karki',
+        to_email: 'krishna21karki@gmail.com'
+      }
+
+      console.log('Sending email with params:', templateParams)
+      
+      // Send email directly through EmailJS
+      const result = await emailjs.send(serviceId, templateId, templateParams)
+      console.log('Email sent successfully:', result)
+      
+      setSubmitStatus('success')
+      
+      // Reset form after successful submission
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+      })
+      
+    } catch (error) {
+      console.error('Email sending failed:', error)
+      setSubmitStatus('error')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -101,12 +145,16 @@ const Contact = () => {
                 >
                   <Github className="w-5 h-5 text-gray-600 dark:text-gray-300" />
                 </a>
-                <a
-                  href="mailto:krishna21karki@gmail.com"
+                <button
+                  onClick={() => {
+                    document.getElementById('message').focus()
+                    document.getElementById('message').scrollIntoView({ behavior: 'smooth' })
+                  }}
                   className="flex items-center justify-center w-10 h-10 bg-gray-100 dark:bg-gray-700 rounded-full hover:bg-primary-100 dark:hover:bg-primary-900 transition-colors"
+                  title="Send us a message"
                 >
                   <Mail className="w-5 h-5 text-gray-600 dark:text-gray-300" />
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -145,10 +193,30 @@ const Contact = () => {
           </h2>
           
           {submitStatus === 'success' && (
-            <div className="mb-6 p-4 bg-green-100 dark:bg-green-900 border border-green-400 dark:border-green-600 rounded-lg">
-              <p className="text-green-700 dark:text-green-300">
-                Thank you for your message! We'll get back to you soon.
-              </p>
+            <div className="mb-6 p-4 bg-green-100 dark:bg-green-900 border border-green-400 dark:border-green-600 rounded-lg flex items-center space-x-3">
+              <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400 flex-shrink-0" />
+              <div>
+                <p className="text-green-700 dark:text-green-300 font-medium">
+                  Message sent successfully!
+                </p>
+                <p className="text-green-600 dark:text-green-400 text-sm">
+                  Thank you for reaching out. We'll get back to you within 24 hours.
+                </p>
+              </div>
+            </div>
+          )}
+
+          {submitStatus === 'error' && (
+            <div className="mb-6 p-4 bg-red-100 dark:bg-red-900 border border-red-400 dark:border-red-600 rounded-lg flex items-center space-x-3">
+              <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400 flex-shrink-0" />
+              <div>
+                <p className="text-red-700 dark:text-red-300 font-medium">
+                  Failed to send message
+                </p>
+                <p className="text-red-600 dark:text-red-400 text-sm">
+                  Please try again or contact us directly at krishna21karki@gmail.com
+                </p>
+              </div>
             </div>
           )}
 
@@ -286,11 +354,6 @@ const Contact = () => {
         </div>
       </div>
       
-      {/* EmailJS Modal */}
-      <EmailModal 
-        isOpen={isEmailModalOpen} 
-        onClose={() => setIsEmailModalOpen(false)} 
-      />
     </div>
   )
 }
