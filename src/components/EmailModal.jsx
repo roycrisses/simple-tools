@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { X, Send, Mail } from 'lucide-react'
 import emailjs from '@emailjs/browser'
+import { EMAILJS_CONFIG, TEMPLATE_PARAMS } from '../config/emailjs'
 
 const EmailModal = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
@@ -25,11 +26,9 @@ const EmailModal = ({ isOpen, onClose }) => {
     setStatus({ type: '', message: '' })
 
     // Check if EmailJS is properly configured
-    const serviceId = 'service_m2zac2c'
-    const templateId = 'template_nzlbwsk' // Using correct "Contact Us" template ID
-    const publicKey = 'FYMjXRdowosriER3r' // Your actual EmailJS public key
+    const { serviceId, publicKey, templates, recipientEmail } = EMAILJS_CONFIG
     
-    console.log('EmailJS Configuration:', { serviceId, templateId, publicKey })
+    console.log('EmailJS Configuration:', { serviceId, templates, publicKey })
     
     // If EmailJS is not configured, use mailto fallback
     if (publicKey === 'YOUR_EMAILJS_PUBLIC_KEY') {
@@ -38,7 +37,7 @@ const EmailModal = ({ isOpen, onClose }) => {
       const body = encodeURIComponent(
         `From: ${formData.email}\n\nMessage:\n${formData.message}`
       )
-      const mailtoLink = `mailto:krishna21karki@gmail.com?subject=${subject}&body=${body}`
+      const mailtoLink = `mailto:${recipientEmail}?subject=${subject}&body=${body}`
       
       window.open(mailtoLink, '_blank')
       
@@ -64,38 +63,41 @@ const EmailModal = ({ isOpen, onClose }) => {
       // Initialize EmailJS with your public key first
       emailjs.init(publicKey)
       
-      // EmailJS configuration - using common template variables
-      const templateParams = {
-        from_name: formData.email,
-        from_email: formData.email,
-        user_email: formData.email,
-        user_name: formData.email,
-        subject: formData.subject,
-        message: formData.message,
-        reply_to: formData.email,
-        to_name: 'Krishna Karki',
-        to_email: 'krishna21karki@gmail.com'
+      // Send main contact email
+      const contactParams = TEMPLATE_PARAMS.contactUs(formData)
+      console.log('Sending contact email with params:', contactParams)
+      
+      const contactResult = await emailjs.send(serviceId, templates.contactUs, contactParams)
+      console.log('Contact Email Success:', contactResult)
+      
+      // Send auto-reply email to the user
+      try {
+        const autoReplyParams = TEMPLATE_PARAMS.autoReply(formData)
+        console.log('Sending auto-reply with params:', autoReplyParams)
+        
+        const autoReplyResult = await emailjs.send(serviceId, templates.autoReply, autoReplyParams)
+        console.log('Auto-Reply Success:', autoReplyResult)
+        
+        setStatus({
+          type: 'success',
+          message: 'Email sent successfully! You should receive a confirmation email shortly.'
+        })
+      } catch (autoReplyError) {
+        console.warn('Auto-reply failed, but main email was sent:', autoReplyError)
+        setStatus({
+          type: 'success',
+          message: 'Email sent successfully! Thank you for reaching out.'
+        })
       }
-
-      console.log('Attempting to send email with params:', templateParams)
-      
-      // Send email using your existing "Contact Us" template
-      const result = await emailjs.send(serviceId, templateId, templateParams)
-      console.log('EmailJS Success:', result)
-      
-      setStatus({
-        type: 'success',
-        message: 'Email sent successfully! Thank you for reaching out.'
-      })
       
       // Reset form
       setFormData({ subject: '', email: '', message: '' })
       
-      // Close modal after 2 seconds
+      // Close modal after 3 seconds
       setTimeout(() => {
         onClose()
         setStatus({ type: '', message: '' })
-      }, 2000)
+      }, 3000)
       
     } catch (error) {
       console.error('EmailJS Error Details:', error)
