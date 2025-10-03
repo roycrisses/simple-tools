@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Mail, Github, Heart, Shield, FileText, Phone } from 'lucide-react'
+import EmailModal from './EmailModal'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
+  const [isEmailModalOpen, setIsEmailModalOpen] = useState(false)
 
   return (
     <footer className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-16">
@@ -27,13 +29,13 @@ const Footer = () => {
               >
                 <Github className="w-5 h-5" />
               </a>
-              <a
-                href="mailto:krishna21karki@gmail.com"
+              <button
+                onClick={() => setIsEmailModalOpen(true)}
                 className="text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
                 aria-label="Email"
               >
                 <Mail className="w-5 h-5" />
-              </a>
+              </button>
             </div>
           </div>
 
@@ -141,12 +143,12 @@ const Footer = () => {
               </p>
               <p>IT Student, Kathmandu</p>
               <p>Leapfrog PVT LTD</p>
-              <a
-                href="mailto:krishna21karki@gmail.com"
-                className="text-primary-600 dark:text-primary-400 hover:underline"
+              <button
+                onClick={() => setIsEmailModalOpen(true)}
+                className="text-primary-600 dark:text-primary-400 hover:underline text-left"
               >
                 krishna21karki@gmail.com
-              </a>
+              </button>
             </div>
           </div>
         </div>
@@ -183,6 +185,12 @@ const Footer = () => {
           </p>
         </div>
       </div>
+      
+      {/* EmailJS Modal */}
+      <EmailModal 
+        isOpen={isEmailModalOpen} 
+        onClose={() => setIsEmailModalOpen(false)} 
+      />
     </footer>
   )
 }

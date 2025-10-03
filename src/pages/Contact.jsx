@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { Mail, MapPin, Phone, Clock, Send, Github, Linkedin } from 'lucide-react'
+import EmailModal from '../components/EmailModal'
 
 const Contact = () => {
+  const [isEmailModalOpen, setIsEmailModalOpen] = useState(false)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -21,14 +23,8 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setIsSubmitting(true)
-    
-    // Simulate form submission (you can integrate with EmailJS or other service)
-    setTimeout(() => {
-      setSubmitStatus('success')
-      setIsSubmitting(false)
-      setFormData({ name: '', email: '', subject: '', message: '' })
-    }, 2000)
+    // Open EmailJS modal instead of simulating submission
+    setIsEmailModalOpen(true)
   }
 
   return (
@@ -289,6 +285,12 @@ const Contact = () => {
           </div>
         </div>
       </div>
+      
+      {/* EmailJS Modal */}
+      <EmailModal 
+        isOpen={isEmailModalOpen} 
+        onClose={() => setIsEmailModalOpen(false)} 
+      />
     </div>
   )
 }

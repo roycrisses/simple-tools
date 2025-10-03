@@ -26,7 +26,7 @@ const EmailModal = ({ isOpen, onClose }) => {
 
     // Check if EmailJS is properly configured
     const serviceId = 'service_m2zac2c'
-    const templateId = 'template_contact'
+    const templateId = 'template_contact' // You'll need to create this template in EmailJS
     const publicKey = 'FYMjXRdowosriER3r' // Your actual EmailJS public key
     
     // If EmailJS is not configured, use mailto fallback
