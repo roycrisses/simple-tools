@@ -26,7 +26,7 @@ const EmailModal = ({ isOpen, onClose }) => {
 
     // Check if EmailJS is properly configured
     const serviceId = 'service_m2zac2c'
-    const templateId = 'template_zqnraj' // Using your existing "Contact Us" template
+    const templateId = 'template_nzlbwsk' // Using correct "Contact Us" template ID
     const publicKey = 'FYMjXRdowosriER3r' // Your actual EmailJS public key
     
     console.log('EmailJS Configuration:', { serviceId, templateId, publicKey })
@@ -64,13 +64,16 @@ const EmailModal = ({ isOpen, onClose }) => {
       // Initialize EmailJS with your public key first
       emailjs.init(publicKey)
       
-      // EmailJS configuration (when properly set up)
+      // EmailJS configuration - using common template variables
       const templateParams = {
         from_name: formData.email,
         from_email: formData.email,
+        user_email: formData.email,
+        user_name: formData.email,
         subject: formData.subject,
         message: formData.message,
-        to_name: 'Simple Tools Team',
+        reply_to: formData.email,
+        to_name: 'Krishna Karki',
         to_email: 'krishna21karki@gmail.com'
       }
 
@@ -95,20 +98,21 @@ const EmailModal = ({ isOpen, onClose }) => {
       }, 2000)
       
     } catch (error) {
-      console.error('EmailJS Error (all attempts failed):', error)
+      console.error('EmailJS Error Details:', error)
       
-      // Fallback to mailto if EmailJS fails
-      const subject = encodeURIComponent(formData.subject)
-      const body = encodeURIComponent(
-        `From: ${formData.email}\n\nMessage:\n${formData.message}`
-      )
-      const mailtoLink = `mailto:krishna21karki@gmail.com?subject=${subject}&body=${body}`
-      
-      window.open(mailtoLink, '_blank')
+      // Show specific error message
+      let errorMessage = 'Email sending failed. '
+      if (error.text) {
+        errorMessage += `Error: ${error.text}`
+      } else if (error.message) {
+        errorMessage += `Error: ${error.message}`
+      } else {
+        errorMessage += 'Please check your internet connection and try again.'
+      }
       
       setStatus({
-        type: 'success',
-        message: 'EmailJS failed. Opening your default email client instead.'
+        type: 'error',
+        message: errorMessage
       })
       
       // Reset form
