@@ -57,8 +57,12 @@ const Contact = () => {
       const autoReplyParams = {
         to_email: formData.email,
         to_name: formData.name,
+        user_email: formData.email,
+        user_name: formData.name,
         from_name: 'Krishna Karki',
-        from_email: 'kris12karki@gmail.com'
+        from_email: 'kris12karki@gmail.com',
+        reply_to: 'kris12karki@gmail.com',
+        subject: `Thank you for contacting Simple Tools - ${formData.subject}`
       }
       
       const autoReplyResult = await emailjs.send(serviceId, 'template_v5ukpui', autoReplyParams)
