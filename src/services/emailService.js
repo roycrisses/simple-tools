@@ -16,9 +16,12 @@ export class EmailService {
     // Check if EmailJS is available (loaded from CDN)
     if (typeof window !== 'undefined' && window.emailjs) {
       window.emailjs.init(this.publicKey);
-      console.log('EmailJS initialized with CDN method');
+      console.log('✅ EmailJS initialized successfully with CDN method');
+      console.log('Service ID:', this.serviceId);
+      console.log('Template ID:', this.templateId);
+      console.log('Public Key:', this.publicKey);
     } else {
-      console.warn('EmailJS not loaded from CDN');
+      console.error('❌ EmailJS not loaded from CDN - check if script is included in HTML');
     }
   }
 
@@ -43,16 +46,21 @@ export class EmailService {
         to_email: this.recipientEmail
       };
 
-      console.log('Sending email with CDN method:', templateParams);
+      console.log('📧 Attempting to send email with parameters:', templateParams);
 
       // Send email using CDN method
       window.emailjs.send(this.serviceId, this.templateId, templateParams)
         .then((response) => {
-          console.log('Email sent successfully:', response);
+          console.log('✅ Email sent successfully:', response);
           resolve(response);
         })
         .catch((error) => {
-          console.error('Email sending failed:', error);
+          console.error('❌ Email sending failed:', error);
+          console.error('Error details:', {
+            status: error.status,
+            text: error.text,
+            message: error.message
+          });
           reject(error);
         });
     });

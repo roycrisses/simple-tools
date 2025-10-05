@@ -39,51 +39,31 @@ const EmailModal = ({ isOpen, onClose }) => {
       // Close modal after 2 seconds
       setTimeout(() => {
         onClose()
-        setStatus({ type: '', message: '' })
       }, 2000)
       
     } catch (error) {
       console.error('Email sending failed:', error)
       
-      // Try mailto fallback
-      try {
-        emailService.openMailtoFallback(formData)
-        setStatus({
-          type: 'success',
-          message: 'Opening your default email client. Please send the email from there.'
-        })
-        
-        // Reset form
-        setFormData({ subject: '', email: '', message: '' })
-        
-        // Close modal after 3 seconds
-        setTimeout(() => {
-          onClose()
-          setStatus({ type: '', message: '' })
-        }, 3000)
-        
-      } catch (fallbackError) {
-        // Show error message
-        let errorMessage = 'Email sending failed. '
-        if (error.text) {
-          errorMessage += `Error: ${error.text}`
-        } else if (error.message) {
-          errorMessage += `Error: ${error.message}`
-        } else {
-          errorMessage += 'Please try again or contact us directly.'
-        }
-        
-        setStatus({
-          type: 'error',
-          message: errorMessage
-        })
-        
-        // Close modal after 4 seconds
-        setTimeout(() => {
-          onClose()
-          setStatus({ type: '', message: '' })
-        }, 4000)
+      // Show error message instead of redirecting
+      let errorMessage = 'Email sending failed. '
+      if (error.text) {
+        errorMessage += `Error: ${error.text}`
+      } else if (error.message) {
+        errorMessage += `Error: ${error.message}`
+      } else {
+        errorMessage += 'Please check your internet connection and try again.'
       }
+      
+      setStatus({
+        type: 'error',
+        message: errorMessage
+      })
+      
+      // Don't reset form on error so user can retry
+      // Clear error message after 5 seconds
+      setTimeout(() => {
+        setStatus({ type: '', message: '' })
+      }, 5000)
     } finally {
       setIsLoading(false)
     }
