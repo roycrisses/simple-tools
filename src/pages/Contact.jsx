@@ -53,20 +53,33 @@ const Contact = () => {
       const result = await emailjs.send(serviceId, templateId, templateParams)
       console.log('Main email sent successfully:', result)
       
-      // Send auto-reply to user
+      // Send auto-reply to user - try multiple variable names
       const autoReplyParams = {
+        // Common recipient field names
         to_email: formData.email,
         to_name: formData.name,
         user_email: formData.email,
         user_name: formData.name,
+        email: formData.email,
+        name: formData.name,
+        recipient_email: formData.email,
+        recipient_name: formData.name,
+        // Sender info
         from_name: 'Krishna Karki',
         from_email: 'kris12karki@gmail.com',
         reply_to: 'kris12karki@gmail.com',
-        subject: `Thank you for contacting Simple Tools - ${formData.subject}`
+        subject: `Thank you for contacting Simple Tools - ${formData.subject}`,
+        message: `Thank you for your message about "${formData.subject}". We'll get back to you soon!`
       }
       
-      const autoReplyResult = await emailjs.send(serviceId, 'template_v5ukpui', autoReplyParams)
-      console.log('Auto-reply sent successfully:', autoReplyResult)
+      // Try to send auto-reply, but don't fail if it doesn't work
+      try {
+        const autoReplyResult = await emailjs.send(serviceId, 'template_v5ukpui', autoReplyParams)
+        console.log('Auto-reply sent successfully:', autoReplyResult)
+      } catch (autoReplyError) {
+        console.warn('Auto-reply failed (not critical):', autoReplyError)
+        // Don't fail the whole process if auto-reply fails
+      }
       
       setSubmitStatus('success')
       
