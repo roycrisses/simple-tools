@@ -4,7 +4,7 @@ import { showNotification } from '../utils/notifications';
 export class EmailService {
   constructor() {
     this.serviceId = 'service_vmr226m'; // Your actual EmailJS service ID
-    this.templateId = 'template_gnaffdv'; // Using your "Contact Us" template
+    this.templateId = 'template_v5ukpui'; // Using your "Auto-Reply" template
     this.publicKey = 'uDq6qlTQPyKGHcrga'; // Your actual EmailJS public key
     this.recipientEmail = 'kris12karki@gmail.com';
     
