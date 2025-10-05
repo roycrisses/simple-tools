@@ -8,9 +8,9 @@ const ContactFormCDN = () => {
   const [isEmailJSReady, setIsEmailJSReady] = useState(false);
 
   // EmailJS Configuration
-  const SERVICE_ID = 'service_m2zac2c';
-  const TEMPLATE_ID = 'template_nzlbwsk';
-  const PUBLIC_KEY = 'FYMjXRdowosriER3r';
+  const SERVICE_ID = 'service_vmr226m';
+  const TEMPLATE_ID = 'template_contact_simple';
+  const PUBLIC_KEY = 'uDq6qlTQPyKGHcrga';
 
   useEffect(() => {
     // Check if EmailJS is loaded and initialize
@@ -149,7 +149,7 @@ const ContactFormCDN = () => {
 
         {/* Hidden fields for EmailJS template */}
         <input type="hidden" name="to_name" value="Krishna Karki" />
-        <input type="hidden" name="to_email" value="krishna21karki@gmail.com" />
+        <input type="hidden" name="to_email" value="kris12karki@gmail.com" />
 
         {/* Submit Button */}
         <button

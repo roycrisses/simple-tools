@@ -1,18 +1,19 @@
 // EmailJS Configuration
 export const EMAILJS_CONFIG = {
-  serviceId: 'service_m2zac2c',
-  publicKey: 'FYMjXRdowosriER3r',
+  serviceId: 'service_vmr226m',
+  publicKey: 'uDq6qlTQPyKGHcrga',
   templates: {
-    contactUs: 'template_nzlbwsk',    // Working Contact Us template
-    autoReply: 'template_fojt0w4'     // Auto-Reply template (optional)
+    contact: 'template_contact_simple',
+    autoReply: 'template_v5ukpui'
   },
-  recipientEmail: 'krishna21karki@gmail.com',
+  recipientEmail: 'kris12karki@gmail.com',
   recipientName: 'Krishna Karki'
 }
 
 // Template parameter mappings for different use cases
 export const TEMPLATE_PARAMS = {
-  contactUs: (formData) => ({
+  contact: (formData) => ({
+    from_name: formData.name,
     from_name: formData.email,
     from_email: formData.email,
     user_email: formData.email,
