@@ -1,12 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react'
-import { Palette, Pipette, Copy, RotateCcw, Shuffle } from 'lucide-react'
+import React, { useState, useEffect } from 'react'
+import { Palette, Copy, RotateCcw, Shuffle } from 'lucide-react'
 
 const ColorTools = () => {
   const [selectedColor, setSelectedColor] = useState('#3B82F6')
-  const [activeTab, setActiveTab] = useState('picker') // 'picker', 'palette', 'converter'
+  const [activeTab, setActiveTab] = useState('picker')
   const [colorPalette, setColorPalette] = useState([])
-  const [colorFormat, setColorFormat] = useState('hex')
-  const canvasRef = useRef(null)
+  const [copyMessage, setCopyMessage] = useState('')
 
   useEffect(() => {
     generatePalette()
@@ -25,14 +24,18 @@ const ColorTools = () => {
     return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)
   }
 
-  const rgbToHsl = (r, g, b) => {
-    r /= 255
-    g /= 255
-    b /= 255
+  const hexToHsl = (hex) => {
+    const rgb = hexToRgb(hex)
+    if (!rgb) return null
+    
+    const r = rgb.r / 255
+    const g = rgb.g / 255
+    const b = rgb.b / 255
+    
     const max = Math.max(r, g, b)
     const min = Math.min(r, g, b)
     let h, s, l = (max + min) / 2
-
+    
     if (max === min) {
       h = s = 0
     } else {
@@ -42,11 +45,10 @@ const ColorTools = () => {
         case r: h = (g - b) / d + (g < b ? 6 : 0); break
         case g: h = (b - r) / d + 2; break
         case b: h = (r - g) / d + 4; break
-        default: h = 0
       }
       h /= 6
     }
-
+    
     return {
       h: Math.round(h * 360),
       s: Math.round(s * 100),
@@ -54,373 +56,279 @@ const ColorTools = () => {
     }
   }
 
-  const getColorInFormat = (color, format) => {
-    const rgb = hexToRgb(color)
-    if (!rgb) return color
-
-    switch (format) {
-      case 'hex':
-        return color.toUpperCase()
-      case 'rgb':
-        return `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`
-      case 'hsl':
-        const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b)
-        return `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`
-      default:
-        return color
-    }
-  }
-
   const generatePalette = () => {
     const rgb = hexToRgb(selectedColor)
     if (!rgb) return
-
+    
     const palette = []
     
-    // Monochromatic palette
-    for (let i = 0; i < 5; i++) {
-      const factor = 0.2 + (i * 0.2)
-      const r = Math.round(rgb.r * factor)
-      const g = Math.round(rgb.g * factor)
-      const b = Math.round(rgb.b * factor)
-      palette.push(rgbToHex(r, g, b))
+    // Generate complementary colors
+    palette.push({
+      name: 'Original',
+      color: selectedColor
+    })
+    
+    // Lighter shades
+    for (let i = 1; i <= 3; i++) {
+      const factor = 0.2 * i
+      const r = Math.min(255, Math.round(rgb.r + (255 - rgb.r) * factor))
+      const g = Math.min(255, Math.round(rgb.g + (255 - rgb.g) * factor))
+      const b = Math.min(255, Math.round(rgb.b + (255 - rgb.b) * factor))
+      palette.push({
+        name: `Light ${i}`,
+        color: rgbToHex(r, g, b)
+      })
     }
-
-    // Complementary colors
-    const compR = 255 - rgb.r
-    const compG = 255 - rgb.g
-    const compB = 255 - rgb.b
-    palette.push(rgbToHex(compR, compG, compB))
-
-    // Analogous colors
-    const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b)
-    for (let i = 1; i <= 2; i++) {
-      const newHue = (hsl.h + (i * 30)) % 360
-      // This is a simplified conversion - in a real app you'd want proper HSL to RGB
-      palette.push(selectedColor)
+    
+    // Darker shades
+    for (let i = 1; i <= 3; i++) {
+      const factor = 0.2 * i
+      const r = Math.round(rgb.r * (1 - factor))
+      const g = Math.round(rgb.g * (1 - factor))
+      const b = Math.round(rgb.b * (1 - factor))
+      palette.push({
+        name: `Dark ${i}`,
+        color: rgbToHex(r, g, b)
+      })
     }
-
+    
     setColorPalette(palette)
   }
 
-  const generateRandomPalette = () => {
-    const palette = []
-    for (let i = 0; i < 8; i++) {
-      const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0')
-      palette.push(randomColor)
-    }
-    setColorPalette(palette)
-  }
-  
-  const generateThemePalette = (theme) => {
-    const themes = {
-      sunset: ['#FF6B35', '#F7931E', '#FFD23F', '#FF8C42', '#C73E1D', '#A0522D', '#8B4513', '#D2691E'],
-      ocean: ['#006994', '#13A3C4', '#5FBEAA', '#A8E6CF', '#0077BE', '#4682B4', '#5F9EA0', '#20B2AA'],
-      forest: ['#228B22', '#32CD32', '#90EE90', '#98FB98', '#006400', '#8FBC8F', '#9ACD32', '#ADFF2F'],
-      candy: ['#FF69B4', '#FF1493', '#DA70D6', '#BA55D3', '#9370DB', '#8A2BE2', '#FF00FF', '#EE82EE'],
-      retro: ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#DDA0DD', '#98D8C8', '#F7DC6F']
-    }
-    setColorPalette(themes[theme] || themes.retro)
+  const generateRandomColor = () => {
+    const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0')
+    setSelectedColor(randomColor)
   }
 
-  const copyToClipboard = async (text) => {
+  const copyToClipboard = async (text, format = 'color') => {
     try {
       await navigator.clipboard.writeText(text)
+      setCopyMessage(`${format} copied!`)
+      setTimeout(() => setCopyMessage(''), 2000)
     } catch (err) {
       console.error('Failed to copy: ', err)
     }
   }
 
-  const clearAll = () => {
-    setSelectedColor('#3B82F6')
-    setColorPalette([])
+  const getColorFormats = (hex) => {
+    const rgb = hexToRgb(hex)
+    const hsl = hexToHsl(hex)
+    
+    return {
+      hex: hex.toUpperCase(),
+      rgb: rgb ? `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})` : '',
+      hsl: hsl ? `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)` : ''
+    }
   }
 
+  const formats = getColorFormats(selectedColor)
+
   return (
-    <div className="max-w-4xl mx-auto p-4">
-      {/* Retro Window Header */}
-      <div className="retro-window mb-8">
-        <div className="retro-window-header">
-          <div className="flex items-center space-x-3">
-            <Palette className="h-6 w-6" />
-            <span className="text-lg font-bold">COLOR TOOLS v1.0</span>
-          </div>
-          <div className="retro-window-controls">
-            <div className="retro-window-control control-minimize"></div>
-            <div className="retro-window-control control-maximize"></div>
-            <div className="retro-window-control control-close"></div>
-          </div>
-        </div>
-        <div className="p-6 bg-gray-100 dark:bg-gray-700">
-          <div className="text-center mb-6">
-            <p className="text-lg font-bold text-black dark:text-white font-mono">
-              {'>> COLOR PICKER, PALETTE GENERATOR, AND MORE <<'}
+    <div className="min-h-screen">
+      {/* Minimal Header */}
+      <div className="minimal-hero">
+        <div className="minimal-container">
+          <div className="text-center max-w-3xl mx-auto">
+            <div className="flex items-center justify-center mb-6">
+              <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mr-3">
+                <Palette className="h-6 w-6 text-white" />
+              </div>
+              <h1 className="minimal-h1 mb-0">
+                Color Tools
+              </h1>
+            </div>
+            
+            <p className="minimal-text text-lg">
+              Pick colors, generate palettes, and convert between different color formats.
             </p>
           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Input Section */}
-        <div className="card p-6">
-          <div className="bg-blue-500 text-white font-bold py-2 px-4 mb-4 border-b-4 border-black">
-            <h2 className="text-xl font-mono">
-              [INPUT] COLOR OPERATIONS
-            </h2>
-          </div>
-          
-          {/* Tab Selection */}
-          <div className="grid grid-cols-3 mb-4 border-4 border-black">
-            <button
-              onClick={() => setActiveTab('picker')}
-              className={`py-2 px-4 font-mono font-bold transition-colors ${
-                activeTab === 'picker'
-                  ? 'bg-yellow-400 text-black'
-                  : 'bg-gray-200 text-black hover:bg-gray-300'
-              }`}
-            >
-              PICKER
-            </button>
-            <button
-              onClick={() => setActiveTab('palette')}
-              className={`py-2 px-4 font-mono font-bold transition-colors border-l-4 border-r-4 border-black ${
-                activeTab === 'palette'
-                  ? 'bg-yellow-400 text-black'
-                  : 'bg-gray-200 text-black hover:bg-gray-300'
-              }`}
-            >
-              PALETTE
-            </button>
-            <button
-              onClick={() => setActiveTab('converter')}
-              className={`py-2 px-4 font-mono font-bold transition-colors ${
-                activeTab === 'converter'
-                  ? 'bg-yellow-400 text-black'
-                  : 'bg-gray-200 text-black hover:bg-gray-300'
-              }`}
-            >
-              CONVERT
-            </button>
-          </div>
-          
-          <div className="space-y-4">
-            {activeTab === 'picker' && (
-              <div>
-                <label className="block text-sm font-bold text-black dark:text-white mb-2 font-mono">
-                  SELECT COLOR:
-                </label>
-                <div className="flex items-center space-x-4">
-                  <input
-                    type="color"
-                    value={selectedColor}
-                    onChange={(e) => setSelectedColor(e.target.value)}
-                    className="w-16 h-16 border-4 border-black cursor-pointer"
-                  />
-                  <div className="flex-1">
+      {/* Main Content */}
+      <div className="py-16">
+        <div className="minimal-container">
+          <div className="max-w-4xl mx-auto space-y-8">
+            {/* Tab Selection */}
+            <div className="minimal-card">
+              <div className="flex mb-6 bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
+                <button
+                  onClick={() => setActiveTab('picker')}
+                  className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${
+                    activeTab === 'picker'
+                      ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
+                      : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
+                  }`}
+                >
+                  Color Picker
+                </button>
+                <button
+                  onClick={() => setActiveTab('palette')}
+                  className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${
+                    activeTab === 'palette'
+                      ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
+                      : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
+                  }`}
+                >
+                  Color Palette
+                </button>
+                <button
+                  onClick={() => setActiveTab('converter')}
+                  className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${
+                    activeTab === 'converter'
+                      ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
+                      : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
+                  }`}
+                >
+                  Color Converter
+                </button>
+              </div>
+
+              {/* Color Picker Tab */}
+              {activeTab === 'picker' && (
+                <div className="space-y-6">
+                  <div className="text-center">
+                    <div 
+                      className="w-32 h-32 mx-auto rounded-2xl shadow-lg border-4 border-white dark:border-gray-700"
+                      style={{ backgroundColor: selectedColor }}
+                    ></div>
+                    <p className="mt-4 text-lg font-semibold">{selectedColor}</p>
+                  </div>
+                  
+                  <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
+                    <input
+                      type="color"
+                      value={selectedColor}
+                      onChange={(e) => setSelectedColor(e.target.value)}
+                      className="w-16 h-16 rounded-lg border-2 border-gray-300 dark:border-gray-600 cursor-pointer"
+                    />
+                    
                     <input
                       type="text"
                       value={selectedColor}
                       onChange={(e) => setSelectedColor(e.target.value)}
-                      className="input-field font-mono"
-                      placeholder="#FFFFFF"
+                      className="minimal-input max-w-xs"
+                      placeholder="#000000"
                     />
-                  </div>
-                </div>
-                
-                <div className="mt-4 p-4 border-4 border-black" style={{backgroundColor: selectedColor}}>
-                  <div className="text-center">
-                    <div className="bg-white bg-opacity-90 inline-block px-3 py-1 border-2 border-black">
-                      <span className="font-mono font-bold text-black">PREVIEW</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {activeTab === 'palette' && (
-              <div>
-                <div className="space-y-2 mb-4">
-                  <div className="flex gap-2">
+                    
                     <button
-                      onClick={generatePalette}
-                      className="btn-primary flex-1 font-mono"
-                    >
-                      FROM COLOR
-                    </button>
-                    <button
-                      onClick={generateRandomPalette}
-                      className="btn-secondary font-mono"
+                      onClick={generateRandomColor}
+                      className="minimal-button minimal-button-secondary"
                     >
                       <Shuffle className="h-4 w-4" />
+                      Random
                     </button>
                   </div>
-                  
-                  <div className="text-xs font-mono font-bold text-black dark:text-white mb-2">🎨 THEME PALETTES:</div>
-                  <div className="grid grid-cols-2 gap-1 text-xs">
-                    <button onClick={() => generateThemePalette('sunset')} className="bg-orange-400 text-black font-mono font-bold py-1 px-2 border-2 border-black hover:bg-orange-300">🌅 SUNSET</button>
-                    <button onClick={() => generateThemePalette('ocean')} className="bg-blue-400 text-black font-mono font-bold py-1 px-2 border-2 border-black hover:bg-blue-300">🌊 OCEAN</button>
-                    <button onClick={() => generateThemePalette('forest')} className="bg-green-400 text-black font-mono font-bold py-1 px-2 border-2 border-black hover:bg-green-300">🌲 FOREST</button>
-                    <button onClick={() => generateThemePalette('candy')} className="bg-pink-400 text-black font-mono font-bold py-1 px-2 border-2 border-black hover:bg-pink-300">🍭 CANDY</button>
+                </div>
+              )}
+
+              {/* Color Palette Tab */}
+              {activeTab === 'palette' && (
+                <div className="space-y-6">
+                  <div className="text-center">
+                    <h3 className="text-lg font-semibold mb-4">Generated Palette</h3>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-4">
+                      {colorPalette.map((item, index) => (
+                        <div key={index} className="text-center">
+                          <div
+                            className="w-full h-16 rounded-lg shadow-sm border border-gray-200 dark:border-gray-600 cursor-pointer hover:scale-105 transition-transform"
+                            style={{ backgroundColor: item.color }}
+                            onClick={() => copyToClipboard(item.color, 'Color')}
+                            title={`Click to copy ${item.color}`}
+                          ></div>
+                          <p className="text-xs mt-2 font-medium">{item.name}</p>
+                          <p className="text-xs minimal-text">{item.color}</p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
-                
-                {colorPalette.length > 0 && (
-                  <div className="grid grid-cols-4 gap-2">
-                    {colorPalette.map((color, index) => (
-                      <div
-                        key={index}
-                        className="aspect-square border-4 border-black cursor-pointer hover:scale-105 transition-transform"
-                        style={{backgroundColor: color}}
-                        onClick={() => copyToClipboard(color)}
-                        title={`Click to copy: ${color}`}
-                      >
-                        <div className="h-full flex items-end justify-center pb-1">
-                          <span className="text-xs font-mono font-bold bg-white bg-opacity-90 px-1 border border-black">
-                            {color}
-                          </span>
+              )}
+
+              {/* Color Converter Tab */}
+              {activeTab === 'converter' && (
+                <div className="space-y-6">
+                  <div className="text-center">
+                    <div 
+                      className="w-24 h-24 mx-auto rounded-xl shadow-lg border-4 border-white dark:border-gray-700 mb-4"
+                      style={{ backgroundColor: selectedColor }}
+                    ></div>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                          HEX
+                        </label>
+                        <div className="flex">
+                          <input
+                            type="text"
+                            value={formats.hex}
+                            readOnly
+                            className="minimal-input rounded-r-none"
+                          />
+                          <button
+                            onClick={() => copyToClipboard(formats.hex, 'HEX')}
+                            className="px-3 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 border border-l-0 border-gray-300 dark:border-gray-600 rounded-r-lg transition-colors"
+                          >
+                            <Copy className="h-4 w-4" />
+                          </button>
                         </div>
                       </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
-
-            {activeTab === 'converter' && (
-              <div>
-                <label className="block text-sm font-bold text-black dark:text-white mb-2 font-mono">
-                  COLOR FORMAT:
-                </label>
-                <select
-                  value={colorFormat}
-                  onChange={(e) => setColorFormat(e.target.value)}
-                  className="input-field font-mono font-bold mb-4"
-                >
-                  <option value="hex">HEX</option>
-                  <option value="rgb">RGB</option>
-                  <option value="hsl">HSL</option>
-                </select>
-                
-                <div className="space-y-3">
-                  <div className="bg-gray-200 p-3 border-4 border-black">
-                    <div className="flex justify-between items-center">
-                      <span className="font-mono font-bold text-black">HEX:</span>
-                      <div className="flex items-center space-x-2">
-                        <span className="font-mono text-black">{getColorInFormat(selectedColor, 'hex')}</span>
-                        <button
-                          onClick={() => copyToClipboard(getColorInFormat(selectedColor, 'hex'))}
-                          className="p-1 border-2 border-black bg-white hover:bg-gray-100"
-                        >
-                          <Copy className="h-3 w-3" />
-                        </button>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                          RGB
+                        </label>
+                        <div className="flex">
+                          <input
+                            type="text"
+                            value={formats.rgb}
+                            readOnly
+                            className="minimal-input rounded-r-none"
+                          />
+                          <button
+                            onClick={() => copyToClipboard(formats.rgb, 'RGB')}
+                            className="px-3 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 border border-l-0 border-gray-300 dark:border-gray-600 rounded-r-lg transition-colors"
+                          >
+                            <Copy className="h-4 w-4" />
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  
-                  <div className="bg-gray-200 p-3 border-4 border-black">
-                    <div className="flex justify-between items-center">
-                      <span className="font-mono font-bold text-black">RGB:</span>
-                      <div className="flex items-center space-x-2">
-                        <span className="font-mono text-black">{getColorInFormat(selectedColor, 'rgb')}</span>
-                        <button
-                          onClick={() => copyToClipboard(getColorInFormat(selectedColor, 'rgb'))}
-                          className="p-1 border-2 border-black bg-white hover:bg-gray-100"
-                        >
-                          <Copy className="h-3 w-3" />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="bg-gray-200 p-3 border-4 border-black">
-                    <div className="flex justify-between items-center">
-                      <span className="font-mono font-bold text-black">HSL:</span>
-                      <div className="flex items-center space-x-2">
-                        <span className="font-mono text-black">{getColorInFormat(selectedColor, 'hsl')}</span>
-                        <button
-                          onClick={() => copyToClipboard(getColorInFormat(selectedColor, 'hsl'))}
-                          className="p-1 border-2 border-black bg-white hover:bg-gray-100"
-                        >
-                          <Copy className="h-3 w-3" />
-                        </button>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                          HSL
+                        </label>
+                        <div className="flex">
+                          <input
+                            type="text"
+                            value={formats.hsl}
+                            readOnly
+                            className="minimal-input rounded-r-none"
+                          />
+                          <button
+                            onClick={() => copyToClipboard(formats.hsl, 'HSL')}
+                            className="px-3 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 border border-l-0 border-gray-300 dark:border-gray-600 rounded-r-lg transition-colors"
+                          >
+                            <Copy className="h-4 w-4" />
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button
-                onClick={() => copyToClipboard(selectedColor)}
-                className="btn-primary flex-1 flex items-center justify-center space-x-2 font-mono"
-              >
-                <Copy className="h-4 w-4" />
-                <span>COPY COLOR</span>
-              </button>
-
-              <button
-                onClick={clearAll}
-                className="btn-secondary flex items-center justify-center space-x-2 font-mono px-4 py-2"
-              >
-                <RotateCcw className="h-4 w-4" />
-                <span>RESET</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Preview Section */}
-        <div className="card p-6">
-          <div className="bg-green-500 text-black font-bold py-2 px-4 mb-4 border-b-4 border-black">
-            <h2 className="text-xl font-mono">
-              [PREVIEW] COLOR DISPLAY
-            </h2>
-          </div>
-          
-          <div className="space-y-4">
-            <div className="h-32 border-4 border-black" style={{backgroundColor: selectedColor}}>
-              <div className="h-full flex items-center justify-center">
-                <div className="bg-white bg-opacity-90 px-4 py-2 border-4 border-black">
-                  <span className="font-mono font-bold text-black text-lg">{selectedColor}</span>
+              {/* Copy Message */}
+              {copyMessage && (
+                <div className="text-center">
+                  <div className="inline-block bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-300 px-4 py-2 rounded-lg text-sm font-medium">
+                    {copyMessage}
+                  </div>
                 </div>
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-white p-4 border-4 border-black">
-                <div className="w-full h-8 border-2 border-black mb-2" style={{backgroundColor: selectedColor}}></div>
-                <span className="font-mono font-bold text-black text-sm">ON WHITE</span>
-              </div>
-              <div className="bg-black p-4 border-4 border-black">
-                <div className="w-full h-8 border-2 border-white mb-2" style={{backgroundColor: selectedColor}}></div>
-                <span className="font-mono font-bold text-white text-sm">ON BLACK</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Tips Section */}
-      <div className="mt-8 card p-6">
-        <div className="bg-purple-500 text-white font-bold py-2 px-4 mb-4 border-b-4 border-black">
-          <h3 className="text-lg font-mono">
-            [TIPS] COLOR THEORY
-          </h3>
-        </div>
-        <div className="retro-alert retro-alert-warning">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-black font-mono font-bold">
-            <div>
-              {'>> USE COMPLEMENTARY COLORS FOR CONTRAST'}
-            </div>
-            <div>
-              {'>> TEST ACCESSIBILITY WITH COLOR BLINDNESS'}
-            </div>
-            <div>
-              {'>> SAVE PALETTES FOR CONSISTENT BRANDING'}
-            </div>
-            <div>
-              {'>> CONSIDER COLOR PSYCHOLOGY IN DESIGN'}
+              )}
             </div>
           </div>
         </div>

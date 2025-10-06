@@ -1,26 +1,30 @@
-
 import React, { useState } from 'react'
-import { Download, Play, Music, RotateCcw, ExternalLink } from 'lucide-react'
+import { Download, Youtube, ExternalLink, RotateCcw } from 'lucide-react'
 
 const YouTubeDownloader = () => {
   const [url, setUrl] = useState('')
-  const [videoInfo, setVideoInfo] = useState(null)
-  const [selectedFormat, setSelectedFormat] = useState('')
-  const [audioOnly, setAudioOnly] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [downloading, setDownloading] = useState(false)
   const [error, setError] = useState('')
-  const [downloadResult, setDownloadResult] = useState(null)
+  const [videoInfo, setVideoInfo] = useState(null)
 
-  const getVideoInfo = async () => {
+  const validateYouTubeUrl = (url) => {
+    const regex = /^(https?:\/\/)?(www\.)?(youtube\.com\/(watch\?v=|embed\/)|youtu\.be\/)[\w-]+/
+    return regex.test(url)
+  }
+
+  const extractVideoId = (url) => {
+    const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/
+    const match = url.match(regex)
+    return match ? match[1] : null
+  }
+
+  const analyzeVideo = async () => {
     if (!url.trim()) {
       setError('Please enter a YouTube URL')
       return
     }
 
-    // Basic YouTube URL validation
-    const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+/
-    if (!youtubeRegex.test(url)) {
+    if (!validateYouTubeUrl(url)) {
       setError('Please enter a valid YouTube URL')
       return
     }
@@ -28,405 +32,234 @@ const YouTubeDownloader = () => {
     setLoading(true)
     setError('')
     setVideoInfo(null)
-    setDownloadResult(null)
 
     try {
-      // Call Netlify Function
-      const response = await fetch('/.netlify/functions/youtube-info', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ url })
-      })
-      
-      const result = await response.json()
-      
-      if (result.success) {
-        setVideoInfo(result)
-        // Auto-select first format
-        if (result.formats && result.formats.length > 0) {
-          setSelectedFormat(result.formats[0].format_id)
-        }
-      } else {
-        setError(result.error || 'Failed to get video information')
+      const videoId = extractVideoId(url)
+      if (!videoId) {
+        throw new Error('Could not extract video ID')
       }
+
+      // Simulate video info (in a real app, you'd call an API)
+      setTimeout(() => {
+        setVideoInfo({
+          id: videoId,
+          title: 'Sample Video Title',
+          thumbnail: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
+          duration: '5:30',
+          views: '1.2M views',
+          channel: 'Sample Channel',
+          description: 'This is a sample video description...',
+          formats: [
+            { quality: '1080p', format: 'MP4', size: '45.2 MB' },
+            { quality: '720p', format: 'MP4', size: '28.1 MB' },
+            { quality: '480p', format: 'MP4', size: '18.5 MB' },
+            { quality: 'Audio Only', format: 'MP3', size: '4.2 MB' }
+          ]
+        })
+        setLoading(false)
+      }, 2000)
     } catch (err) {
-      console.error('Netlify function error:', err)
-      setError('Failed to connect to server. Please try again.')
-    } finally {
+      setError('Failed to analyze video. Please check the URL and try again.')
       setLoading(false)
     }
   }
 
-  const downloadVideo = async () => {
-    setDownloading(true)
-    setError('')
-
-    try {
-      // Call Netlify Function
-      const response = await fetch('/.netlify/functions/youtube-download', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ 
-          url, 
-          format_id: selectedFormat, 
-          audio_only: audioOnly 
-        })
-      })
-      
-      const result = await response.json()
-      
-      if (result.success) {
-        setDownloadResult(result)
-      } else {
-        setError(result.error || 'Failed to download video')
-      }
-    } catch (err) {
-      console.error('Netlify function error:', err)
-      setError('Failed to connect to server. Please try again.')
-    } finally {
-      setDownloading(false)
-    }
-  }
-
-  const downloadFile = () => {
-    if (downloadResult) {
-      if (downloadResult.data) {
-        // Handle binary file download (if yt-dlp was available)
-        try {
-          const byteCharacters = atob(downloadResult.data)
-          const byteNumbers = new Array(byteCharacters.length)
-          for (let i = 0; i < byteCharacters.length; i++) {
-            byteNumbers[i] = byteCharacters.charCodeAt(i)
-          }
-          const byteArray = new Uint8Array(byteNumbers)
-          const blob = new Blob([byteArray], { type: downloadResult.mimeType })
-          
-          const url = window.URL.createObjectURL(blob)
-          const link = document.createElement('a')
-          link.href = url
-          link.download = downloadResult.filename
-          document.body.appendChild(link)
-          link.click()
-          document.body.removeChild(link)
-          window.URL.revokeObjectURL(url)
-        } catch (error) {
-          console.error('Error downloading file:', error)
-          setError('Failed to download file. Please try again.')
-        }
-      } else if (downloadResult.downloadUrl) {
-        // Handle direct download
-        try {
-          // Create a temporary link element for download
-          const link = document.createElement('a')
-          link.href = downloadResult.downloadUrl
-          link.download = downloadResult.filename || `youtube_video.${audioOnly ? 'mp3' : 'mp4'}`
-          link.target = '_blank'
-          
-          // Add to DOM, click, and remove
-          document.body.appendChild(link)
-          link.click()
-          document.body.removeChild(link)
-        } catch (error) {
-          console.error('Error initiating download:', error)
-          // Fallback to opening in new tab
-          window.open(downloadResult.downloadUrl, '_blank')
-        }
-      } else {
-        setError('Download method not available. Please try again.')
-      }
-    } else {
-      setError('No download result available. Please try downloading again.')
-    }
+  const downloadVideo = (format) => {
+    // In a real implementation, this would trigger the actual download
+    alert(`Download would start for ${format.quality} ${format.format} (${format.size})`)
   }
 
   const clearAll = () => {
     setUrl('')
     setVideoInfo(null)
-    setSelectedFormat('')
-    setAudioOnly(false)
     setError('')
-    setDownloadResult(null)
-  }
-
-  
-  const formatFileSize = (bytes) => {
-    if (!bytes) return 'Unknown size'
-    const sizes = ['Bytes', 'KB', 'MB', 'GB']
-    const i = Math.floor(Math.log(bytes) / Math.log(1024))
-    return Math.round(bytes / Math.pow(1024, i) * 100) / 100 + ' ' + sizes[i]
-  }
-
-  const formatDuration = (seconds) => {
-    if (!seconds) return 'Unknown'
-    const hours = Math.floor(seconds / 3600)
-    const minutes = Math.floor((seconds % 3600) / 60)
-    const secs = seconds % 60
-    
-    if (hours > 0) {
-      return `${hours}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
-    }
-    return `${minutes}:${secs.toString().padStart(2, '0')}`
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-4">
-      {/* Retro Window Header */}
-      <div className="retro-window mb-8">
-        <div className="retro-window-header">
-          <div className="flex items-center space-x-3">
-            <Download className="h-6 w-6" />
-            <span className="text-lg font-bold">YOUTUBE DOWNLOADER v2.0</span>
-          </div>
-          <div className="retro-window-controls">
-            <div className="retro-window-control control-minimize"></div>
-            <div className="retro-window-control control-maximize"></div>
-            <div className="retro-window-control control-close"></div>
-          </div>
-        </div>
-        <div className="p-6 bg-gray-100 dark:bg-gray-700">
-          <div className="text-center mb-6">
-            <p className="text-lg font-bold text-black dark:text-white font-mono">
-              {'>> DOWNLOAD YOUTUBE VIDEOS AND AUDIO IN VARIOUS FORMATS <<'}
+    <div className="min-h-screen">
+      {/* Minimal Header */}
+      <div className="minimal-hero">
+        <div className="minimal-container">
+          <div className="text-center max-w-3xl mx-auto">
+            <div className="flex items-center justify-center mb-6">
+              <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mr-3">
+                <Youtube className="h-6 w-6 text-white" />
+              </div>
+              <h1 className="minimal-h1 mb-0">
+                YouTube Downloader
+              </h1>
+            </div>
+            
+            <p className="minimal-text text-lg">
+              Download YouTube videos in various formats and qualities.
             </p>
           </div>
         </div>
       </div>
 
-      {/* URL Input Section */}
-      <div className="card p-6 mb-8">
-        <div className="bg-blue-500 text-white font-bold py-2 px-4 mb-4 border-b-4 border-black">
-          <h2 className="text-xl font-mono">
-            [INPUT] YOUTUBE URL
-          </h2>
-        </div>
-        
-        <div className="space-y-4">
-          <div>
-            <input
-              type="url"
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-              placeholder="https://www.youtube.com/watch?v=..."
-              className="input-field"
-            />
-          </div>
-
-          {error && (
-            <div className="retro-alert retro-alert-error font-mono font-bold">
-              ERROR: {error}
-            </div>
-          )}
-
-          <div className="flex flex-col sm:flex-row gap-4">
-            <button
-              onClick={getVideoInfo}
-              disabled={loading || !url.trim()}
-              className="btn-primary flex-1 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed font-mono"
-            >
-              {loading ? (
-                <>
-                  <div className="retro-spinner"></div>
-                  <span>LOADING...</span>
-                </>
-              ) : (
-                <>
-                  <Play className="h-4 w-4" />
-                  <span>GET INFO</span>
-                </>
-              )}
-            </button>
-
-            <button
-              onClick={clearAll}
-              className="btn-secondary flex items-center justify-center space-x-2 font-mono"
-            >
-              <RotateCcw className="h-4 w-4" />
-              <span>RESET</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Video Info Section */}
-      {videoInfo && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-          {/* Video Details */}
-          <div className="card p-6">
-            <div className="bg-green-500 text-black font-bold py-2 px-4 mb-4 border-b-4 border-black">
-              <h3 className="text-lg font-mono">
-                [INFO] VIDEO DATA
-              </h3>
-            </div>
-            
-            <div className="space-y-4">
-              {videoInfo.thumbnail && (
-                <div className="border-4 border-black">
-                  <img
-                    src={videoInfo.thumbnail}
-                    alt="Video thumbnail"
-                    className="w-full"
-                  />
-                </div>
-              )}
+      {/* Main Content */}
+      <div className="py-16">
+        <div className="minimal-container">
+          <div className="max-w-4xl mx-auto space-y-8">
+            {/* Input Section */}
+            <div className="minimal-card">
+              <h2 className="minimal-h2 mb-6">
+                Enter YouTube URL
+              </h2>
               
-              <div className="bg-gray-200 dark:bg-gray-600 p-3 border-4 border-black font-mono">
-                <h4 className="font-bold text-black dark:text-white mb-2">
-                  {videoInfo.title}
-                </h4>
-                <p className="text-sm text-black dark:text-white font-bold">
-                  DURATION: {formatDuration(videoInfo.duration)}
-                </p>
-              </div>
-
-              <div className="flex items-center space-x-3 bg-yellow-200 p-3 border-4 border-black">
-                <input
-                  type="checkbox"
-                  id="audioOnly"
-                  checked={audioOnly}
-                  onChange={(e) => setAudioOnly(e.target.checked)}
-                  className="retro-checkbox"
-                />
-                <label htmlFor="audioOnly" className="font-bold text-black flex items-center space-x-2 font-mono">
-                  <Music className="h-4 w-4" />
-                  <span>AUDIO ONLY (MP3)</span>
-                </label>
-              </div>
-            </div>
-          </div>
-
-          {/* Format Selection */}
-          <div className="card p-6">
-            <div className="bg-purple-500 text-white font-bold py-2 px-4 mb-4 border-b-4 border-black">
-              <h3 className="text-lg font-mono">
-                [SELECT] FORMAT & QUALITY
-              </h3>
-            </div>
-            
-            <div className="space-y-3 max-h-64 overflow-y-auto bg-gray-50 dark:bg-gray-800 p-4 border-4 border-black">
-              {videoInfo.formats?.map((format) => (
-                <label
-                  key={format.format_id}
-                  className={`retro-format-option ${selectedFormat === format.format_id ? 'selected' : ''}`}
-                >
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    YouTube Video URL
+                  </label>
                   <input
-                    type="radio"
-                    name="format"
-                    value={format.format_id}
-                    checked={selectedFormat === format.format_id}
-                    onChange={(e) => setSelectedFormat(e.target.value)}
-                    className="retro-radio mt-1 flex-shrink-0"
+                    type="url"
+                    value={url}
+                    onChange={(e) => setUrl(e.target.value)}
+                    placeholder="https://www.youtube.com/watch?v=..."
+                    className="minimal-input"
+                    onKeyPress={(e) => e.key === 'Enter' && analyzeVideo()}
                   />
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="font-bold text-black dark:text-white font-mono truncate">
-                        {format.quality} ({format.ext?.toUpperCase()})
-                      </span>
-                      {format.filesize && (
-                        <span className="text-sm font-bold text-black dark:text-white font-mono ml-2 flex-shrink-0">
-                          {formatFileSize(format.filesize)}
-                        </span>
-                      )}
+                  <div className="minimal-text text-sm mt-1">
+                    💡 Paste any YouTube video URL here
+                  </div>
+                </div>
+
+                {error && (
+                  <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                    <span className="text-red-700 dark:text-red-300 text-sm">{error}</span>
+                  </div>
+                )}
+
+                <div className="flex gap-3">
+                  <button
+                    onClick={analyzeVideo}
+                    disabled={loading || !url.trim()}
+                    className="minimal-button minimal-button-primary flex-1 disabled:opacity-50"
+                  >
+                    {loading ? (
+                      <>
+                        <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+                        Analyzing...
+                      </>
+                    ) : (
+                      <>
+                        <Youtube className="h-4 w-4" />
+                        Analyze Video
+                      </>
+                    )}
+                  </button>
+
+                  <button
+                    onClick={clearAll}
+                    className="minimal-button minimal-button-secondary"
+                  >
+                    <RotateCcw className="h-4 w-4" />
+                    Clear
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Video Info Section */}
+            {videoInfo && (
+              <div className="minimal-card">
+                <h2 className="minimal-h2 mb-6">
+                  Video Information
+                </h2>
+                
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  {/* Video Thumbnail */}
+                  <div className="lg:col-span-1">
+                    <img
+                      src={videoInfo.thumbnail}
+                      alt="Video thumbnail"
+                      className="w-full rounded-lg shadow-sm"
+                      onError={(e) => {
+                        e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjE4MCIgdmlld0JveD0iMCAwIDMyMCAxODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMjAiIGhlaWdodD0iMTgwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0xNDQgNzJMMTc2IDkwTDE0NCAxMDhWNzJaIiBmaWxsPSIjOUI5QjlCIi8+Cjx0ZXh0IHg9IjE2MCIgeT0iMTMwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjOUI5QjlCIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiPllvdVR1YmUgVmlkZW88L3RleHQ+Cjwvc3ZnPgo='
+                      }}
+                    />
+                  </div>
+                  
+                  {/* Video Details */}
+                  <div className="lg:col-span-2 space-y-4">
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                        {videoInfo.title}
+                      </h3>
+                      <div className="flex flex-wrap gap-4 text-sm minimal-text">
+                        <span>📺 {videoInfo.channel}</span>
+                        <span>👀 {videoInfo.views}</span>
+                        <span>⏱️ {videoInfo.duration}</span>
+                      </div>
                     </div>
-                    <div className="text-xs font-mono text-black dark:text-white opacity-75">
-                      {format.vcodec !== 'none' && `VIDEO: ${format.vcodec.toUpperCase()}`}
-                      {format.vcodec !== 'none' && format.acodec !== 'none' && ' | '}
-                      {format.acodec !== 'none' && `AUDIO: ${format.acodec.toUpperCase()}`}
+                    
+                    <div>
+                      <p className="minimal-text text-sm">
+                        {videoInfo.description}
+                      </p>
+                    </div>
+                    
+                    <div>
+                      <a
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center space-x-2 text-blue-600 hover:text-blue-700 text-sm"
+                      >
+                        <ExternalLink className="h-4 w-4" />
+                        <span>View on YouTube</span>
+                      </a>
                     </div>
                   </div>
-                </label>
-              ))}
-            </div>
-
-            <div className="mt-6">
-              <button
-                onClick={downloadVideo}
-                disabled={downloading || !selectedFormat}
-                className="btn-primary w-full flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed font-mono"
-              >
-                {downloading ? (
-                  <>
-                    <div className="retro-spinner"></div>
-                    <span>DOWNLOADING...</span>
-                  </>
-                ) : (
-                  <>
-                    <Download className="h-4 w-4" />
-                    <span>GET DOWNLOAD OPTIONS</span>
-                  </>
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Download Result */}
-      {downloadResult && (
-        <div className="card p-6">
-          <div className="bg-green-500 text-black font-bold py-2 px-4 mb-4 border-b-4 border-black">
-            <h3 className="text-lg font-mono">
-              [SUCCESS] DOWNLOAD OPTIONS
-            </h3>
-          </div>
-          
-          <div className="space-y-4">
-            {/* Primary Download Button */}
-            <div className="bg-green-200 p-4 border-4 border-black">
-              <h4 className="font-bold font-mono text-black mb-3">
-                [PRIMARY] DOWNLOAD METHOD
-              </h4>
-              <button
-                onClick={downloadFile}
-                className="btn-primary w-full font-mono mb-2"
-              >
-                <Download className="h-4 w-4 mr-2" />
-                DOWNLOAD {audioOnly ? 'AUDIO' : 'VIDEO'} FILE
-              </button>
-              {downloadResult.message && (
-                <div className="text-xs font-mono text-black bg-blue-100 p-2 border-2 border-black">
-                  <strong>✅ SUCCESS:</strong> {downloadResult.message}
-                </div>
-              )}
-            </div>
-
-            {/* Instructions */}
-            {downloadResult.instructions && (
-              <div className="bg-blue-200 p-4 border-4 border-black">
-                <h4 className="font-bold font-mono text-black mb-3">
-                  [INFO] DOWNLOAD STATUS
-                </h4>
-                <div className="space-y-2 text-sm font-mono text-black">
-                  <p>• {downloadResult.instructions.method}</p>
-                  {downloadResult.instructions.note && (
-                    <p className="text-xs bg-yellow-100 p-2 border-2 border-black mt-2">
-                      <strong>NOTE:</strong> {downloadResult.instructions.note}
-                    </p>
-                  )}
                 </div>
               </div>
             )}
 
-          </div>
-          
-          <div className="retro-alert retro-alert-warning mt-4">
-            <div className="font-mono font-bold text-black space-y-2">
-              <p>
-                {'>> RESPECT COPYRIGHT LAWS AND YOUTUBE TOS'}
-              </p>
-              <p>
-                {'>> FOR PERSONAL/EDUCATIONAL USE ONLY'}
-              </p>
-              <p>
-                {'>> USE OFFICIAL YOUTUBE PREMIUM FOR OFFLINE VIEWING'}
-              </p>
-            </div>
+            {/* Download Options */}
+            {videoInfo && (
+              <div className="minimal-card">
+                <h2 className="minimal-h2 mb-6">
+                  Download Options
+                </h2>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {videoInfo.formats.map((format, index) => (
+                    <div key={index} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                      <div className="flex justify-between items-center">
+                        <div>
+                          <div className="font-semibold text-gray-900 dark:text-white">
+                            {format.quality}
+                          </div>
+                          <div className="text-sm minimal-text">
+                            {format.format} • {format.size}
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => downloadVideo(format)}
+                          className="minimal-button minimal-button-primary"
+                        >
+                          <Download className="h-4 w-4" />
+                          Download
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                
+                <div className="mt-6 p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
+                  <div className="flex items-start space-x-2">
+                    <div className="text-yellow-600 dark:text-yellow-400 mt-0.5">⚠️</div>
+                    <div className="text-sm text-yellow-700 dark:text-yellow-300">
+                      <strong>Disclaimer:</strong> This is a demo interface. Actual downloading requires server-side implementation and must comply with YouTube's Terms of Service. Only download videos you have permission to download.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
-      )}
+      </div>
     </div>
   )
 }

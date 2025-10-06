@@ -1,356 +1,253 @@
 import React, { useState } from 'react'
-import { Type, Hash, ArrowUpDown, RotateCcw } from 'lucide-react'
+import { Type, Copy, RotateCcw, FileText } from 'lucide-react'
 
 const TextTools = () => {
-  const [text, setText] = useState('')
-  const [activeTab, setActiveTab] = useState('count') // 'count', 'case', 'format'
-  const [result, setResult] = useState(null)
+  const [inputText, setInputText] = useState('')
+  const [activeTab, setActiveTab] = useState('case')
+  const [copyMessage, setCopyMessage] = useState('')
 
-  const analyzeText = () => {
-    if (!text.trim()) {
-      return
-    }
-
-    const words = text.trim().split(/\s+/).filter(word => word.length > 0)
-    const characters = text.length
-    const charactersNoSpaces = text.replace(/\s/g, '').length
-    const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0).length
-    const paragraphs = text.split(/\n\s*\n/).filter(p => p.trim().length > 0).length
-    const lines = text.split('\n').length
-    
-    // Fun calculations!
-    const typingTime = Math.ceil(words.length / 40) // 40 WPM average typing speed
-    const tweetCount = Math.ceil(characters / 280) // Twitter character limit
-    const coffeeBreaks = Math.ceil(words.length / 500) // Coffee break every 500 words
-    const pizzaSlices = Math.ceil(characters / 100) // 1 pizza slice per 100 characters of energy
-
-    setResult({
-      words: words.length,
-      characters,
-      charactersNoSpaces,
-      sentences,
-      paragraphs,
-      lines,
-      averageWordsPerSentence: sentences > 0 ? Math.round(words.length / sentences * 10) / 10 : 0,
-      readingTime: Math.ceil(words.length / 200), // Assuming 200 words per minute
-      typingTime,
-      tweetCount,
-      coffeeBreaks,
-      pizzaSlices
-    })
-  }
-
-  const convertCase = (type) => {
-    if (!text.trim()) return
-
-    let converted = ''
-    switch (type) {
-      case 'upper':
-        converted = text.toUpperCase()
-        break
-      case 'lower':
-        converted = text.toLowerCase()
-        break
-      case 'title':
-        converted = text.replace(/\w\S*/g, (txt) => 
-          txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
-        )
-        break
-      case 'sentence':
-        converted = text.toLowerCase().replace(/(^\s*\w|[.!?]\s*\w)/g, (c) => c.toUpperCase())
-        break
-      case 'camel':
-        converted = text.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => {
-          return index === 0 ? word.toLowerCase() : word.toUpperCase()
-        }).replace(/\s+/g, '')
-        break
-      case 'snake':
-        converted = text.toLowerCase().replace(/\s+/g, '_')
-        break
-      default:
-        converted = text
-    }
-    setText(converted)
-  }
-
-  const formatText = (type) => {
-    if (!text.trim()) return
-
-    let formatted = ''
-    switch (type) {
-      case 'removeSpaces':
-        formatted = text.replace(/\s+/g, '')
-        break
-      case 'removeLineBreaks':
-        formatted = text.replace(/\n/g, ' ').replace(/\s+/g, ' ')
-        break
-      case 'addLineBreaks':
-        formatted = text.replace(/\. /g, '.\n')
-        break
-      case 'reverse':
-        formatted = text.split('').reverse().join('')
-        break
-      case 'sort':
-        formatted = text.split('\n').sort().join('\n')
-        break
-      case 'removeDuplicates':
-        const lines = text.split('\n')
-        formatted = [...new Set(lines)].join('\n')
-        break
-      default:
-        formatted = text
-    }
-    setText(formatted)
-  }
-
-  const clearAll = () => {
-    setText('')
-    setResult(null)
-  }
-
-  const copyToClipboard = async () => {
+  const copyToClipboard = async (text, label) => {
     try {
       await navigator.clipboard.writeText(text)
+      setCopyMessage(`${label} copied!`)
+      setTimeout(() => setCopyMessage(''), 2000)
     } catch (err) {
-      console.error('Failed to copy text: ', err)
+      console.error('Failed to copy: ', err)
     }
   }
 
+  const clearText = () => {
+    setInputText('')
+  }
+
+  // Text transformation functions
+  const transformations = {
+    case: {
+      name: 'Case Converter',
+      operations: [
+        { name: 'UPPERCASE', func: (text) => text.toUpperCase() },
+        { name: 'lowercase', func: (text) => text.toLowerCase() },
+        { name: 'Title Case', func: (text) => text.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()) },
+        { name: 'Sentence case', func: (text) => text.charAt(0).toUpperCase() + text.slice(1).toLowerCase() },
+        { name: 'aLtErNaTiNg CaSe', func: (text) => text.split('').map((char, i) => i % 2 === 0 ? char.toLowerCase() : char.toUpperCase()).join('') },
+        { name: 'iNVERSE cASE', func: (text) => text.split('').map(char => char === char.toUpperCase() ? char.toLowerCase() : char.toUpperCase()).join('') }
+      ]
+    },
+    format: {
+      name: 'Text Formatter',
+      operations: [
+        { name: 'Remove Extra Spaces', func: (text) => text.replace(/\s+/g, ' ').trim() },
+        { name: 'Remove Line Breaks', func: (text) => text.replace(/\n/g, ' ').replace(/\s+/g, ' ').trim() },
+        { name: 'Add Line Numbers', func: (text) => text.split('\n').map((line, i) => `${i + 1}. ${line}`).join('\n') },
+        { name: 'Reverse Text', func: (text) => text.split('').reverse().join('') },
+        { name: 'Reverse Words', func: (text) => text.split(' ').reverse().join(' ') },
+        { name: 'Sort Lines A-Z', func: (text) => text.split('\n').sort().join('\n') }
+      ]
+    },
+    encode: {
+      name: 'Encoder/Decoder',
+      operations: [
+        { name: 'URL Encode', func: (text) => encodeURIComponent(text) },
+        { name: 'URL Decode', func: (text) => { try { return decodeURIComponent(text) } catch { return 'Invalid URL encoding' } } },
+        { name: 'Base64 Encode', func: (text) => btoa(unescape(encodeURIComponent(text))) },
+        { name: 'Base64 Decode', func: (text) => { try { return decodeURIComponent(escape(atob(text))) } catch { return 'Invalid Base64' } } },
+        { name: 'HTML Encode', func: (text) => text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;') },
+        { name: 'HTML Decode', func: (text) => text.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'") }
+      ]
+    }
+  }
+
+  // Text statistics
+  const getTextStats = (text) => {
+    const words = text.trim() ? text.trim().split(/\s+/) : []
+    const sentences = text.trim() ? text.split(/[.!?]+/).filter(s => s.trim().length > 0) : []
+    const paragraphs = text.trim() ? text.split(/\n\s*\n/).filter(p => p.trim().length > 0) : []
+    
+    return {
+      characters: text.length,
+      charactersNoSpaces: text.replace(/\s/g, '').length,
+      words: words.length,
+      sentences: sentences.length,
+      paragraphs: paragraphs.length,
+      lines: text.split('\n').length
+    }
+  }
+
+  const stats = getTextStats(inputText)
+
   return (
-    <div className="max-w-4xl mx-auto p-4">
-      {/* Retro Window Header */}
-      <div className="retro-window mb-8">
-        <div className="retro-window-header">
-          <div className="flex items-center space-x-3">
-            <Type className="h-6 w-6" />
-            <span className="text-lg font-bold">TEXT TOOLS v1.0</span>
-          </div>
-          <div className="retro-window-controls">
-            <div className="retro-window-control control-minimize"></div>
-            <div className="retro-window-control control-maximize"></div>
-            <div className="retro-window-control control-close"></div>
-          </div>
-        </div>
-        <div className="p-6 bg-gray-100 dark:bg-gray-700">
-          <div className="text-center mb-6">
-            <p className="text-lg font-bold text-black dark:text-white font-mono">
-              {'>> WORD COUNT, CASE CONVERTER, AND MORE TEXT UTILITIES <<'}
+    <div className="min-h-screen">
+      {/* Minimal Header */}
+      <div className="minimal-hero">
+        <div className="minimal-container">
+          <div className="text-center max-w-3xl mx-auto">
+            <div className="flex items-center justify-center mb-6">
+              <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mr-3">
+                <Type className="h-6 w-6 text-white" />
+              </div>
+              <h1 className="minimal-h1 mb-0">
+                Text Tools
+              </h1>
+            </div>
+            
+            <p className="minimal-text text-lg">
+              Transform, format, and analyze your text with powerful text manipulation tools.
             </p>
           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Input Section */}
-        <div className="card p-6">
-          <div className="bg-blue-500 text-white font-bold py-2 px-4 mb-4 border-b-4 border-black">
-            <h2 className="text-xl font-mono">
-              [INPUT] TEXT OPERATIONS
-            </h2>
-          </div>
-          
-          {/* Tab Selection */}
-          <div className="grid grid-cols-3 mb-4 border-4 border-black">
-            <button
-              onClick={() => setActiveTab('count')}
-              className={`py-2 px-4 font-mono font-bold transition-colors ${
-                activeTab === 'count'
-                  ? 'bg-yellow-400 text-black'
-                  : 'bg-gray-200 text-black hover:bg-gray-300'
-              }`}
-            >
-              COUNT
-            </button>
-            <button
-              onClick={() => setActiveTab('case')}
-              className={`py-2 px-4 font-mono font-bold transition-colors border-l-4 border-r-4 border-black ${
-                activeTab === 'case'
-                  ? 'bg-yellow-400 text-black'
-                  : 'bg-gray-200 text-black hover:bg-gray-300'
-              }`}
-            >
-              CASE
-            </button>
-            <button
-              onClick={() => setActiveTab('format')}
-              className={`py-2 px-4 font-mono font-bold transition-colors ${
-                activeTab === 'format'
-                  ? 'bg-yellow-400 text-black'
-                  : 'bg-gray-200 text-black hover:bg-gray-300'
-              }`}
-            >
-              FORMAT
-            </button>
-          </div>
-          
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-bold text-black dark:text-white mb-2 font-mono">
-                ENTER YOUR TEXT:
-              </label>
-              <textarea
-                value={text}
-                onChange={(e) => {
-                  setText(e.target.value)
-                  if (activeTab === 'count') {
-                    analyzeText()
-                  }
-                }}
-                placeholder="PASTE OR TYPE YOUR TEXT HERE..."
-                className="input-field h-48 resize-none font-mono"
-              />
-              <div className="text-sm text-black dark:text-white mt-1 font-mono font-bold">
-                {text.length} CHARACTERS
-              </div>
-            </div>
-
-            {activeTab === 'case' && (
-              <div className="grid grid-cols-2 gap-2">
-                <button onClick={() => convertCase('upper')} className="btn-secondary font-mono text-xs py-2">
-                  UPPERCASE
-                </button>
-                <button onClick={() => convertCase('lower')} className="btn-secondary font-mono text-xs py-2">
-                  lowercase
-                </button>
-                <button onClick={() => convertCase('title')} className="btn-secondary font-mono text-xs py-2">
-                  Title Case
-                </button>
-                <button onClick={() => convertCase('sentence')} className="btn-secondary font-mono text-xs py-2">
-                  Sentence case
-                </button>
-                <button onClick={() => convertCase('camel')} className="btn-secondary font-mono text-xs py-2">
-                  camelCase
-                </button>
-                <button onClick={() => convertCase('snake')} className="btn-secondary font-mono text-xs py-2">
-                  snake_case
-                </button>
-              </div>
-            )}
-
-            {activeTab === 'format' && (
-              <div className="grid grid-cols-2 gap-2">
-                <button onClick={() => formatText('removeSpaces')} className="btn-secondary font-mono text-xs py-2">
-                  REMOVE SPACES
-                </button>
-                <button onClick={() => formatText('removeLineBreaks')} className="btn-secondary font-mono text-xs py-2">
-                  REMOVE BREAKS
-                </button>
-                <button onClick={() => formatText('addLineBreaks')} className="btn-secondary font-mono text-xs py-2">
-                  ADD BREAKS
-                </button>
-                <button onClick={() => formatText('reverse')} className="btn-secondary font-mono text-xs py-2">
-                  REVERSE
-                </button>
-                <button onClick={() => formatText('sort')} className="btn-secondary font-mono text-xs py-2">
-                  SORT LINES
-                </button>
-                <button onClick={() => formatText('removeDuplicates')} className="btn-secondary font-mono text-xs py-2">
-                  REMOVE DUPES
-                </button>
-              </div>
-            )}
-
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button
-                onClick={copyToClipboard}
-                disabled={!text.trim()}
-                className="btn-primary flex-1 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed font-mono"
-              >
-                <Type className="h-4 w-4" />
-                <span>COPY TEXT</span>
-              </button>
-
-              <button
-                onClick={clearAll}
-                className="btn-secondary flex items-center justify-center space-x-2 font-mono px-4 py-2"
-              >
-                <RotateCcw className="h-4 w-4" />
-                <span>CLEAR</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Results Section */}
-        <div className="card p-6">
-          <div className="bg-green-500 text-black font-bold py-2 px-4 mb-4 border-b-4 border-black">
-            <h2 className="text-xl font-mono">
-              [RESULTS] TEXT ANALYSIS
-            </h2>
-          </div>
-          
-          {result ? (
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-blue-200 p-3 border-4 border-black text-center">
-                  <div className="text-2xl font-bold font-mono text-black">{result.words}</div>
-                  <div className="text-sm font-mono font-bold text-black">WORDS</div>
-                </div>
-                <div className="bg-yellow-200 p-3 border-4 border-black text-center">
-                  <div className="text-2xl font-bold font-mono text-black">{result.characters}</div>
-                  <div className="text-sm font-mono font-bold text-black">CHARACTERS</div>
-                </div>
-                <div className="bg-green-200 p-3 border-4 border-black text-center">
-                  <div className="text-2xl font-bold font-mono text-black">{result.sentences}</div>
-                  <div className="text-sm font-mono font-bold text-black">SENTENCES</div>
-                </div>
-                <div className="bg-purple-200 p-3 border-4 border-black text-center">
-                  <div className="text-2xl font-bold font-mono text-black">{result.paragraphs}</div>
-                  <div className="text-sm font-mono font-bold text-black">PARAGRAPHS</div>
-                </div>
-              </div>
+      {/* Main Content */}
+      <div className="py-16">
+        <div className="minimal-container">
+          <div className="max-w-6xl mx-auto space-y-8">
+            {/* Input Section */}
+            <div className="minimal-card">
+              <h2 className="minimal-h2 mb-6">
+                Enter Your Text
+              </h2>
               
-              <div className="bg-gray-200 p-4 border-4 border-black">
-                <h3 className="font-bold font-mono text-black mb-2">DETAILED STATS:</h3>
-                <div className="text-sm font-mono text-black space-y-1">
-                  <div>• CHARACTERS (NO SPACES): {result.charactersNoSpaces}</div>
-                  <div>• LINES: {result.lines}</div>
-                  <div>• AVG WORDS/SENTENCE: {result.averageWordsPerSentence}</div>
-                  <div>• READING TIME: ~{result.readingTime} MIN 📖</div>
-                </div>
-              </div>
-              
-              <div className="bg-yellow-200 p-4 border-4 border-black">
-                <h3 className="font-bold font-mono text-black mb-2">🎉 FUN FACTS:</h3>
-                <div className="text-sm font-mono text-black space-y-1">
-                  <div>⌨️ TYPING TIME: ~{result.typingTime} MIN</div>
-                  <div>🐦 TWITTER POSTS: {result.tweetCount} TWEETS</div>
-                  <div>☕ COFFEE BREAKS NEEDED: {result.coffeeBreaks}</div>
-                  <div>🍕 PIZZA ENERGY: {result.pizzaSlices} SLICES</div>
+              <div className="space-y-4">
+                <textarea
+                  value={inputText}
+                  onChange={(e) => setInputText(e.target.value)}
+                  placeholder="Enter your text here to transform, format, or analyze..."
+                  className="minimal-input h-40 resize-none"
+                  rows={8}
+                />
+                
+                <div className="flex justify-between items-center">
+                  <div className="flex gap-4 text-sm minimal-text">
+                    <span>Characters: {stats.characters}</span>
+                    <span>Words: {stats.words}</span>
+                    <span>Lines: {stats.lines}</span>
+                  </div>
+                  
+                  <button
+                    onClick={clearText}
+                    className="minimal-button minimal-button-secondary"
+                  >
+                    <RotateCcw className="h-4 w-4" />
+                    Clear
+                  </button>
                 </div>
               </div>
             </div>
-          ) : (
-            <div className="flex flex-col items-center justify-center h-64 bg-gray-200 dark:bg-gray-600 border-4 border-black">
-              <Hash className="h-16 w-16 mb-4 text-black dark:text-white" />
-              <p className="text-center font-mono font-bold text-black dark:text-white">
-                ENTER TEXT TO SEE ANALYSIS
-              </p>
-            </div>
-          )}
-        </div>
-      </div>
 
-      {/* Tips Section */}
-      <div className="mt-8 card p-6">
-        <div className="bg-purple-500 text-white font-bold py-2 px-4 mb-4 border-b-4 border-black">
-          <h3 className="text-lg font-mono">
-            [TIPS] TEXT PROCESSING
-          </h3>
-        </div>
-        <div className="retro-alert retro-alert-warning">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-black font-mono font-bold">
-            <div>
-              {'>> USE FOR CONTENT ANALYSIS'}
-            </div>
-            <div>
-              {'>> PERFECT FOR WRITERS & EDITORS'}
-            </div>
-            <div>
-              {'>> BATCH PROCESS MULTIPLE TEXTS'}
-            </div>
-            <div>
-              {'>> GREAT FOR SEO OPTIMIZATION'}
+            {/* Tab Selection */}
+            <div className="minimal-card">
+              <div className="flex mb-6 bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
+                {Object.entries(transformations).map(([key, category]) => (
+                  <button
+                    key={key}
+                    onClick={() => setActiveTab(key)}
+                    className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${
+                      activeTab === key
+                        ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
+                        : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
+                    }`}
+                  >
+                    {category.name}
+                  </button>
+                ))}
+                <button
+                  onClick={() => setActiveTab('stats')}
+                  className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${
+                    activeTab === 'stats'
+                      ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
+                      : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
+                  }`}
+                >
+                  Statistics
+                </button>
+              </div>
+
+              {/* Transformations */}
+              {activeTab !== 'stats' && (
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold">{transformations[activeTab].name}</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {transformations[activeTab].operations.map((operation, index) => {
+                      const result = inputText ? operation.func(inputText) : ''
+                      return (
+                        <div key={index} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                          <div className="flex justify-between items-center mb-2">
+                            <h4 className="font-medium text-sm">{operation.name}</h4>
+                            <button
+                              onClick={() => copyToClipboard(result, operation.name)}
+                              className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
+                              disabled={!result}
+                            >
+                              <Copy className="h-3 w-3" />
+                            </button>
+                          </div>
+                          <div className="bg-gray-50 dark:bg-gray-800 rounded p-2 text-sm min-h-[3rem] overflow-auto">
+                            {result || <span className="minimal-text">Result will appear here</span>}
+                          </div>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Statistics Tab */}
+              {activeTab === 'stats' && (
+                <div className="space-y-6">
+                  <h3 className="text-lg font-semibold">Text Statistics</h3>
+                  
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                    <div className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                      <div className="text-2xl font-bold text-blue-600">{stats.characters}</div>
+                      <div className="text-sm minimal-text">Characters</div>
+                    </div>
+                    
+                    <div className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                      <div className="text-2xl font-bold text-green-600">{stats.charactersNoSpaces}</div>
+                      <div className="text-sm minimal-text">No Spaces</div>
+                    </div>
+                    
+                    <div className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                      <div className="text-2xl font-bold text-purple-600">{stats.words}</div>
+                      <div className="text-sm minimal-text">Words</div>
+                    </div>
+                    
+                    <div className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                      <div className="text-2xl font-bold text-orange-600">{stats.sentences}</div>
+                      <div className="text-sm minimal-text">Sentences</div>
+                    </div>
+                    
+                    <div className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                      <div className="text-2xl font-bold text-red-600">{stats.paragraphs}</div>
+                      <div className="text-sm minimal-text">Paragraphs</div>
+                    </div>
+                    
+                    <div className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                      <div className="text-2xl font-bold text-cyan-600">{stats.lines}</div>
+                      <div className="text-sm minimal-text">Lines</div>
+                    </div>
+                  </div>
+
+                  {inputText && (
+                    <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+                      <h4 className="font-semibold mb-2">Reading Time Estimate</h4>
+                      <p className="minimal-text">
+                        Average reading time: {Math.ceil(stats.words / 200)} minute(s) 
+                        <span className="text-xs ml-2">(based on 200 words per minute)</span>
+                      </p>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Copy Message */}
+              {copyMessage && (
+                <div className="text-center mt-4">
+                  <div className="inline-block bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-300 px-4 py-2 rounded-lg text-sm font-medium">
+                    {copyMessage}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

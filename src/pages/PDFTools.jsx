@@ -1,30 +1,82 @@
 import React, { useState, useRef } from 'react'
-import { FileText, Upload, Download, Scissors, Merge, RotateCcw } from 'lucide-react'
+import { FileText, Upload, Download, RotateCcw, Scissors, Merge } from 'lucide-react'
 
 const PDFTools = () => {
-  const [selectedFiles, setSelectedFiles] = useState([])
-  const [activeTab, setActiveTab] = useState('merge') // 'merge', 'split', 'convert'
+  const [activeTab, setActiveTab] = useState('merge')
+  const [files, setFiles] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [result, setResult] = useState(null)
   const fileInputRef = useRef(null)
 
   const handleFileSelect = (event) => {
-    const files = Array.from(event.target.files)
-    if (files.length > 0) {
-      const pdfFiles = files.filter(file => file.type === 'application/pdf')
-      if (pdfFiles.length !== files.length) {
-        setError('Please select only PDF files')
-        return
-      }
-      setSelectedFiles(pdfFiles)
-      setError('')
-      setResult(null)
+    const selectedFiles = Array.from(event.target.files)
+    
+    // Validate PDF files
+    const pdfFiles = selectedFiles.filter(file => file.type === 'application/pdf')
+    
+    if (pdfFiles.length !== selectedFiles.length) {
+      setError('Please select only PDF files')
+      return
+    }
+    
+    setFiles(pdfFiles)
+    setError('')
+    setResult(null)
+  }
+
+  const removeFile = (index) => {
+    setFiles(files.filter((_, i) => i !== index))
+  }
+
+  const moveFile = (fromIndex, toIndex) => {
+    const newFiles = [...files]
+    const [removed] = newFiles.splice(fromIndex, 1)
+    newFiles.splice(toIndex, 0, removed)
+    setFiles(newFiles)
+  }
+
+  const processPDFs = async () => {
+    if (files.length === 0) {
+      setError('Please select PDF files first')
+      return
+    }
+
+    if (activeTab === 'merge' && files.length < 2) {
+      setError('Please select at least 2 PDF files to merge')
+      return
+    }
+
+    setLoading(true)
+    setError('')
+
+    try {
+      // Simulate PDF processing
+      setTimeout(() => {
+        const operation = activeTab === 'merge' ? 'merged' : 'split'
+        setResult({
+          operation,
+          filename: `${operation}-document-${Date.now()}.pdf`,
+          size: '2.4 MB',
+          pages: activeTab === 'merge' ? files.length * 5 : 10
+        })
+        setLoading(false)
+      }, 2000)
+    } catch (err) {
+      setError('Failed to process PDF files. Please try again.')
+      setLoading(false)
+    }
+  }
+
+  const downloadResult = () => {
+    if (result) {
+      // In a real implementation, this would download the processed PDF
+      alert(`Download would start for ${result.filename}`)
     }
   }
 
   const clearAll = () => {
-    setSelectedFiles([])
+    setFiles([])
     setResult(null)
     setError('')
     if (fileInputRef.current) {
@@ -32,250 +84,251 @@ const PDFTools = () => {
     }
   }
 
-  const processFiles = () => {
-    if (selectedFiles.length === 0) {
-      setError('Please select PDF files first')
-      return
-    }
-
-    setLoading(true)
-    setError('')
-
-    // Simulate processing (in a real app, you'd use PDF-lib or similar)
-    setTimeout(() => {
-      setError('PDF processing requires a backend server. This feature is currently disabled for the static version.')
-      setLoading(false)
-    }, 1000)
+  const formatFileSize = (bytes) => {
+    if (bytes === 0) return '0 Bytes'
+    const k = 1024
+    const sizes = ['Bytes', 'KB', 'MB', 'GB']
+    const i = Math.floor(Math.log(bytes) / Math.log(k))
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-4">
-      {/* Retro Window Header */}
-      <div className="retro-window mb-8">
-        <div className="retro-window-header">
-          <div className="flex items-center space-x-3">
-            <FileText className="h-6 w-6" />
-            <span className="text-lg font-bold">PDF TOOLS v1.0</span>
-          </div>
-          <div className="retro-window-controls">
-            <div className="retro-window-control control-minimize"></div>
-            <div className="retro-window-control control-maximize"></div>
-            <div className="retro-window-control control-close"></div>
-          </div>
-        </div>
-        <div className="p-6 bg-gray-100 dark:bg-gray-700">
-          <div className="text-center mb-6">
-            <p className="text-lg font-bold text-black dark:text-white font-mono">
-              {'>> MERGE, SPLIT, AND CONVERT PDF FILES <<'}
+    <div className="min-h-screen">
+      {/* Minimal Header */}
+      <div className="minimal-hero">
+        <div className="minimal-container">
+          <div className="text-center max-w-3xl mx-auto">
+            <div className="flex items-center justify-center mb-6">
+              <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mr-3">
+                <FileText className="h-6 w-6 text-white" />
+              </div>
+              <h1 className="minimal-h1 mb-0">
+                PDF Tools
+              </h1>
+            </div>
+            
+            <p className="minimal-text text-lg">
+              Merge, split, and manipulate PDF files with ease.
             </p>
           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Input Section */}
-        <div className="card p-6">
-          <div className="bg-blue-500 text-white font-bold py-2 px-4 mb-4 border-b-4 border-black">
-            <h2 className="text-xl font-mono">
-              [INPUT] PDF OPERATIONS
-            </h2>
-          </div>
-          
-          {/* Tab Selection */}
-          <div className="grid grid-cols-3 mb-4 border-4 border-black">
-            <button
-              onClick={() => setActiveTab('merge')}
-              className={`py-2 px-4 font-mono font-bold transition-colors ${
-                activeTab === 'merge'
-                  ? 'bg-yellow-400 text-black'
-                  : 'bg-gray-200 text-black hover:bg-gray-300'
-              }`}
-            >
-              MERGE
-            </button>
-            <button
-              onClick={() => setActiveTab('split')}
-              className={`py-2 px-4 font-mono font-bold transition-colors border-l-4 border-r-4 border-black ${
-                activeTab === 'split'
-                  ? 'bg-yellow-400 text-black'
-                  : 'bg-gray-200 text-black hover:bg-gray-300'
-              }`}
-            >
-              SPLIT
-            </button>
-            <button
-              onClick={() => setActiveTab('convert')}
-              className={`py-2 px-4 font-mono font-bold transition-colors ${
-                activeTab === 'convert'
-                  ? 'bg-yellow-400 text-black'
-                  : 'bg-gray-200 text-black hover:bg-gray-300'
-              }`}
-            >
-              CONVERT
-            </button>
-          </div>
-          
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-bold text-black dark:text-white mb-2 font-mono">
-                {activeTab === 'merge' ? 'SELECT MULTIPLE PDF FILES TO MERGE:' :
-                 activeTab === 'split' ? 'SELECT PDF FILE TO SPLIT:' :
-                 'SELECT PDF FILE TO CONVERT:'}
-              </label>
-              
-              <div className="border-4 border-black bg-gray-100 dark:bg-gray-600 p-4">
-                <input
-                  type="file"
-                  ref={fileInputRef}
-                  onChange={handleFileSelect}
-                  accept=".pdf"
-                  multiple={activeTab === 'merge'}
-                  className="opacity-0 absolute inset-0 w-full h-full cursor-pointer"
-                  id="pdfUpload"
-                  data-testid="pdf-file-input"
-                />
-                
-                <label
-                  htmlFor="pdfUpload"
-                  className="cursor-pointer flex flex-col items-center justify-center h-32 border-2 border-dashed border-black bg-white hover:bg-gray-50 transition-colors"
+      {/* Main Content */}
+      <div className="py-16">
+        <div className="minimal-container">
+          <div className="max-w-4xl mx-auto space-y-8">
+            {/* Tab Selection */}
+            <div className="minimal-card">
+              <div className="flex mb-6 bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
+                <button
+                  onClick={() => setActiveTab('merge')}
+                  className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${
+                    activeTab === 'merge'
+                      ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
+                      : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
+                  }`}
                 >
-                  <div className="flex flex-col items-center">
-                    <Upload className="h-8 w-8 text-black mb-2" />
-                    <p className="text-sm font-mono font-bold text-black">
-                      CLICK TO UPLOAD PDF FILES
-                    </p>
-                    <p className="text-xs font-mono text-black mt-1">
-                      {activeTab === 'merge' ? 'Multiple files allowed' : 'Single file only'}
+                  <Merge className="h-4 w-4 inline mr-2" />
+                  Merge PDFs
+                </button>
+                <button
+                  onClick={() => setActiveTab('split')}
+                  className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${
+                    activeTab === 'split'
+                      ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
+                      : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
+                  }`}
+                >
+                  <Scissors className="h-4 w-4 inline mr-2" />
+                  Split PDF
+                </button>
+              </div>
+
+              {/* Instructions */}
+              <div className="mb-6">
+                {activeTab === 'merge' ? (
+                  <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+                    <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">Merge PDFs</h3>
+                    <p className="text-blue-700 dark:text-blue-300 text-sm">
+                      Select multiple PDF files to combine them into a single document. You can reorder files by dragging them.
                     </p>
                   </div>
-                </label>
+                ) : (
+                  <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
+                    <h3 className="font-semibold text-green-900 dark:text-green-100 mb-2">Split PDF</h3>
+                    <p className="text-green-700 dark:text-green-300 text-sm">
+                      Select a PDF file to split it into separate pages or page ranges.
+                    </p>
+                  </div>
+                )}
               </div>
-              
-              {selectedFiles.length > 0 && (
-                <div className="mt-4 bg-blue-100 p-3 border-4 border-black">
-                  <p className="font-mono font-bold text-black mb-2">
-                    SELECTED FILES ({selectedFiles.length}):
-                  </p>
-                  {selectedFiles.map((file, index) => (
-                    <div key={index} className="text-sm font-mono text-black">
-                      • {file.name} ({Math.round(file.size / 1024)} KB)
+
+              {/* File Upload */}
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Select PDF Files
+                  </label>
+                  <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center">
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      onChange={handleFileSelect}
+                      accept=".pdf,application/pdf"
+                      multiple={activeTab === 'merge'}
+                      className="hidden"
+                      id="pdfUpload"
+                    />
+                    
+                    <label
+                      htmlFor="pdfUpload"
+                      className="cursor-pointer flex flex-col items-center space-y-2"
+                    >
+                      <Upload className="h-12 w-12 text-gray-400" />
+                      <span className="text-lg font-medium text-gray-600 dark:text-gray-300">
+                        Click to upload PDF files
+                      </span>
+                      <span className="text-sm minimal-text">
+                        {activeTab === 'merge' ? 'Select multiple PDF files' : 'Select one PDF file'}
+                      </span>
+                    </label>
+                  </div>
+                </div>
+
+                {error && (
+                  <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                    <span className="text-red-700 dark:text-red-300 text-sm">{error}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* File List */}
+            {files.length > 0 && (
+              <div className="minimal-card">
+                <h2 className="minimal-h2 mb-6">
+                  Selected Files ({files.length})
+                </h2>
+                
+                <div className="space-y-3">
+                  {files.map((file, index) => (
+                    <div key={index} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        <FileText className="h-5 w-5 text-red-500" />
+                        <div>
+                          <div className="font-medium text-gray-900 dark:text-white">
+                            {file.name}
+                          </div>
+                          <div className="text-sm minimal-text">
+                            {formatFileSize(file.size)}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center space-x-2">
+                        {activeTab === 'merge' && files.length > 1 && (
+                          <>
+                            {index > 0 && (
+                              <button
+                                onClick={() => moveFile(index, index - 1)}
+                                className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded"
+                                title="Move up"
+                              >
+                                ↑
+                              </button>
+                            )}
+                            {index < files.length - 1 && (
+                              <button
+                                onClick={() => moveFile(index, index + 1)}
+                                className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded"
+                                title="Move down"
+                              >
+                                ↓
+                              </button>
+                            )}
+                          </>
+                        )}
+                        <button
+                          onClick={() => removeFile(index)}
+                          className="p-1 hover:bg-red-100 dark:hover:bg-red-900/20 text-red-600 rounded"
+                          title="Remove file"
+                        >
+                          ×
+                        </button>
+                      </div>
                     </div>
                   ))}
                 </div>
-              )}
-            </div>
 
-            {error && (
-              <div className="retro-alert retro-alert-error font-mono font-bold">
-                ERROR: {error}
+                <div className="flex gap-3 mt-6">
+                  <button
+                    onClick={processPDFs}
+                    disabled={loading}
+                    className="minimal-button minimal-button-primary flex-1 disabled:opacity-50"
+                  >
+                    {loading ? (
+                      <>
+                        <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+                        Processing...
+                      </>
+                    ) : (
+                      <>
+                        {activeTab === 'merge' ? <Merge className="h-4 w-4" /> : <Scissors className="h-4 w-4" />}
+                        {activeTab === 'merge' ? 'Merge PDFs' : 'Split PDF'}
+                      </>
+                    )}
+                  </button>
+
+                  <button
+                    onClick={clearAll}
+                    className="minimal-button minimal-button-secondary"
+                  >
+                    <RotateCcw className="h-4 w-4" />
+                    Clear
+                  </button>
+                </div>
               </div>
             )}
 
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button
-                onClick={processFiles}
-                disabled={loading || selectedFiles.length === 0}
-                className="btn-primary flex-1 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed font-mono"
-              >
-                {loading ? (
-                  <>
-                    <div className="retro-spinner"></div>
-                    <span>PROCESSING...</span>
-                  </>
-                ) : (
-                  <>
-                    {activeTab === 'merge' ? <Merge className="h-4 w-4" /> :
-                     activeTab === 'split' ? <Scissors className="h-4 w-4" /> :
-                     <Download className="h-4 w-4" />}
-                    <span>
-                      {activeTab === 'merge' ? 'MERGE PDFs' :
-                       activeTab === 'split' ? 'SPLIT PDF' :
-                       'CONVERT PDF'}
-                    </span>
-                  </>
-                )}
-              </button>
-
-              <button
-                onClick={clearAll}
-                className="btn-secondary flex items-center justify-center space-x-2 font-mono px-4 py-2"
-              >
-                <RotateCcw className="h-4 w-4" />
-                <span>CLEAR</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Info Section */}
-        <div className="card p-6">
-          <div className="bg-green-500 text-black font-bold py-2 px-4 mb-4 border-b-4 border-black">
-            <h2 className="text-xl font-mono">
-              [INFO] OPERATION DETAILS
-            </h2>
-          </div>
-          
-          <div className="space-y-4">
-            {activeTab === 'merge' && (
-              <div className="bg-yellow-200 p-4 border-4 border-black">
-                <h3 className="font-bold font-mono text-black mb-2">MERGE PDFs:</h3>
-                <ul className="text-sm font-mono text-black space-y-1">
-                  <li>• COMBINE MULTIPLE PDF FILES</li>
-                  <li>• MAINTAIN ORIGINAL QUALITY</li>
-                  <li>• PRESERVE BOOKMARKS</li>
-                  <li>• CUSTOM PAGE ORDER</li>
-                </ul>
+            {/* Result Section */}
+            {result && (
+              <div className="minimal-card">
+                <h2 className="minimal-h2 mb-6">
+                  Processing Complete
+                </h2>
+                
+                <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-6">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <FileText className="h-8 w-8 text-green-600" />
+                      <div>
+                        <div className="font-semibold text-green-900 dark:text-green-100">
+                          {result.filename}
+                        </div>
+                        <div className="text-sm text-green-700 dark:text-green-300">
+                          {result.size} • {result.pages} pages
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <button
+                      onClick={downloadResult}
+                      className="minimal-button minimal-button-primary"
+                    >
+                      <Download className="h-4 w-4" />
+                      Download
+                    </button>
+                  </div>
+                </div>
+                
+                <div className="mt-4 p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
+                  <div className="text-sm text-yellow-700 dark:text-yellow-300">
+                    <strong>Note:</strong> This is a demo interface. Actual PDF processing requires server-side implementation with PDF manipulation libraries.
+                  </div>
+                </div>
               </div>
             )}
-            
-            {activeTab === 'split' && (
-              <div className="bg-blue-200 p-4 border-4 border-black">
-                <h3 className="font-bold font-mono text-black mb-2">SPLIT PDF:</h3>
-                <ul className="text-sm font-mono text-black space-y-1">
-                  <li>• EXTRACT SPECIFIC PAGES</li>
-                  <li>• SPLIT BY PAGE RANGES</li>
-                  <li>• CREATE SEPARATE FILES</li>
-                  <li>• BATCH PROCESSING</li>
-                </ul>
-              </div>
-            )}
-            
-            {activeTab === 'convert' && (
-              <div className="bg-green-200 p-4 border-4 border-black">
-                <h3 className="font-bold font-mono text-black mb-2">CONVERT PDF:</h3>
-                <ul className="text-sm font-mono text-black space-y-1">
-                  <li>• PDF TO IMAGES (PNG/JPG)</li>
-                  <li>• PDF TO TEXT</li>
-                  <li>• PDF TO WORD</li>
-                  <li>• HIGH QUALITY OUTPUT</li>
-                </ul>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Tips Section */}
-      <div className="mt-8 card p-6">
-        <div className="bg-purple-500 text-white font-bold py-2 px-4 mb-4 border-b-4 border-black">
-          <h3 className="text-lg font-mono">
-            [TIPS] PDF BEST PRACTICES
-          </h3>
-        </div>
-        <div className="retro-alert retro-alert-warning">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-black font-mono font-bold">
-            <div>
-              {'>> SMALLER FILES PROCESS FASTER'}
-            </div>
-            <div>
-              {'>> CHECK FILE PERMISSIONS FIRST'}
-            </div>
-            <div>
-              {'>> BACKUP ORIGINAL FILES'}
-            </div>
-            <div>
-              {'>> USE DESCRIPTIVE FILENAMES'}
-            </div>
           </div>
         </div>
       </div>
