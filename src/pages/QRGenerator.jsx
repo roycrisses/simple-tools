@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import { QrCode, Download, Copy, RotateCcw, Upload, FileImage } from 'lucide-react'
+import { QrCode, Download, Copy, RotateCcw, FileImage } from 'lucide-react'
 import QRCodeLib from 'qrcode'
 
 const QRGenerator = () => {
@@ -10,9 +10,8 @@ const QRGenerator = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [uploadedImage, setUploadedImage] = useState(null)
-  const [processingImage, setProcessingImage] = useState(false)
   const [uploadingToHost, setUploadingToHost] = useState(false)
-  const [activeTab, setActiveTab] = useState('text') // 'text' or 'image'
+  const [activeTab, setActiveTab] = useState('text')
   const fileInputRef = useRef(null)
 
   const generateQR = async () => {
@@ -161,48 +160,37 @@ const QRGenerator = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-4">
-      {/* Page Title for Accessibility */}
-      <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-          QR Code Generator
-        </h1>
-        <p className="text-xl text-gray-600 dark:text-gray-300">
-          Convert text, URLs, or images into QR codes instantly
-        </p>
-      </div>
-
-      {/* Retro Window Header */}
-      <div className="retro-window mb-8">
-        <div className="retro-window-header">
-          <div className="flex items-center space-x-3">
-            <QrCode className="h-6 w-6" />
-            <span className="text-lg font-bold">QR CODE GENERATOR v1.0</span>
-          </div>
-          <div className="retro-window-controls">
-            <div className="retro-window-control control-minimize"></div>
-            <div className="retro-window-control control-maximize"></div>
-            <div className="retro-window-control control-close"></div>
-          </div>
-        </div>
-        <div className="p-6 bg-gray-100 dark:bg-gray-700">
-          <div className="text-center mb-6">
-            <p className="text-lg font-bold text-black dark:text-white font-mono">
-              {'>> CONVERT TEXT, URLS, OR IMAGES INTO QR CODES INSTANTLY <<'}
+    <div className="min-h-screen">
+      {/* Minimal Header */}
+      <div className="minimal-hero">
+        <div className="minimal-container">
+          <div className="text-center max-w-3xl mx-auto">
+            <div className="flex items-center justify-center mb-6">
+              <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mr-3">
+                <QrCode className="h-6 w-6 text-white" />
+              </div>
+              <h1 className="minimal-h1 mb-0">
+                QR Code Generator
+              </h1>
+            </div>
+            
+            <p className="minimal-text text-lg">
+              Generate QR codes for text, URLs, or any content you need to share.
             </p>
           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Input Section */}
-        <div className="card p-6">
-          <div className="bg-blue-500 text-white font-bold py-2 px-4 mb-4 border-b-4 border-black">
-            <h2 className="text-xl font-mono">
-              [INPUT] ENTER YOUR CONTENT
-            </h2>
-          </div>
-          
+      {/* Main Content */}
+      <div className="py-16">
+        <div className="minimal-container">
+          <div className="minimal-grid minimal-grid-2">
+            {/* Input Section */}
+            <div className="minimal-card">
+              <h2 className="minimal-h2 mb-6">
+                Enter Content
+              </h2>
+              
               {/* Tab Selection */}
               <div className="flex mb-6 bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
                 <button
@@ -441,25 +429,6 @@ const QRGenerator = () => {
         </div>
         <div className="retro-alert retro-alert-warning">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-black font-mono font-bold">
-            <div>
-              {'>> KEEP IT SIMPLE: SHORTER TEXT = CLEANER CODES'}
-            </div>
-            <div>
-              {'>> TEST BEFORE USE: ALWAYS SCAN TO VERIFY'}
-            </div>
-            <div>
-              {'>> SIZE MATTERS: LARGER = EASIER TO SCAN'}
-            </div>
-            <div>
-              {'>> UPLOAD IMAGES: CREATES URL FOR QR 📷'}
-            </div>
-            <div>
-              {'>> FUN FACT: QR = QUICK RESPONSE! ⚡'}
-            </div>
-            <div>
-              {'>> CAN STORE 4,296 CHARACTERS MAX! 📊'}
-            </div>
-            </div>
           </div>
         </div>
       </div>
