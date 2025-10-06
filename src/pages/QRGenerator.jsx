@@ -36,14 +36,10 @@ const QRGenerator = () => {
         setUploadingToHost(true)
         
         try {
-          // Upload image to hosting service and get URL
           const imageUrl = await uploadImageToHost(uploadedImage)
           dataToEncode = imageUrl
           filename = `qr-code-image-${Date.now()}.png`
-          
-          // Update text to show the URL that will be encoded
           setText(`Image URL: ${imageUrl}`)
-          
         } catch (uploadError) {
           setError('Failed to upload image. Please try again or use text mode.')
           setLoading(false)
@@ -54,9 +50,8 @@ const QRGenerator = () => {
         }
       }
       
-      // Generate QR code client-side
       const qrDataURL = await QRCodeLib.toDataURL(dataToEncode, {
-        width: size * 20, // Convert size to pixels
+        width: size * 20,
         margin: border,
         color: {
           dark: '#000000',
@@ -64,11 +59,7 @@ const QRGenerator = () => {
         }
       })
       
-      setQrResult({
-        success: true,
-        url: qrDataURL,
-        filename: filename
-      })
+      setQrResult(qrDataURL)
     } catch (err) {
       setError(`Failed to generate QR code: ${err.message}`)
     } finally {
@@ -79,8 +70,8 @@ const QRGenerator = () => {
   const downloadQR = () => {
     if (qrResult) {
       const link = document.createElement('a')
-      link.href = qrResult.url
-      link.download = qrResult.filename
+      link.download = `qr-code-${Date.now()}.png`
+      link.href = qrResult
       document.body.appendChild(link)
       link.click()
       document.body.removeChild(link)
@@ -90,7 +81,6 @@ const QRGenerator = () => {
   const copyToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(text)
-      // You could add a toast notification here
     } catch (err) {
       console.error('Failed to copy text: ', err)
     }
@@ -108,7 +98,6 @@ const QRGenerator = () => {
       reader.onload = (e) => {
         setUploadedImage(e.target.result)
         setError('')
-        // Set a placeholder text to indicate image is ready
         setText('Image ready for QR conversion')
       }
       reader.readAsDataURL(file)
@@ -117,18 +106,14 @@ const QRGenerator = () => {
 
   const uploadImageToHost = async (imageDataUrl) => {
     try {
-      // Convert data URL to blob
       const response = await fetch(imageDataUrl)
       const blob = await response.blob()
       
-      // Create form data
       const formData = new FormData()
       formData.append('image', blob)
       
-      // Upload to ImgBB using your API key
       const apiKey = '15e11b72ae8aba63233d22d2e90198f5'
       
-      // Real ImgBB upload
       const uploadResponse = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
         method: 'POST',
         body: formData
@@ -141,13 +126,11 @@ const QRGenerator = () => {
       } else {
         throw new Error(`Upload failed: ${result.error?.message || 'Unknown error'}`)
       }
-      
     } catch (error) {
       console.error('Image upload error:', error)
       throw new Error('Failed to upload image to hosting service')
     }
   }
-
 
   const clearAll = () => {
     setText('')
@@ -284,142 +267,146 @@ const QRGenerator = () => {
                     {uploadingToHost && (
                       <div className="mt-3 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
                         <div className="flex items-center space-x-2">
-                      <div className="retro-spinner"></div>
-                      <span>UPLOADING IMAGE TO HOSTING SERVICE...</span>
+                          <div className="animate-spin rounded-full h-4 w-4 border-2 border-yellow-600 border-t-transparent"></div>
+                          <span className="text-sm text-yellow-700 dark:text-yellow-300">Uploading image...</span>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {uploadedImage && !qrResult && (
+                      <div className="mt-3 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+                        <span className="text-sm text-blue-700 dark:text-blue-300">📷 Image uploaded! Click Generate QR Code to create QR code</span>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {error && (
+                  <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                    <span className="text-red-700 dark:text-red-300 text-sm">{error}</span>
+                  </div>
+                )}
+
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Size (Modules)
+                      </label>
+                      <input
+                        type="range"
+                        min="5"
+                        max="20"
+                        value={size}
+                        onChange={(e) => setSize(parseInt(e.target.value))}
+                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                      />
+                      <div className="text-center text-sm minimal-text mt-1">
+                        {size} modules ({size * 20}px)
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Border (Margin)
+                      </label>
+                      <input
+                        type="range"
+                        min="0"
+                        max="10"
+                        value={border}
+                        onChange={(e) => setBorder(parseInt(e.target.value))}
+                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                      />
+                      <div className="text-center text-sm minimal-text mt-1">
+                        {border} modules border
+                      </div>
                     </div>
                   </div>
-                )}
-                
-                {uploadedImage && !qrResult && (
-                  <div className="retro-alert retro-alert-info font-mono font-bold">
-                    📷 IMAGE UPLOADED! CLICK "CONVERT TO QR" TO GENERATE QR CODE
+                </div>
+
+                <div className="flex gap-3">
+                  <button
+                    onClick={generateQR}
+                    disabled={loading || (activeTab === 'text' && !text.trim()) || (activeTab === 'image' && !uploadedImage)}
+                    className="minimal-button minimal-button-primary flex-1 disabled:opacity-50"
+                    data-testid="generate-qr-button"
+                  >
+                    {loading ? (
+                      <>
+                        <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+                        Generating...
+                      </>
+                    ) : (
+                      <>
+                        <QrCode className="h-4 w-4" />
+                        Generate QR Code
+                      </>
+                    )}
+                  </button>
+
+                  <button
+                    onClick={clearAll}
+                    className="minimal-button minimal-button-secondary"
+                    data-testid="clear-button"
+                  >
+                    <RotateCcw className="h-4 w-4" />
+                    Clear
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Result Section */}
+            <div className="minimal-card">
+              <h2 className="minimal-h2 mb-6">
+                Your QR Code
+              </h2>
+
+              {qrResult ? (
+                <div className="space-y-6">
+                  <div className="bg-white p-6 rounded-lg border border-gray-200 dark:border-gray-700 flex justify-center">
+                    <img
+                      src={qrResult}
+                      alt="Generated QR Code"
+                      className="max-w-full h-auto"
+                      data-testid="qr-code-image"
+                    />
                   </div>
-                )}
-                
-                {uploadedImage && qrResult && (
-                  <div className="retro-alert retro-alert-success font-mono font-bold">
-                    ✅ IMAGE SUCCESSFULLY CONVERTED TO QR CODE!
+
+                  <div className="flex gap-3">
+                    <button
+                      onClick={downloadQR}
+                      className="minimal-button minimal-button-primary flex-1"
+                      data-testid="download-button"
+                    >
+                      <Download className="h-4 w-4" />
+                      Download QR
+                    </button>
+
+                    <button
+                      onClick={copyToClipboard}
+                      className="minimal-button minimal-button-secondary"
+                      data-testid="copy-button"
+                    >
+                      <Copy className="h-4 w-4" />
+                      Copy Image
+                    </button>
                   </div>
-                )}
-              </div>
-            )}
-
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-bold text-black dark:text-white mb-2 font-mono">
-                  SIZE:
-                </label>
-                <select
-                  value={size}
-                  onChange={(e) => setSize(parseInt(e.target.value))}
-                  className="input-field font-mono font-bold"
-                >
-                  <option value={5}>SMALL (5)</option>
-                  <option value={10}>MEDIUM (10)</option>
-                  <option value={15}>LARGE (15)</option>
-                  <option value={20}>EXTRA LARGE (20)</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-bold text-black dark:text-white mb-2 font-mono">
-                  BORDER:
-                </label>
-                <select
-                  value={border}
-                  onChange={(e) => setBorder(parseInt(e.target.value))}
-                  className="input-field font-mono font-bold"
-                >
-                  <option value={1}>THIN (1)</option>
-                  <option value={4}>NORMAL (4)</option>
-                  <option value={8}>THICK (8)</option>
-                </select>
-              </div>
-            </div>
-
-            {error && (
-              <div className="retro-alert retro-alert-error font-mono font-bold">
-                ERROR: {error}
-              </div>
-            )}
-
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button
-                onClick={generateQR}
-                disabled={loading || (activeTab === 'text' && !text.trim()) || (activeTab === 'image' && !uploadedImage)}
-                className="btn-primary flex-1 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed font-mono"
-              >
-                {loading || uploadingToHost ? (
-                  <>
-                    <div className="retro-spinner"></div>
-                    <span>{activeTab === 'image' ? (uploadingToHost ? 'UPLOADING...' : 'GENERATING...') : 'GENERATING...'}</span>
-                  </>
-                ) : (
-                  <>
-                    <QrCode className="h-4 w-4" />
-                    <span>{activeTab === 'image' ? 'CONVERT TO QR' : 'GENERATE QR'}</span>
-                  </>
-                )}
-              </button>
-
-              <button
-                onClick={clearAll}
-                className="btn-secondary flex items-center justify-center space-x-2 font-mono px-4 py-2"
-              >
-                <RotateCcw className="h-4 w-4" />
-                <span>CLEAR</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Result Section */}
-        <div className="card p-6">
-          <div className="bg-green-500 text-black font-bold py-2 px-4 mb-4 border-b-4 border-black">
-            <h2 className="text-xl font-mono">
-              [OUTPUT] GENERATED QR CODE
-            </h2>
-          </div>
-          
-          {qrResult ? (
-            <div className="space-y-4">
-              <div className="bg-white p-4 border-4 border-black flex items-center justify-center" style={{boxShadow: '4px 4px 0px #000, 8px 8px 0px rgba(0,0,0,0.3)'}}>
-                <img
-                  src={qrResult.url}
-                  alt="Generated QR Code"
-                  className="max-w-full h-auto"
-                />
-              </div>
-              
-              <div className="flex flex-col sm:flex-row gap-4">
-                <button
-                  onClick={downloadQR}
-                  className="btn-primary flex-1 flex items-center justify-center space-x-2 font-mono"
-                >
-                  <Download className="h-4 w-4" />
-                  <span>DOWNLOAD</span>
-                </button>
-                
-                <button
-                  onClick={copyToClipboard}
-                  className="btn-secondary flex items-center justify-center space-x-2 font-mono"
-                >
-                  <Copy className="h-4 w-4" />
-                  <span>COPY TEXT</span>
-                </button>
-              </div>
-            </div>
-          ) : (
-            <div className="flex flex-col items-center justify-center h-64 bg-gray-200 dark:bg-gray-600 border-4 border-black">
-              <QrCode className="h-16 w-16 mb-4 text-black dark:text-white" />
-              <p className="text-center font-mono font-bold text-black dark:text-white">
-                ENTER SOME TEXT AND CLICK "GENERATE QR" TO CREATE YOUR QR CODE
-              </p>
-            </div>
-          )}
-        </div>
-      </div>
-
+                </div>
+              ) : (
+                <div className="flex flex-col items-center justify-center h-48 text-center">
+                  <div className="w-12 h-12 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center mb-4">
+                    <QrCode className="h-6 w-6 text-gray-400" />
+                  </div>
+                  <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
+                    Ready to Generate
+                  </h3>
+                  <p className="minimal-text text-sm">
+                    Enter some text and click generate to create your QR code
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>
