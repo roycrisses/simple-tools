@@ -12,7 +12,8 @@ import {
   ArrowRight,
   Zap,
   Shield,
-  Heart
+  Heart,
+  Link as LinkIcon
 } from 'lucide-react'
 
 const Tools = () => {
@@ -34,28 +35,28 @@ const Tools = () => {
     },
     {
       name: 'Image Resizer',
-      description: 'Resize images to custom dimensions while maintaining quality',
+      description: 'Resize and optimize images while maintaining quality',
       features: [
-        'Multiple format support (JPG, PNG, GIF)',
-        'Custom width and height',
-        'Aspect ratio preservation',
-        'Batch processing ready',
-        'No quality loss'
+        'Batch image processing',
+        'Multiple format support',
+        'Quality preservation',
+        'Instant preview',
+        'Social media presets'
       ],
       icon: Image,
       path: '/image-resizer',
       color: 'green',
-      status: 'New'
+      status: 'Popular'
     },
     {
       name: 'YouTube Downloader',
-      description: 'Download YouTube videos and audio in various formats and qualities',
+      description: 'Download YouTube videos in various formats and qualities',
       features: [
-        'Multiple video qualities',
+        'Multiple quality options',
         'Audio-only downloads',
         'Fast processing',
         'No registration required',
-        'Direct download links'
+        'Safe and secure'
       ],
       icon: Download,
       path: '/youtube-downloader',
@@ -64,13 +65,13 @@ const Tools = () => {
     },
     {
       name: 'Coin Flip',
-      description: 'Make quick, unbiased decisions with our virtual coin flip tool',
+      description: 'Make random decisions with a virtual coin flip',
       features: [
-        'Realistic coin animation',
-        'Statistics tracking',
-        'Multiple flip sessions',
-        'Fair randomization',
-        'Quick decision making'
+        'True randomness',
+        'Flip history tracking',
+        'Statistics display',
+        'Smooth animations',
+        'Perfect for decisions'
       ],
       icon: Coins,
       path: '/coin-flip',
@@ -79,13 +80,13 @@ const Tools = () => {
     },
     {
       name: 'PDF Tools',
-      description: 'Comprehensive PDF manipulation tools for all your document needs',
+      description: 'Merge, split, and manipulate PDF files with ease',
       features: [
         'Merge multiple PDFs',
         'Split PDF pages',
-        'Compress file size',
-        'Convert to/from PDF',
-        'Password protection'
+        'Password protection',
+        'Compress files',
+        'Extract pages'
       ],
       icon: FileText,
       path: '/pdf-tools',
@@ -94,13 +95,13 @@ const Tools = () => {
     },
     {
       name: 'Text Tools',
-      description: 'Powerful text manipulation and analysis utilities',
+      description: 'Comprehensive text manipulation and analysis tools',
       features: [
-        'Word and character count',
         'Case conversion (upper/lower)',
         'Text formatting',
         'Find and replace',
-        'Text analysis'
+        'Text analysis',
+        'Word count statistics'
       ],
       icon: Type,
       path: '/text-tools',
@@ -135,6 +136,36 @@ const Tools = () => {
       icon: Calculator,
       path: '/unit-converter',
       color: 'teal',
+      status: 'New'
+    },
+    {
+      name: 'Domain Authority Checker',
+      description: 'Check domain authority and SEO metrics for any website',
+      features: [
+        'Domain authority score',
+        'Page authority metrics',
+        'Backlink analysis',
+        'SEO insights',
+        'Competitor comparison'
+      ],
+      icon: Shield,
+      path: '/domain-authority',
+      color: 'blue',
+      status: 'Popular'
+    },
+    {
+      name: 'Backlink Checker',
+      description: 'Analyze backlink profiles and discover link opportunities',
+      features: [
+        'Backlink discovery',
+        'Authority analysis',
+        'Anchor text review',
+        'Competitor research',
+        'Link quality assessment'
+      ],
+      icon: LinkIcon,
+      path: '/backlink-checker',
+      color: 'green',
       status: 'New'
     }
   ]
@@ -212,161 +243,135 @@ const Tools = () => {
   }
 
   return (
-    <div className="max-w-5xl mx-auto">
-      {/* Retro Window Header */}
-      <div className="retro-window mb-8">
-        <div className="retro-window-header">
-          <div className="flex items-center space-x-3">
-            <span className="text-lg font-bold">ALL TOOLS v1.0</span>
+    <div className="min-h-screen">
+      {/* Minimal Header */}
+      <div className="minimal-hero">
+        <div className="minimal-container">
+          <div className="text-center max-w-4xl mx-auto">
+            <div className="flex items-center justify-center mb-6">
+              <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mr-3">
+                <Zap className="h-6 w-6 text-white" />
+              </div>
+              <h1 className="minimal-h1 mb-0">
+                All Tools
+              </h1>
+            </div>
+            
+            <p className="minimal-text text-lg mb-8">
+              Complete collection of free utilities for daily use. Everything you need in one place.
+            </p>
+
+            {/* Stats */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-2xl mx-auto">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-blue-600 mb-2">{tools.length}</div>
+                <div className="minimal-text">Total Tools</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-green-600 mb-2">100%</div>
+                <div className="minimal-text">Free to Use</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-purple-600 mb-2">24/7</div>
+                <div className="minimal-text">Available</div>
+              </div>
+            </div>
           </div>
-          <div className="retro-window-controls">
-            <div className="retro-window-control control-minimize"></div>
-            <div className="retro-window-control control-maximize"></div>
-            <div className="retro-window-control control-close"></div>
-          </div>
-        </div>
-        <div className="p-8 bg-gray-100 dark:bg-gray-700 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold text-black dark:text-white mb-6 font-mono">
-            ALL TOOLS FOR{' '}
-            <span className="text-blue-600 dark:text-blue-400">DAILY USE</span>
-          </h1>
-          <p className="text-xl md:text-2xl text-black dark:text-white mb-8 max-w-3xl mx-auto font-mono font-bold">
-            {'>> COMPLETE COLLECTION OF FREE UTILITIES FOR EVERYONE <<'}
-          </p>
         </div>
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-        <div className="card p-6 text-center">
-          <div className="w-16 h-16 bg-blue-400 border-4 border-black flex items-center justify-center mx-auto mb-4">
-            <span className="text-2xl font-mono font-bold text-black">{tools.length}</span>
-          </div>
-          <h3 className="text-xl font-bold text-black dark:text-white mb-2 font-mono">
-            TOTAL TOOLS
-          </h3>
-          <p className="text-black dark:text-white font-mono">
-            AVAILABLE NOW
-          </p>
-        </div>
-        
-        <div className="card p-6 text-center">
-          <div className="w-16 h-16 bg-green-400 border-4 border-black flex items-center justify-center mx-auto mb-4">
-            <span className="text-2xl">🔒</span>
-          </div>
-          <h3 className="text-xl font-bold text-black dark:text-white mb-2 font-mono">
-            100% PRIVATE
-          </h3>
-          <p className="text-black dark:text-white font-mono">
-            NO DATA STORED
-          </p>
-        </div>
-        
-        <div className="card p-6 text-center">
-          <div className="w-16 h-16 bg-yellow-400 border-4 border-black flex items-center justify-center mx-auto mb-4">
-            <span className="text-2xl">💯</span>
-          </div>
-          <h3 className="text-xl font-bold text-black dark:text-white mb-2 font-mono">
-            ALWAYS FREE
-          </h3>
-          <p className="text-black dark:text-white font-mono">
-            NO HIDDEN COSTS
-          </p>
-        </div>
-      </div>
-
-      {/* Tools List */}
-      <div className="card p-6 mb-8">
-        <div className="bg-green-500 text-black font-bold py-2 px-4 mb-4 border-b-4 border-black">
-          <h2 className="text-3xl md:text-4xl font-mono text-center">
-            [TOOLS] COMPLETE COLLECTION
-          </h2>
-        </div>
-      </div>
-      
-      <div className="space-y-6">
-        {tools.map((tool, index) => {
-          const IconComponent = tool.icon
-          const isComingSoon = tool.status === 'Coming Soon'
-          const colorClasses = getColorClasses(tool.color)
-          
-          return (
-            <div 
-              key={index} 
-              className={`card transition-all duration-200 ${!isComingSoon ? 'hover:shadow-lg' : 'opacity-75'}`}
-              style={{boxShadow: '4px 4px 0px #000, 8px 8px 0px rgba(0,0,0,0.3)'}}
-            >
-              <div className="p-8">
-                <div className="flex flex-col lg:flex-row lg:items-start gap-6">
-                  {/* Left Side - Icon and Basic Info */}
-                  <div className="flex-shrink-0">
-                    <div className={`w-20 h-20 border-4 border-black flex items-center justify-center mb-4 ${colorClasses.iconBg}`}>
-                      <IconComponent className={`h-10 w-10 text-black`} />
+      {/* Tools Grid */}
+      <div className="py-16">
+        <div className="minimal-container">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {tools.map((tool, index) => {
+              const Icon = tool.icon
+              const colorClasses = getColorClasses(tool.color)
+              
+              return (
+                <div
+                  key={index}
+                  className={`bg-white dark:bg-gray-800 rounded-xl border-2 ${colorClasses.border} p-6 hover:shadow-lg transition-all duration-200 group`}
+                >
+                  {/* Tool Header */}
+                  <div className="flex items-start justify-between mb-4">
+                    <div className={`w-12 h-12 ${colorClasses.iconBg} rounded-lg flex items-center justify-center`}>
+                      <Icon className={`h-6 w-6 ${colorClasses.iconText}`} />
                     </div>
-                    <span className={`inline-block px-3 py-1 text-sm font-bold font-mono border-2 border-black ${getStatusColor(tool.status)}`}>
-                      {tool.status.toUpperCase()}
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(tool.status)}`}>
+                      {tool.status}
                     </span>
                   </div>
 
-                  {/* Middle - Description and Features */}
-                  <div className="flex-1">
-                    <h3 className="text-2xl font-bold text-black dark:text-white mb-3 font-mono">
-                      {tool.name.toUpperCase()}
+                  {/* Tool Info */}
+                  <div className="mb-4">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                      {tool.name}
                     </h3>
-                    <p className="text-black dark:text-white mb-4 text-lg font-mono">
+                    <p className="minimal-text text-sm mb-3">
                       {tool.description}
                     </p>
-                    
-                    {/* Features List */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                      {tool.features.map((feature, featureIndex) => (
-                        <div key={featureIndex} className="flex items-center text-sm text-black dark:text-white font-mono font-bold">
-                          <span className="mr-2 text-black">{'>> '}</span>
-                          {feature.toUpperCase()}
-                        </div>
-                      ))}
-                    </div>
                   </div>
 
-                  {/* Right Side - Action Button */}
-                  <div className="flex-shrink-0 lg:ml-6">
-                    {isComingSoon ? (
-                      <div className="px-6 py-3 bg-gray-400 text-black font-bold font-mono border-4 border-black cursor-not-allowed">
-                        COMING SOON
-                      </div>
-                    ) : (
-                      <Link
-                        to={tool.path}
-                        className={`inline-flex items-center space-x-2 px-6 py-3 ${colorClasses.button} text-black font-bold font-mono border-4 border-black transition-all duration-200 group hover:translate-x-1 hover:translate-y-1`}
-                        style={{boxShadow: '4px 4px 0px #000'}}
-                      >
-                        <span>USE TOOL</span>
-                        <ArrowRight className="h-4 w-4" />
-                      </Link>
-                    )}
+                  {/* Features */}
+                  <div className="mb-6">
+                    <ul className="space-y-1">
+                      {tool.features.slice(0, 3).map((feature, featureIndex) => (
+                        <li key={featureIndex} className="flex items-center text-sm minimal-text">
+                          <div className={`w-1.5 h-1.5 ${colorClasses.dot} rounded-full mr-2 flex-shrink-0`}></div>
+                          {feature}
+                        </li>
+                      ))}
+                      {tool.features.length > 3 && (
+                        <li className="text-xs minimal-text ml-3.5">
+                          +{tool.features.length - 3} more features
+                        </li>
+                      )}
+                    </ul>
                   </div>
+
+                  {/* Action Button */}
+                  <Link
+                    to={tool.path}
+                    className={`w-full ${colorClasses.button} text-white font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2 group-hover:shadow-md`}
+                  >
+                    <span>Use Tool</span>
+                    <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Link>
                 </div>
+              )
+            })}
+          </div>
+
+          {/* Call to Action */}
+          <div className="mt-16 text-center">
+            <div className="minimal-card max-w-2xl mx-auto">
+              <div className="flex items-center justify-center mb-4">
+                <Heart className="h-6 w-6 text-red-500 mr-2" />
+                <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+                  Love Our Tools?
+                </h2>
+              </div>
+              <p className="minimal-text mb-6">
+                All tools are completely free to use. Bookmark this page and share with others who might find these tools helpful!
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <Link
+                  to="/contact"
+                  className="minimal-button minimal-button-primary"
+                >
+                  Contact Us
+                </Link>
+                <Link
+                  to="/about"
+                  className="minimal-button minimal-button-secondary"
+                >
+                  Learn More
+                </Link>
               </div>
             </div>
-          )
-        })}
-      </div>
-
-      {/* Call to Action */}
-      <div className="mt-16 text-center bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-2xl p-8">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-          Need a Specific Tool?
-        </h2>
-        <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-2xl mx-auto">
-          We're constantly adding new tools based on user feedback. Have a suggestion for a tool that would make your life easier?
-        </p>
-        <Link
-          to="/about"
-          className="inline-flex items-center space-x-2 px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-xl transition-colors duration-200"
-        >
-          <span>Suggest a Tool</span>
-          <ArrowRight className="h-4 w-4" />
-        </Link>
+          </div>
+        </div>
       </div>
     </div>
   )
