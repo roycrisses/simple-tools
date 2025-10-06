@@ -75,3 +75,6 @@ pids/
 
 # Yarn Integrity file
 .yarn-integrity
+
+# TestSprite results
+test-results/

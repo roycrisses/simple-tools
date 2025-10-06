@@ -17,6 +17,17 @@ import About from './pages/About'
 import Contact from './pages/Contact'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import TermsOfService from './pages/TermsOfService'
+// New SEO Tools
+import DomainAuthorityChecker from './pages/DomainAuthorityChecker'
+import BacklinkChecker from './pages/BacklinkChecker'
+import WebsiteSEOChecker from './pages/WebsiteSEOChecker'
+// New Text Tools
+import PlagiarismChecker from './pages/PlagiarismChecker'
+import GrammarChecker from './pages/GrammarChecker'
+// New Keyword Tools
+import KeywordResearch from './pages/KeywordResearch'
+// New Image Tools
+import ImageCompressor from './pages/ImageCompressor'
 
 function App() {
   // Initialize with system preference to avoid flash
@@ -107,6 +118,17 @@ function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/terms-of-service" element={<TermsOfService />} />
+              {/* New SEO Tools Routes */}
+              <Route path="/domain-authority-checker" element={<DomainAuthorityChecker />} />
+              <Route path="/backlink-checker" element={<BacklinkChecker />} />
+              <Route path="/website-seo-checker" element={<WebsiteSEOChecker />} />
+              {/* New Text Tools Routes */}
+              <Route path="/plagiarism-checker" element={<PlagiarismChecker />} />
+              <Route path="/grammar-checker" element={<GrammarChecker />} />
+              {/* New Keyword Tools Routes */}
+              <Route path="/keyword-research" element={<KeywordResearch />} />
+              {/* New Image Tools Routes */}
+              <Route path="/image-compressor" element={<ImageCompressor />} />
             </Routes>
           </Layout>
         </main>

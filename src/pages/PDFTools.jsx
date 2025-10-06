@@ -130,8 +130,9 @@ const PDFTools = () => {
                   onChange={handleFileSelect}
                   accept=".pdf"
                   multiple={activeTab === 'merge'}
-                  className="hidden"
+                  className="opacity-0 absolute inset-0 w-full h-full cursor-pointer"
                   id="pdfUpload"
+                  data-testid="pdf-file-input"
                 />
                 
                 <label

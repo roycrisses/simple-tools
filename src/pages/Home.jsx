@@ -1,212 +1,151 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { QrCode, Image, Download, Coins, FileText, Type, Palette, Calculator, ArrowRight } from 'lucide-react'
+import { QrCode, Image, Download, Coins, FileText, Type, Palette, Calculator, ArrowRight, Globe, Link as LinkIcon, Search, BookOpen, Target, Minimize2 } from 'lucide-react'
 
 const Home = () => {
   const tools = [
-    {
-      name: 'QR Code Generator',
-      description: 'Convert text, links, or images into QR codes',
-      button: 'Generate QR',
-      icon: QrCode,
-      path: '/qr-generator',
-      color: 'primary'
-    },
-    {
-      name: 'Image Resizer',
-      description: 'Resize images to custom dimensions',
-      button: 'Resize',
-      icon: Image,
-      path: '/image-resizer',
-      color: 'secondary'
-    },
-    {
-      name: 'YouTube Downloader',
-      description: 'Download YouTube videos or audio easily',
-      button: 'Download',
-      icon: Download,
-      path: '/youtube-downloader',
-      color: 'primary'
-    },
-    {
-      name: 'Coin Flip',
-      description: 'Flip a virtual coin for quick decisions',
-      button: 'Flip Coin',
-      icon: Coins,
-      path: '/coin-flip',
-      color: 'secondary'
-    },
-    {
-      name: 'PDF Tools',
-      description: 'Merge, split, and convert PDF files',
-      button: 'PDF Tools',
-      icon: FileText,
-      path: '/pdf-tools',
-      color: 'primary'
-    },
-    {
-      name: 'Text Tools',
-      description: 'Word count, case converter, and more',
-      button: 'Text Tools',
-      icon: Type,
-      path: '/text-tools',
-      color: 'secondary'
-    },
-    {
-      name: 'Color Tools',
-      description: 'Color picker, palette generator',
-      button: 'Color Tools',
-      icon: Palette,
-      path: '/color-tools',
-      color: 'primary'
-    },
-    {
-      name: 'Unit Converter',
-      description: 'Length, weight, temperature, and more',
-      button: 'Convert',
-      icon: Calculator,
-      path: '/unit-converter',
-      color: 'secondary'
-    }
+    { name: 'QR Generator', description: 'Create QR codes instantly', path: '/qr-generator', icon: QrCode },
+    { name: 'Image Resizer', description: 'Resize images quickly', path: '/image-resizer', icon: Image },
+    { name: 'Image Compressor', description: 'Reduce image file sizes', path: '/image-compressor', icon: Minimize2 },
+    { name: 'PDF Tools', description: 'Merge, split, convert PDFs', path: '/pdf-tools', icon: FileText },
+    { name: 'Text Tools', description: 'Text manipulation utilities', path: '/text-tools', icon: Type },
+    { name: 'Color Tools', description: 'Color picker and palette', path: '/color-tools', icon: Palette },
+    { name: 'Unit Converter', description: 'Convert units easily', path: '/unit-converter', icon: Calculator },
+    { name: 'Domain Authority', description: 'Check SEO metrics', path: '/domain-authority-checker', icon: Globe },
+    { name: 'Backlink Checker', description: 'Analyze backlinks', path: '/backlink-checker', icon: LinkIcon },
+    { name: 'Website SEO Checker', description: 'Complete SEO analysis', path: '/website-seo-checker', icon: Search },
+    { name: 'Plagiarism Checker', description: 'Check content originality', path: '/plagiarism-checker', icon: FileText },
+    { name: 'Grammar Checker', description: 'Fix grammar and spelling', path: '/grammar-checker', icon: BookOpen },
+    { name: 'Keyword Research', description: 'Find profitable keywords', path: '/keyword-research', icon: Target },
+    { name: 'Coin Flip', description: 'Random coin flip', path: '/coin-flip', icon: Coins },
   ]
 
   return (
-    <div className="max-w-6xl mx-auto p-4">
-      {/* Retro Hero Section */}
-      <div className="retro-window mb-12">
-        <div className="retro-window-header">
-          <div className="flex items-center space-x-3">
-            <span className="text-lg font-bold">SIMPLE TOOLS v1.0</span>
-          </div>
-          <div className="retro-window-controls">
-            <div className="retro-window-control control-minimize"></div>
-            <div className="retro-window-control control-maximize"></div>
-            <div className="retro-window-control control-close"></div>
-          </div>
-        </div>
-        <div className="p-8 bg-gray-100 dark:bg-gray-700 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold text-black dark:text-white mb-6 font-mono">
-            SIMPLE TOOLS FOR{' '}
-            <span className="text-blue-600 dark:text-blue-400">DAILY USE</span>
-          </h1>
-          <p className="text-xl md:text-2xl text-black dark:text-white mb-8 max-w-3xl mx-auto font-mono font-bold">
-            {'>> QUICK, FREE, AND EASY-TO-USE UTILITIES FOR EVERYONE <<'}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Link
-              to="/tools"
-              className="btn-primary inline-flex items-center justify-center space-x-2 text-lg px-8 py-4 font-mono"
-            >
-              <span>EXPLORE TOOLS</span>
-              <ArrowRight className="h-5 w-5" />
-            </Link>
-            <Link
-              to="/about"
-              className="btn-secondary inline-flex items-center justify-center space-x-2 text-lg px-8 py-4 font-mono"
-            >
-              <span>LEARN MORE</span>
-            </Link>
+    <div className="min-h-screen">
+      {/* Minimal Hero Section */}
+      <section className="minimal-hero">
+        <div className="minimal-container">
+          <div className="text-center max-w-3xl mx-auto">
+            <h1 className="minimal-h1 mb-6">
+              Simple Tools for Everyone
+            </h1>
+            
+            <p className="minimal-text text-lg mb-8">
+              Free, fast, and easy-to-use tools for your daily tasks. No sign-up required.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                to="#tools"
+                className="minimal-button minimal-button-primary px-6 py-3"
+                onClick={(e) => {
+                  e.preventDefault()
+                  document.getElementById('tools')?.scrollIntoView({ behavior: 'smooth' })
+                }}
+              >
+                Browse Tools
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              
+              <Link
+                to="/about"
+                className="minimal-button minimal-button-secondary px-6 py-3"
+              >
+                Learn More
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
-
-      {/* Tools Section */}
-      <section id="tools" className="mb-16">
-        <div className="card p-6 mb-8">
-          <div className="bg-green-500 text-black font-bold py-2 px-4 mb-4 border-b-4 border-black">
-            <h2 className="text-3xl md:text-4xl font-mono text-center">
-              [TOOLS] AVAILABLE UTILITIES
+      </section>
+      <section id="tools" className="py-16">
+        <div className="minimal-container">
+          <div className="text-center mb-12">
+            <h2 className="minimal-h2 mb-4">
+              Available Tools
             </h2>
+            <p className="minimal-text">
+              Choose from our collection of useful utilities
+            </p>
           </div>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {tools.map((tool, index) => {
-            const IconComponent = tool.icon
-            return (
-              <div key={index} className="card p-6 group h-full flex flex-col">
-                {/* Icon Section - Fixed at top */}
-                <div className="flex justify-center mb-4">
-                  <div className={`p-4 border-4 border-black ${
-                    tool.color === 'primary' 
-                      ? 'bg-blue-400' 
-                      : 'bg-yellow-400'
-                  }`}>
-                    <IconComponent className="h-8 w-8 text-black" />
+          
+          <div className="minimal-grid minimal-grid-3">
+            {tools.map((tool, index) => {
+              const IconComponent = tool.icon
+              return (
+                <Link
+                  key={index}
+                  to={tool.path}
+                  className="minimal-card hover:minimal-shadow-lg transition-all duration-200 group"
+                >
+                  <div className="flex items-center mb-4">
+                    <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center mr-3">
+                      <IconComponent className="h-5 w-5 text-white" />
+                    </div>
+                    <h3 className="minimal-h2 mb-0">
+                      {tool.name}
+                    </h3>
                   </div>
-                </div>
-                
-                {/* Content Section - Flexible */}
-                <div className="flex-1 flex flex-col text-center">
-                  <h3 className="text-base font-bold text-black dark:text-white mb-3 font-mono leading-tight min-h-[3rem] flex items-center justify-center">
-                    {tool.name.toUpperCase()}
-                  </h3>
-                  <p className="text-sm text-black dark:text-white mb-6 font-mono flex-1 leading-relaxed min-h-[4rem] flex items-start justify-center text-center">
+                  
+                  <p className="minimal-text mb-4">
                     {tool.description}
                   </p>
                   
-                  {/* Button Section - Fixed at bottom */}
-                  <div className="mt-auto">
-                    <Link
-                      to={tool.path}
-                      className={`btn-${tool.color} inline-flex items-center justify-center space-x-2 font-mono w-full py-3 px-4 text-sm`}
-                    >
-                      <span>{tool.button.toUpperCase()}</span>
-                      <ArrowRight className="h-4 w-4" />
-                    </Link>
+                  <div className="flex items-center minimal-text group-hover:text-blue-500 transition-colors">
+                    <span>Try it now</span>
+                    <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
                   </div>
-                </div>
-              </div>
-            )
-          })}
+                </Link>
+              )
+            })}
+          </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="text-center">
-        <div className="card p-6 mb-8">
-          <div className="bg-purple-500 text-white font-bold py-2 px-4 mb-4 border-b-4 border-black">
-            <h2 className="text-3xl font-mono">
-              [FEATURES] WHY CHOOSE OUR TOOLS?
+      <section className="py-16 bg-gray-50 dark:bg-gray-800">
+        <div className="minimal-container">
+          <div className="text-center mb-12">
+            <h2 className="minimal-h2 mb-4">
+              Why Choose Simple Tools?
             </h2>
           </div>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="card p-6">
-            <div className="w-20 h-20 bg-blue-400 border-4 border-black flex items-center justify-center mx-auto mb-4">
-              <span className="text-3xl">🚀</span>
-            </div>
-            <h3 className="text-xl font-bold text-black dark:text-white mb-2 font-mono">
-              FAST & SIMPLE
-            </h3>
-            <p className="text-black dark:text-white font-mono">
-              NO COMPLEX SETUP OR REGISTRATION. JUST UPLOAD, PROCESS, AND DOWNLOAD.
-            </p>
-          </div>
           
-          <div className="card p-6">
-            <div className="w-20 h-20 bg-yellow-400 border-4 border-black flex items-center justify-center mx-auto mb-4">
-              <span className="text-3xl">🔒</span>
+          <div className="minimal-grid minimal-grid-3">
+            <div className="minimal-card text-center">
+              <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mx-auto mb-4">
+                <span className="text-xl">⚡</span>
+              </div>
+              <h3 className="minimal-h2 mb-2">
+                Fast & Simple
+              </h3>
+              <p className="minimal-text">
+                No registration required. Just upload, process, and download.
+              </p>
             </div>
-            <h3 className="text-xl font-bold text-black dark:text-white mb-2 font-mono">
-              PRIVACY FIRST
-            </h3>
-            <p className="text-black dark:text-white font-mono">
-              YOUR FILES ARE PROCESSED LOCALLY AND NEVER STORED ON OUR SERVERS.
-            </p>
-          </div>
-          
-          <div className="card p-6">
-            <div className="w-20 h-20 bg-green-400 border-4 border-black flex items-center justify-center mx-auto mb-4">
-              <span className="text-3xl">💯</span>
+            
+            <div className="minimal-card text-center">
+              <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mx-auto mb-4">
+                <span className="text-xl">🔒</span>
+              </div>
+              <h3 className="minimal-h2 mb-2">
+                Privacy First
+              </h3>
+              <p className="minimal-text">
+                Your files are processed locally. We never store your data.
+              </p>
             </div>
-            <h3 className="text-xl font-bold text-black dark:text-white mb-2 font-mono">
-              COMPLETELY FREE
-            </h3>
-            <p className="text-black dark:text-white font-mono">
-              ALL TOOLS ARE FREE TO USE WITH NO HIDDEN COSTS OR PREMIUM FEATURES.
-            </p>
+            
+            <div className="minimal-card text-center">
+              <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mx-auto mb-4">
+                <span className="text-xl">💯</span>
+              </div>
+              <h3 className="minimal-h2 mb-2">
+                Completely Free
+              </h3>
+              <p className="minimal-text">
+                All tools are free to use with no hidden costs or limits.
+              </p>
+            </div>
           </div>
         </div>
       </section>

@@ -177,7 +177,8 @@ const ImageResizer = () => {
                 type="file"
                 accept="image/*"
                 onChange={handleFileSelect}
-                className="hidden"
+                className="opacity-0 absolute inset-0 w-full h-full cursor-pointer"
+                data-testid="image-file-input"
               />
               
               {preview ? (
