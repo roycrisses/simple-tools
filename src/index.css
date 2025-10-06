@@ -3,13 +3,10 @@
 @tailwind utilities;
 
 @layer base {
-  /* Smooth theme transitions */
   html {
-    font-family: 'Courier New', 'Monaco', monospace;
-    transition: color-scheme 0.3s ease;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
   
-  /* Prevent flash of unstyled content */
   html.dark {
     color-scheme: dark;
   }
@@ -19,214 +16,22 @@
   }
   
   body {
-    @apply bg-gray-300 dark:bg-gray-800 text-gray-900 dark:text-gray-100;
-    background-image: 
-      radial-gradient(circle at 25% 25%, #f0f0f0 2px, transparent 2px),
-      radial-gradient(circle at 75% 75%, #e0e0e0 1px, transparent 1px);
-    background-size: 20px 20px;
+    @apply bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100;
     transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  
-  /* Dark mode background pattern */
-  .dark body {
-    background-image: 
-      radial-gradient(circle at 25% 25%, #374151 2px, transparent 2px),
-      radial-gradient(circle at 75% 75%, #4b5563 1px, transparent 1px);
   }
 }
 
 @layer components {
-  /* Retro 3D Button Styles */
-  .btn-primary {
-    @apply bg-blue-400 text-black font-bold py-3 px-6 relative transition-all duration-150;
-    border: 3px solid #000;
-    box-shadow: 
-      4px 4px 0px #000,
-      8px 8px 0px rgba(0,0,0,0.3);
-    transform: translate(-4px, -4px);
+  /* Clean, minimal components - no retro styling */
+}
+
+@layer utilities {
+  /* Clean utility classes */
+  .text-shadow {
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
   }
   
-  .btn-primary:hover {
-    @apply bg-blue-300;
-    transform: translate(-2px, -2px);
-    box-shadow: 
-      2px 2px 0px #000,
-      4px 4px 0px rgba(0,0,0,0.3);
-  }
-  
-  .btn-primary:active {
-    @apply bg-blue-500;
-    transform: translate(0px, 0px);
-    box-shadow: 
-      1px 1px 0px #000,
-      2px 2px 0px rgba(0,0,0,0.3);
-  }
-  
-  .btn-secondary {
-    @apply bg-yellow-400 text-black font-bold py-3 px-6 relative transition-all duration-150;
-    border: 3px solid #000;
-    box-shadow: 
-      4px 4px 0px #000,
-      8px 8px 0px rgba(0,0,0,0.3);
-    transform: translate(-4px, -4px);
-  }
-  
-  .btn-secondary:hover {
-    @apply bg-yellow-300;
-    transform: translate(-2px, -2px);
-    box-shadow: 
-      2px 2px 0px #000,
-      4px 4px 0px rgba(0,0,0,0.3);
-  }
-  
-  .btn-secondary:active {
-    @apply bg-yellow-500;
-    transform: translate(0px, 0px);
-    box-shadow: 
-      1px 1px 0px #000,
-      2px 2px 0px rgba(0,0,0,0.3);
-  }
-  
-  /* Retro 3D Card Styles */
-  .card {
-    @apply bg-gray-100 dark:bg-gray-700 relative;
-    border: 4px solid #000;
-    box-shadow: 
-      6px 6px 0px #000,
-      12px 12px 0px rgba(0,0,0,0.4);
-    transform: translate(-6px, -6px);
-    min-height: 280px; /* Ensure consistent card heights */
-  }
-  
-  .card:hover {
-    transform: translate(-3px, -3px);
-    box-shadow: 
-      3px 3px 0px #000,
-      6px 6px 0px rgba(0,0,0,0.4);
-  }
-  
-  /* Retro Window Style */
-  .retro-window {
-    @apply bg-gray-200 dark:bg-gray-600 relative;
-    border: 4px solid #000;
-    box-shadow: 
-      8px 8px 0px #000,
-      16px 16px 0px rgba(0,0,0,0.3);
-    transform: translate(-8px, -8px);
-  }
-  
-  .retro-window-header {
-    @apply bg-blue-500 text-white font-bold py-2 px-4 flex items-center justify-between;
-    border-bottom: 3px solid #000;
-  }
-  
-  .retro-window-controls {
-    @apply flex space-x-2;
-  }
-  
-  .retro-window-control {
-    @apply w-5 h-5 rounded-full border-2 border-black;
-  }
-  
-  .control-close { @apply bg-red-400; }
-  .control-minimize { @apply bg-yellow-400; }
-  .control-maximize { @apply bg-green-400; }
-  
-  /* Retro Input Fields */
-  .input-field {
-    @apply w-full px-4 py-3 bg-white dark:bg-gray-200 text-black font-mono font-bold;
-    border: 3px solid #000;
-    box-shadow: 
-      inset 3px 3px 0px rgba(0,0,0,0.3),
-      2px 2px 0px #000;
-  }
-  
-  .input-field:focus {
-    @apply outline-none;
-    box-shadow: 
-      inset 3px 3px 0px rgba(0,0,0,0.3),
-      2px 2px 0px #000,
-      0 0 0 3px #3b82f6;
-  }
-  
-  /* Retro Checkbox */
-  .retro-checkbox {
-    @apply appearance-none w-5 h-5 bg-white border-4 border-black relative;
-    box-shadow: inset 2px 2px 0px rgba(0,0,0,0.3);
-  }
-  
-  .retro-checkbox:checked {
-    @apply bg-green-400;
-  }
-  
-  .retro-checkbox:checked::after {
-    content: '✓';
-    @apply absolute inset-0 flex items-center justify-center text-black font-bold text-sm;
-  }
-  
-  /* Retro Radio Button */
-  .retro-radio {
-    @apply appearance-none w-5 h-5 bg-white border-4 border-black relative;
-    border-radius: 50%;
-    box-shadow: inset 2px 2px 0px rgba(0,0,0,0.3);
-  }
-  
-  .retro-radio:checked {
-    @apply bg-green-400;
-  }
-  
-  .retro-radio:checked::after {
-    content: '●';
-    @apply absolute inset-0 flex items-center justify-center text-black font-bold text-lg;
-  }
-  
-  /* Retro Progress/Loading */
-  .retro-spinner {
-    @apply w-6 h-6 border-4 border-black border-t-transparent;
-    animation: retro-spin 1s linear infinite;
-  }
-  
-  @keyframes retro-spin {
-    to { transform: rotate(360deg); }
-  }
-  
-  /* Retro Alert Boxes */
-  .retro-alert {
-    @apply relative p-4;
-    border: 3px solid #000;
-    box-shadow: 
-      4px 4px 0px #000,
-      8px 8px 0px rgba(0,0,0,0.3);
-    transform: translate(-4px, -4px);
-  }
-  
-  .retro-alert-error {
-    @apply bg-red-300 text-black;
-  }
-  
-  .retro-alert-success {
-    @apply bg-green-300 text-black;
-  }
-  
-  .retro-alert-warning {
-    @apply bg-yellow-300 text-black;
-  }
-  
-  /* Retro Format Selection */
-  .retro-format-option {
-    @apply p-4 bg-gray-100 dark:bg-gray-600 border-2 border-black cursor-pointer transition-all duration-150 rounded-none flex items-start space-x-4;
-    box-shadow: 2px 2px 0px rgba(0,0,0,0.3);
-  }
-  
-  .retro-format-option:hover {
-    @apply bg-gray-200 dark:bg-gray-500;
-    transform: translate(-1px, -1px);
-    box-shadow: 3px 3px 0px rgba(0,0,0,0.3);
-  }
-  
-  .retro-format-option.selected {
-    @apply bg-green-300 dark:bg-green-400 border-green-600;
-    transform: translate(-2px, -2px);
-    box-shadow: 4px 4px 0px rgba(0,0,0,0.3);
+  .dark .text-shadow {
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
   }
 }

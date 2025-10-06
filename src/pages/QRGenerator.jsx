@@ -203,100 +203,99 @@ const QRGenerator = () => {
             </h2>
           </div>
           
-          {/* Tab Selection */}
-          <div className="flex mb-4 border-4 border-black">
-            <button
-              onClick={() => setActiveTab('text')}
-              className={`flex-1 py-2 px-4 font-mono font-bold transition-colors ${
-                activeTab === 'text'
-                  ? 'bg-yellow-400 text-black'
-                  : 'bg-gray-200 text-black hover:bg-gray-300'
-              }`}
-            >
-              TEXT INPUT
-            </button>
-            <button
-              onClick={() => setActiveTab('image')}
-              className={`flex-1 py-2 px-4 font-mono font-bold transition-colors border-l-4 border-black ${
-                activeTab === 'image'
-                  ? 'bg-yellow-400 text-black'
-                  : 'bg-gray-200 text-black hover:bg-gray-300'
-              }`}
-            >
-              IMAGE UPLOAD
-            </button>
-          </div>
-          
-          <div className="space-y-4">
-            {activeTab === 'text' ? (
-              <div>
-                <label className="block text-sm font-bold text-black dark:text-white mb-2 font-mono">
-                  TEXT OR URL:
-                </label>
-                <textarea
-                  type="text"
-                  value={text}
-                  onChange={(e) => setText(e.target.value)}
-                  placeholder="ENTER TEXT, URL, OR ANY MESSAGE..."
-                  className="input-field h-32 resize-none font-mono"
-                  maxLength={1000}
-                  data-testid="qr-text-input"
-                />
-                <div className="text-sm text-black dark:text-white mt-1 font-mono font-bold">
-                  {text.length}/1000 CHARACTERS {text.length > 500 ? '💪 LONG TEXT!' : text.length > 100 ? '📄 GOOD SIZE' : text.length > 0 ? '📝 SHORT & SWEET' : ''}
-                </div>
+              {/* Tab Selection */}
+              <div className="flex mb-6 bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
+                <button
+                  onClick={() => setActiveTab('text')}
+                  className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${
+                    activeTab === 'text'
+                      ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
+                      : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
+                  }`}
+                >
+                  Text Input
+                </button>
+                <button
+                  onClick={() => setActiveTab('image')}
+                  className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${
+                    activeTab === 'image'
+                      ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
+                      : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
+                  }`}
+                >
+                  Image Upload
+                </button>
               </div>
-            ) : (
-              <div>
-                <label className="block text-sm font-bold text-black dark:text-white mb-2 font-mono">
-                  UPLOAD IMAGE TO CONVERT TO QR:
-                </label>
-                <div className="text-xs text-gray-600 dark:text-gray-400 mb-2 font-mono">
-                  📤 NOTE: Images will be uploaded to hosting service and QR will contain the image URL.
-                </div>
-                
-                <div className="border-4 border-black bg-gray-100 dark:bg-gray-600 p-4">
-                  <input
-                    type="file"
-                    ref={fileInputRef}
-                    onChange={handleImageUpload}
-                    accept="image/*"
-                    className="hidden"
-                    id="imageUpload"
-                  />
-                  
-                  <label
-                    htmlFor="imageUpload"
-                    className="cursor-pointer flex flex-col items-center justify-center h-32 border-2 border-dashed border-black bg-white hover:bg-gray-50 transition-colors"
-                  >
-                    {uploadedImage ? (
-                      <div className="flex flex-col items-center">
-                        <img
-                          src={uploadedImage}
-                          alt="Uploaded"
-                          className="max-h-20 max-w-20 object-contain mb-2"
-                        />
-                        <p className="text-sm font-mono font-bold text-black">
-                          CLICK TO CHANGE IMAGE
-                        </p>
-                      </div>
-                    ) : (
-                      <div className="flex flex-col items-center">
-                        <FileImage className="h-8 w-8 text-black mb-2" />
-                        <p className="text-sm font-mono font-bold text-black">
-                          CLICK TO UPLOAD IMAGE
-                        </p>
-                        <p className="text-xs font-mono text-black mt-1">
-                          JPG, PNG, GIF, etc.
-                        </p>
-                      </div>
-                    )}
-                  </label>
-                </div>
-                
-                {uploadingToHost && (
-                  <div className="retro-alert retro-alert-warning font-mono font-bold">
-                    <div className="flex items-center space-x-2">
+          
+              <div className="space-y-4">
+                {activeTab === 'text' ? (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      Text or URL
+                    </label>
+                    <textarea
+                      value={text}
+                      onChange={(e) => setText(e.target.value)}
+                      placeholder="Enter text, URL, or any message..."
+                      className="minimal-input h-32 resize-none"
+                      maxLength={1000}
+                      data-testid="qr-text-input"
+                    />
+                    <div className="minimal-text text-sm mt-1">
+                      {text.length}/1000 characters
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      Upload Image
+                    </label>
+                    <div className="minimal-text text-sm mb-3">
+                      💡 Images will be uploaded and QR will contain the image URL
+                    </div>
+                    
+                    <div className="p-4 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg">
+                      <input
+                        type="file"
+                        ref={fileInputRef}
+                        onChange={handleImageUpload}
+                        accept="image/*"
+                        className="hidden"
+                        id="imageUpload"
+                      />
+                      
+                      <label
+                        htmlFor="imageUpload"
+                        className="cursor-pointer flex flex-col items-center justify-center h-32 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors rounded-lg"
+                      >
+                        {uploadedImage ? (
+                          <div className="flex flex-col items-center">
+                            <img
+                              src={uploadedImage}
+                              alt="Uploaded"
+                              className="max-h-20 max-w-20 object-contain mb-2"
+                            />
+                            <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                              Click to change image
+                            </p>
+                          </div>
+                        ) : (
+                          <div className="flex flex-col items-center">
+                            <FileImage className="h-8 w-8 text-gray-400 mb-2" />
+                            <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                              Click to upload image
+                            </p>
+                            <p className="text-xs minimal-text mt-1">
+                              JPG, PNG, GIF, etc.
+                            </p>
+                          </div>
+                        )}
+                      </label>
+                    </div>
+                    
+                    {uploadingToHost && (
+                      <div className="mt-3 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
+                        <div className="flex items-center space-x-2">
                       <div className="retro-spinner"></div>
                       <span>UPLOADING IMAGE TO HOSTING SERVICE...</span>
                     </div>
@@ -459,6 +458,7 @@ const QRGenerator = () => {
             </div>
             <div>
               {'>> CAN STORE 4,296 CHARACTERS MAX! 📊'}
+            </div>
             </div>
           </div>
         </div>
