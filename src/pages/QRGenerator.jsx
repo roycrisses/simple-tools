@@ -420,15 +420,7 @@ const QRGenerator = () => {
         </div>
       </div>
 
-      {/* Tips Section */}
-      <div className="mt-8 card p-6">
-        <div className="bg-purple-500 text-white font-bold py-2 px-4 mb-4 border-b-4 border-black">
-          <h3 className="text-lg font-mono">
-            [TIPS] BETTER QR CODES
-          </h3>
-        </div>
-        <div className="retro-alert retro-alert-warning">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-black font-mono font-bold">
+            </div>
           </div>
         </div>
       </div>
