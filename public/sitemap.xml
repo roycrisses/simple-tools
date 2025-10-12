@@ -2,85 +2,139 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://simple-tools.netlify.app/</loc>
-    <lastmod>2024-01-01</lastmod>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://simple-tools.netlify.app/tools</loc>
-    <lastmod>2024-01-01</lastmod>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
+  
+  <!-- Core Tools -->
   <url>
     <loc>https://simple-tools.netlify.app/qr-generator</loc>
-    <lastmod>2024-01-01</lastmod>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://simple-tools.netlify.app/image-resizer</loc>
-    <lastmod>2024-01-01</lastmod>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://simple-tools.netlify.app/image-compressor</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://simple-tools.netlify.app/youtube-downloader</loc>
-    <lastmod>2024-01-01</lastmod>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Document Tools -->
+  <url>
+    <loc>https://simple-tools.netlify.app/pdf-tools</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Text Tools -->
+  <url>
+    <loc>https://simple-tools.netlify.app/text-tools</loc>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://simple-tools.netlify.app/coin-flip</loc>
-    <lastmod>2024-01-01</lastmod>
+    <loc>https://simple-tools.netlify.app/grammar-checker</loc>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://simple-tools.netlify.app/pdf-tools</loc>
-    <lastmod>2024-01-01</lastmod>
+    <loc>https://simple-tools.netlify.app/plagiarism-checker</loc>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- SEO Tools -->
+  <url>
+    <loc>https://simple-tools.netlify.app/domain-authority-checker</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://simple-tools.netlify.app/text-tools</loc>
-    <lastmod>2024-01-01</lastmod>
+    <loc>https://simple-tools.netlify.app/backlink-checker</loc>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://simple-tools.netlify.app/website-seo-checker</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://simple-tools.netlify.app/keyword-research</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Utility Tools -->
   <url>
     <loc>https://simple-tools.netlify.app/color-tools</loc>
-    <lastmod>2024-01-01</lastmod>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://simple-tools.netlify.app/unit-converter</loc>
-    <lastmod>2024-01-01</lastmod>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://simple-tools.netlify.app/coin-flip</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <!-- Information Pages -->
+  <url>
     <loc>https://simple-tools.netlify.app/about</loc>
-    <lastmod>2024-01-01</lastmod>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://simple-tools.netlify.app/contact</loc>
-    <lastmod>2024-01-01</lastmod>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://simple-tools.netlify.app/privacy-policy</loc>
-    <lastmod>2024-01-01</lastmod>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://simple-tools.netlify.app/terms-of-service</loc>
-    <lastmod>2024-01-01</lastmod>
+    <lastmod>2024-12-19</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>

@@ -7,21 +7,36 @@ Sitemap: https://simple-tools.netlify.app/sitemap.xml
 # Disallow temporary files and backend endpoints
 Disallow: /temp/
 Disallow: /api/
+Disallow: /backend/
+Disallow: /functions/
+Disallow: /node_modules/
 Disallow: /*.json$
 Disallow: /*.log$
+Disallow: /*.env$
+Disallow: /dist/
+Disallow: /src/
 
-# Allow important pages for indexing
-Allow: /
+# Allow all tool pages for indexing
 Allow: /tools
 Allow: /qr-generator
 Allow: /image-resizer
+Allow: /image-compressor
 Allow: /youtube-downloader
 Allow: /coin-flip
 Allow: /pdf-tools
 Allow: /text-tools
 Allow: /color-tools
 Allow: /unit-converter
+Allow: /domain-authority-checker
+Allow: /backlink-checker
+Allow: /website-seo-checker
+Allow: /grammar-checker
+Allow: /plagiarism-checker
+Allow: /keyword-research
 Allow: /about
 Allow: /contact
 Allow: /privacy-policy
 Allow: /terms-of-service
+
+# Crawl delay for respectful crawling
+Crawl-delay: 1

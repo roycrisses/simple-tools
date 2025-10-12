@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react'
 import { QrCode, Download, Copy, RotateCcw, FileImage } from 'lucide-react'
 import QRCodeLib from 'qrcode'
+import SEOHead from '../components/SEOHead'
 
 const QRGenerator = () => {
   const [text, setText] = useState('')
@@ -142,276 +143,342 @@ const QRGenerator = () => {
     }
   }
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "QR Code Generator",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Web Browser",
+    "description": "Generate high-quality QR codes instantly for text, URLs, images, and any content. Customizable size, border, and format options. Free, fast, and privacy-focused.",
+    "url": "https://simple-tools.netlify.app/qr-generator",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "featureList": [
+      "Instant QR code generation",
+      "Text and URL support",
+      "Image upload and conversion",
+      "Customizable size and border",
+      "High-quality output",
+      "Free download",
+      "Privacy-focused processing"
+    ]
+  }
+
   return (
-    <div className="min-h-screen">
-      {/* Minimal Header */}
-      <div className="minimal-hero">
-        <div className="minimal-container">
-          <div className="text-center max-w-3xl mx-auto">
-            <div className="flex items-center justify-center mb-6">
-              <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mr-3">
-                <QrCode className="h-6 w-6 text-white" />
-              </div>
-              <h1 className="minimal-h1 mb-0">
-                QR Code Generator
-              </h1>
-            </div>
-            
-            <p className="minimal-text text-lg">
-              Generate QR codes for text, URLs, or any content you need to share.
+    <>
+      <SEOHead
+        title="QR Code Generator - Free Online QR Code Creator"
+        description="Generate high-quality QR codes instantly for text, URLs, images, and any content. Customizable size, border, and format options. Free, fast, and privacy-focused QR code generator."
+        keywords="QR code generator, QR code creator, free QR code, QR code maker, QR code online, QR code text, QR code URL, QR code image, QR code download, QR code custom"
+        canonical="/qr-generator"
+        structuredData={structuredData}
+      />
+      <div className="max-w-6xl mx-auto p-4">
+      {/* Modern Hero Section */}
+      <div className="hero-modern mb-12">
+        <div className="max-w-4xl mx-auto">
+          <div className="icon-container mx-auto mb-6">
+            <QrCode className="h-8 w-8" />
+          </div>
+          <h1 className="heading-1 text-white mb-4">
+            QR Code Generator
+          </h1>
+          <p className="text-xl text-white/90 mb-6">
+            Generate QR codes for text, URLs, images, or any content you need to share
+          </p>
+          <div className="glass-modern rounded-xl p-4 inline-block">
+            <p className="text-white/80 text-sm">
+              ✨ Instant generation • Multiple formats • High quality output • Free download
             </p>
           </div>
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="py-16">
-        <div className="minimal-container">
-          <div className="minimal-grid minimal-grid-2">
-            {/* Input Section */}
-            <div className="minimal-card">
-              <h2 className="minimal-h2 mb-6">
-                Enter Content
-              </h2>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Input Section */}
+        <div className="modern-card p-6">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="icon-container w-12 h-12">
+              <QrCode className="h-6 w-6" />
+            </div>
+            <h2 className="heading-3 mb-0">
+              Enter Content
+            </h2>
+          </div>
               
-              {/* Tab Selection */}
-              <div className="flex mb-6 bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
-                <button
-                  onClick={() => setActiveTab('text')}
-                  className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${
-                    activeTab === 'text'
-                      ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
-                      : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
-                  }`}
-                >
-                  Text Input
-                </button>
-                <button
-                  onClick={() => setActiveTab('image')}
-                  className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${
-                    activeTab === 'image'
-                      ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
-                      : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
-                  }`}
-                >
-                  Image Upload
-                </button>
-              </div>
+          {/* Tab Selection */}
+          <div className="flex mb-6 bg-gray-100 dark:bg-gray-800 rounded-xl p-1">
+            <button
+              onClick={() => setActiveTab('text')}
+              className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all ${
+                activeTab === 'text'
+                  ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-md transform scale-105'
+                  : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700'
+              }`}
+            >
+              📝 Text Input
+            </button>
+            <button
+              onClick={() => setActiveTab('image')}
+              className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all ${
+                activeTab === 'image'
+                  ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-md transform scale-105'
+                  : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700'
+              }`}
+            >
+              🖼️ Image Upload
+            </button>
+          </div>
           
-              <div className="space-y-4">
-                {activeTab === 'text' ? (
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Text or URL
-                    </label>
-                    <textarea
-                      value={text}
-                      onChange={(e) => setText(e.target.value)}
-                      placeholder="Enter text, URL, or any message..."
-                      className="minimal-input h-32 resize-none"
-                      maxLength={1000}
-                      data-testid="qr-text-input"
-                    />
-                    <div className="minimal-text text-sm mt-1">
-                      {text.length}/1000 characters
-                    </div>
+          <div className="space-y-6">
+            {activeTab === 'text' ? (
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+                  Text or URL
+                </label>
+                <textarea
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                  placeholder="Enter text, URL, or any message..."
+                  className="input-modern h-32 resize-none"
+                  maxLength={1000}
+                  data-testid="qr-text-input"
+                />
+                <div className="flex justify-between items-center mt-2">
+                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                    {text.length}/1000 characters
                   </div>
-                ) : (
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Upload Image
-                    </label>
-                    <div className="minimal-text text-sm mb-3">
-                      💡 Images will be uploaded and QR will contain the image URL
-                    </div>
-                    
-                    <div className="p-4 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg">
-                      <input
-                        type="file"
-                        ref={fileInputRef}
-                        onChange={handleImageUpload}
-                        accept="image/*"
-                        className="hidden"
-                        id="imageUpload"
-                      />
-                      
-                      <label
-                        htmlFor="imageUpload"
-                        className="cursor-pointer flex flex-col items-center justify-center h-32 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors rounded-lg"
-                      >
-                        {uploadedImage ? (
-                          <div className="flex flex-col items-center">
-                            <img
-                              src={uploadedImage}
-                              alt="Uploaded"
-                              className="max-h-20 max-w-20 object-contain mb-2"
-                            />
-                            <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                              Click to change image
-                            </p>
-                          </div>
-                        ) : (
-                          <div className="flex flex-col items-center">
-                            <FileImage className="h-8 w-8 text-gray-400 mb-2" />
-                            <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                              Click to upload image
-                            </p>
-                            <p className="text-xs minimal-text mt-1">
-                              JPG, PNG, GIF, etc.
-                            </p>
-                          </div>
-                        )}
-                      </label>
-                    </div>
-                    
-                    {uploadingToHost && (
-                      <div className="mt-3 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
-                        <div className="flex items-center space-x-2">
-                          <div className="animate-spin rounded-full h-4 w-4 border-2 border-yellow-600 border-t-transparent"></div>
-                          <span className="text-sm text-yellow-700 dark:text-yellow-300">Uploading image...</span>
-                        </div>
+                  <div className="text-xs text-gray-400 dark:text-gray-500">
+                    💡 Supports URLs, text, phone numbers, emails
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+                  Upload Image
+                </label>
+                <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg border border-blue-200 dark:border-blue-800 mb-4">
+                  <p className="text-sm text-blue-800 dark:text-blue-200">
+                    💡 Images will be uploaded to a hosting service and the QR code will contain the image URL
+                  </p>
+                </div>
+                
+                <div className="p-6 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl bg-gray-50 dark:bg-gray-800 hover:border-blue-400 hover:bg-blue-50 dark:hover:bg-gray-700 transition-all">
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={handleImageUpload}
+                    accept="image/*"
+                    className="hidden"
+                    id="imageUpload"
+                  />
+                  
+                  <label
+                    htmlFor="imageUpload"
+                    className="cursor-pointer flex flex-col items-center justify-center h-32"
+                  >
+                    {uploadedImage ? (
+                      <div className="flex flex-col items-center">
+                        <img
+                          src={uploadedImage}
+                          alt="Uploaded"
+                          className="max-h-20 max-w-20 object-contain mb-3 rounded-lg border border-gray-200 dark:border-gray-600"
+                        />
+                        <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                          Click to change image
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="flex flex-col items-center">
+                        <FileImage className="h-12 w-12 text-gray-400 mb-3" />
+                        <p className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-1">
+                          Click to upload image
+                        </p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                          JPG, PNG, GIF, WebP supported
+                        </p>
                       </div>
                     )}
-                    
-                    {uploadedImage && !qrResult && (
-                      <div className="mt-3 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
-                        <span className="text-sm text-blue-700 dark:text-blue-300">📷 Image uploaded! Click Generate QR Code to create QR code</span>
-                      </div>
-                    )}
+                  </label>
+                </div>
+                
+                {uploadingToHost && (
+                  <div className="mt-4 p-4 bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 border border-yellow-200 dark:border-yellow-800 rounded-xl">
+                    <div className="flex items-center gap-3">
+                      <div className="spinner-modern"></div>
+                      <span className="text-sm font-medium text-yellow-700 dark:text-yellow-300">Uploading image to hosting service...</span>
+                    </div>
                   </div>
                 )}
-
-                {error && (
-                  <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-                    <span className="text-red-700 dark:text-red-300 text-sm">{error}</span>
+                
+                {uploadedImage && !qrResult && (
+                  <div className="mt-4 p-4 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border border-green-200 dark:border-green-800 rounded-xl">
+                    <div className="flex items-center gap-2">
+                      <span className="text-green-600 dark:text-green-400">✓</span>
+                      <span className="text-sm font-medium text-green-700 dark:text-green-300">Image ready! Click Generate QR Code to proceed</span>
+                    </div>
                   </div>
                 )}
+              </div>
+            )}
 
-                <div className="space-y-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        Size (Modules)
-                      </label>
-                      <input
-                        type="range"
-                        min="5"
-                        max="20"
-                        value={size}
-                        onChange={(e) => setSize(parseInt(e.target.value))}
-                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-                      />
-                      <div className="text-center text-sm minimal-text mt-1">
-                        {size} modules ({size * 20}px)
-                      </div>
-                    </div>
+            {error && (
+              <div className="p-4 bg-gradient-to-r from-red-50 to-pink-50 dark:from-red-900/20 dark:to-pink-900/20 border border-red-200 dark:border-red-800 rounded-xl">
+                <div className="flex items-center gap-2">
+                  <span className="text-red-600 dark:text-red-400">⚠️</span>
+                  <span className="text-red-700 dark:text-red-300 text-sm font-medium">{error}</span>
+                </div>
+              </div>
+            )}
 
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        Border (Margin)
-                      </label>
-                      <input
-                        type="range"
-                        min="0"
-                        max="10"
-                        value={border}
-                        onChange={(e) => setBorder(parseInt(e.target.value))}
-                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-                      />
-                      <div className="text-center text-sm minimal-text mt-1">
-                        {border} modules border
-                      </div>
-                    </div>
+            <div className="bg-gradient-to-r from-purple-50 to-indigo-50 dark:from-purple-900/20 dark:to-indigo-900/20 p-6 rounded-xl border border-purple-200 dark:border-purple-800">
+              <h3 className="font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
+                <span>⚙️</span> Customization Options
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+                    Size: {size} modules ({size * 20}px)
+                  </label>
+                  <input
+                    type="range"
+                    min="5"
+                    max="20"
+                    value={size}
+                    onChange={(e) => setSize(parseInt(e.target.value))}
+                    className="w-full h-3 bg-gray-200 dark:bg-gray-700 rounded-full appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  />
+                  <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-2">
+                    <span>Small</span>
+                    <span>Large</span>
                   </div>
                 </div>
 
-                <div className="flex gap-3">
-                  <button
-                    onClick={generateQR}
-                    disabled={loading || (activeTab === 'text' && !text.trim()) || (activeTab === 'image' && !uploadedImage)}
-                    className="minimal-button minimal-button-primary flex-1 disabled:opacity-50"
-                    data-testid="generate-qr-button"
-                  >
-                    {loading ? (
-                      <>
-                        <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
-                        Generating...
-                      </>
-                    ) : (
-                      <>
-                        <QrCode className="h-4 w-4" />
-                        Generate QR Code
-                      </>
-                    )}
-                  </button>
-
-                  <button
-                    onClick={clearAll}
-                    className="minimal-button minimal-button-secondary"
-                    data-testid="clear-button"
-                  >
-                    <RotateCcw className="h-4 w-4" />
-                    Clear
-                  </button>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+                    Border: {border} modules
+                  </label>
+                  <input
+                    type="range"
+                    min="0"
+                    max="10"
+                    value={border}
+                    onChange={(e) => setBorder(parseInt(e.target.value))}
+                    className="w-full h-3 bg-gray-200 dark:bg-gray-700 rounded-full appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  />
+                  <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-2">
+                    <span>No border</span>
+                    <span>Thick border</span>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Result Section */}
-            <div className="minimal-card">
-              <h2 className="minimal-h2 mb-6">
-                Your QR Code
-              </h2>
+            <div className="flex gap-3">
+              <button
+                onClick={generateQR}
+                disabled={loading || (activeTab === 'text' && !text.trim()) || (activeTab === 'image' && !uploadedImage)}
+                className="btn-modern btn-modern-primary flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
+                data-testid="generate-qr-button"
+              >
+                {loading ? (
+                  <>
+                    <div className="spinner-modern"></div>
+                    <span>Generating...</span>
+                  </>
+                ) : (
+                  <>
+                    <QrCode className="h-5 w-5" />
+                    <span>Generate QR Code</span>
+                  </>
+                )}
+              </button>
 
-              {qrResult ? (
-                <div className="space-y-6">
-                  <div className="bg-white p-6 rounded-lg border border-gray-200 dark:border-gray-700 flex justify-center">
-                    <img
-                      src={qrResult}
-                      alt="Generated QR Code"
-                      className="max-w-full h-auto"
-                      data-testid="qr-code-image"
-                    />
-                  </div>
-
-                  <div className="flex gap-3">
-                    <button
-                      onClick={downloadQR}
-                      className="minimal-button minimal-button-primary flex-1"
-                      data-testid="download-button"
-                    >
-                      <Download className="h-4 w-4" />
-                      Download QR
-                    </button>
-
-                    <button
-                      onClick={copyToClipboard}
-                      className="minimal-button minimal-button-secondary"
-                      data-testid="copy-button"
-                    >
-                      <Copy className="h-4 w-4" />
-                      Copy Image
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <div className="flex flex-col items-center justify-center h-48 text-center">
-                  <div className="w-12 h-12 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center mb-4">
-                    <QrCode className="h-6 w-6 text-gray-400" />
-                  </div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
-                    Ready to Generate
-                  </h3>
-                  <p className="minimal-text text-sm">
-                    Enter some text and click generate to create your QR code
-                  </p>
-                </div>
-              )}
+              <button
+                onClick={clearAll}
+                className="btn-modern btn-modern-secondary"
+                data-testid="clear-button"
+              >
+                <RotateCcw className="h-4 w-4" />
+                <span>Clear</span>
+              </button>
             </div>
           </div>
         </div>
+
+        {/* Result Section */}
+        <div className="modern-card p-6">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="icon-container w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500">
+              <Download className="h-6 w-6" />
+            </div>
+            <h2 className="heading-3 mb-0">
+              Your QR Code
+            </h2>
+          </div>
+
+          {qrResult ? (
+            <div className="space-y-6">
+              <div className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 p-8 rounded-xl border border-gray-200 dark:border-gray-700 flex justify-center shadow-inner">
+                <img
+                  src={qrResult}
+                  alt="Generated QR Code"
+                  className="max-w-full h-auto rounded-lg shadow-lg"
+                  data-testid="qr-code-image"
+                />
+              </div>
+
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-4 rounded-xl border border-blue-200 dark:border-blue-800">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-blue-600 dark:text-blue-400">✓</span>
+                  <span className="font-semibold text-blue-800 dark:text-blue-200">QR Code Generated Successfully!</span>
+                </div>
+                <p className="text-sm text-blue-700 dark:text-blue-300">
+                  Size: {size * 20}px × {size * 20}px • Border: {border} modules • Ready to download
+                </p>
+              </div>
+
+              <div className="flex gap-3">
+                <button
+                  onClick={downloadQR}
+                  className="btn-modern btn-modern-primary flex-1"
+                  data-testid="download-button"
+                >
+                  <Download className="h-5 w-5" />
+                  <span>Download QR Code</span>
+                </button>
+
+                <button
+                  onClick={copyToClipboard}
+                  className="btn-modern btn-modern-secondary"
+                  data-testid="copy-button"
+                >
+                  <Copy className="h-4 w-4" />
+                  <span>Copy Text</span>
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center h-64 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-600">
+              <div className="icon-container w-16 h-16 mb-4 bg-gradient-to-br from-gray-400 to-gray-500">
+                <QrCode className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-2 text-lg">
+                Ready to Generate
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400 text-center max-w-sm">
+                Enter some text or upload an image, then click generate to create your QR code
+              </p>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+      </div>
+    </>
   )
 }
 

@@ -133,33 +133,21 @@ const ImageCompressor = () => {
 
   return (
     <div className="max-w-6xl mx-auto p-4">
-      {/* Page Title */}
-      <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-          Image Compressor
-        </h1>
-        <p className="text-xl text-gray-600 dark:text-gray-300">
-          Reduce image file size while maintaining quality
-        </p>
-      </div>
-
-      {/* Retro Window Header */}
-      <div className="retro-window mb-8">
-        <div className="retro-window-header">
-          <div className="flex items-center space-x-3">
-            <Minimize2 className="h-6 w-6" />
-            <span className="text-lg font-bold">IMAGE COMPRESSOR v1.0</span>
+      {/* Modern Hero Section */}
+      <div className="hero-modern mb-12">
+        <div className="max-w-4xl mx-auto">
+          <div className="icon-container mx-auto mb-6">
+            <Minimize2 className="h-8 w-8" />
           </div>
-          <div className="retro-window-controls">
-            <div className="retro-window-control control-minimize"></div>
-            <div className="retro-window-control control-maximize"></div>
-            <div className="retro-window-control control-close"></div>
-          </div>
-        </div>
-        <div className="p-6 bg-gray-100 dark:bg-gray-700">
-          <div className="text-center mb-6">
-            <p className="text-lg font-bold text-black dark:text-white font-mono">
-              {'>> COMPRESS IMAGES TO REDUCE FILE SIZE & IMPROVE LOADING SPEED <<'}
+          <h1 className="heading-1 text-white mb-4">
+            Image Compressor
+          </h1>
+          <p className="text-xl text-white/90 mb-6">
+            Reduce image file size while maintaining quality
+          </p>
+          <div className="glass-modern rounded-xl p-4 inline-block">
+            <p className="text-white/80 text-sm">
+              ✨ Compress images up to 90% smaller • Maintain visual quality • Fast processing
             </p>
           </div>
         </div>
@@ -169,23 +157,28 @@ const ImageCompressor = () => {
         {/* Upload and Settings Section */}
         <div className="space-y-6">
           {/* File Upload */}
-          <div className="card p-6">
-            <div className="bg-blue-500 text-white font-bold py-2 px-4 mb-4 border-b-4 border-black">
-              <h2 className="text-xl font-mono">
-                [INPUT] UPLOAD IMAGE
+          <div className="modern-card p-6">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="icon-container w-12 h-12">
+                <Upload className="h-6 w-6" />
+              </div>
+              <h2 className="heading-3 mb-0">
+                Upload Image
               </h2>
             </div>
             
             <div
-              onClick={() => fileInputRef.current?.click()}
-              className="border-4 border-black bg-gray-100 dark:bg-gray-600 p-4 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-500 transition-colors"
+              onClick={!preview ? () => fileInputRef.current?.click() : undefined}
+              className={`border-2 border-dashed border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 p-6 rounded-xl transition-all ${
+                !preview ? 'cursor-pointer hover:border-blue-400 hover:bg-blue-50 dark:hover:bg-gray-700' : ''
+              }`}
             >
               <input
                 ref={fileInputRef}
                 type="file"
                 accept="image/*"
                 onChange={handleFileSelect}
-                className="opacity-0 absolute inset-0 w-full h-full cursor-pointer"
+                className="hidden"
                 data-testid="image-compressor-input"
               />
               
@@ -196,22 +189,28 @@ const ImageCompressor = () => {
                     alt="Preview"
                     className="max-w-full max-h-48 mx-auto border-2 border-black"
                   />
-                  <div className="text-center">
+                  <div className="text-center space-y-2">
                     <p className="text-sm font-mono font-bold text-black dark:text-white">
                       {selectedFile?.name}
                     </p>
                     <p className="text-xs font-mono text-black dark:text-white">
                       Size: {formatFileSize(selectedFile?.size)}
                     </p>
+                    <button
+                      onClick={() => fileInputRef.current?.click()}
+                      className="btn-modern btn-modern-secondary text-sm px-4 py-2"
+                    >
+                      Change Image
+                    </button>
                   </div>
                 </div>
               ) : (
-                <div className="flex flex-col items-center justify-center h-32 border-2 border-dashed border-black bg-white">
-                  <Upload className="h-8 w-8 text-black mb-2" />
-                  <p className="text-sm font-mono font-bold text-black">
-                    CLICK TO UPLOAD IMAGE
+                <div className="flex flex-col items-center justify-center h-32">
+                  <Upload className="h-12 w-12 text-gray-400 mb-4" />
+                  <p className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                    Click to upload image
                   </p>
-                  <p className="text-xs font-mono text-black mt-1">
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
                     JPG, PNG, WebP, GIF (Max 10MB)
                   </p>
                 </div>
@@ -221,17 +220,20 @@ const ImageCompressor = () => {
 
           {/* Compression Settings */}
           {selectedFile && (
-            <div className="card p-6">
-              <div className="bg-yellow-500 text-black font-bold py-2 px-4 mb-4 border-b-4 border-black">
-                <h2 className="text-xl font-mono">
-                  [SETTINGS] COMPRESSION
+            <div className="modern-card p-6">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="icon-container w-12 h-12 bg-gradient-to-br from-yellow-500 to-orange-500">
+                  <ImageIcon className="h-6 w-6" />
+                </div>
+                <h2 className="heading-3 mb-0">
+                  Compression Settings
                 </h2>
               </div>
               
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-bold text-black dark:text-white mb-2 font-mono">
-                    QUALITY: {quality}%
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+                    Quality: {quality}%
                   </label>
                   <input
                     type="range"
@@ -239,27 +241,33 @@ const ImageCompressor = () => {
                     max="100"
                     value={quality}
                     onChange={(e) => setQuality(parseInt(e.target.value))}
-                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
+                    className="w-full h-3 bg-gray-200 dark:bg-gray-700 rounded-full appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
-                  <div className="flex justify-between text-xs font-mono text-black dark:text-white mt-1">
-                    <span>SMALL FILE</span>
-                    <span>HIGH QUALITY</span>
+                  <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-2">
+                    <span>Smaller file</span>
+                    <span>Higher quality</span>
                   </div>
                 </div>
 
-                <div className="bg-gray-100 p-3 border-2 border-black">
-                  <div className="text-xs font-mono text-black">
-                    <div>💡 QUALITY GUIDE:</div>
-                    <div>• 90-100%: BEST QUALITY, LARGER FILE</div>
-                    <div>• 70-89%: GOOD QUALITY, BALANCED</div>
-                    <div>• 50-69%: MEDIUM QUALITY, SMALLER FILE</div>
-                    <div>• 10-49%: LOW QUALITY, SMALLEST FILE</div>
+                <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
+                  <div className="text-sm text-blue-800 dark:text-blue-200">
+                    <div className="font-semibold mb-2 flex items-center gap-2">
+                      <span>💡</span> Quality Guide
+                    </div>
+                    <div className="space-y-1 text-xs">
+                      <div>• 90-100%: Best quality, larger file</div>
+                      <div>• 70-89%: Good quality, balanced</div>
+                      <div>• 50-69%: Medium quality, smaller file</div>
+                      <div>• 10-49%: Low quality, smallest file</div>
+                    </div>
                   </div>
                 </div>
 
                 {error && (
-                  <div className="retro-alert retro-alert-error font-mono font-bold">
-                    ERROR: {error}
+                  <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
+                    <p className="text-red-800 dark:text-red-200 text-sm font-medium">
+                      ⚠️ {error}
+                    </p>
                   </div>
                 )}
 
@@ -267,27 +275,27 @@ const ImageCompressor = () => {
                   <button
                     onClick={compressImage}
                     disabled={loading || !selectedFile}
-                    className="btn-primary flex-1 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed font-mono"
+                    className="btn-modern btn-modern-primary flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {loading ? (
                       <>
-                        <div className="retro-spinner"></div>
-                        <span>COMPRESSING...</span>
+                        <div className="spinner-modern"></div>
+                        <span>Compressing...</span>
                       </>
                     ) : (
                       <>
                         <Minimize2 className="h-4 w-4" />
-                        <span>COMPRESS IMAGE</span>
+                        <span>Compress Image</span>
                       </>
                     )}
                   </button>
 
                   <button
                     onClick={clearAll}
-                    className="btn-secondary flex items-center justify-center space-x-2 font-mono px-4 py-2"
+                    className="btn-modern btn-modern-secondary"
                   >
                     <RotateCcw className="h-4 w-4" />
-                    <span>CLEAR</span>
+                    <span>Clear</span>
                   </button>
                 </div>
               </div>
@@ -296,59 +304,62 @@ const ImageCompressor = () => {
         </div>
 
         {/* Result Section */}
-        <div className="card p-6">
-          <div className="bg-green-500 text-black font-bold py-2 px-4 mb-4 border-b-4 border-black">
-            <h2 className="text-xl font-mono">
-              [OUTPUT] COMPRESSED IMAGE
+        <div className="modern-card p-6">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="icon-container w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500">
+              <Download className="h-6 w-6" />
+            </div>
+            <h2 className="heading-3 mb-0">
+              Compressed Image
             </h2>
           </div>
           
           {result ? (
             <div className="space-y-4">
-              <div className="bg-white p-4 border-4 border-black">
+              <div className="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-200 dark:border-gray-700">
                 <img
                   src={result.url}
                   alt="Compressed"
-                  className="max-w-full h-auto mx-auto border-2 border-gray-300"
+                  className="max-w-full h-auto mx-auto rounded-lg"
                 />
               </div>
               
               {/* Compression Stats */}
-              <div className="bg-gray-100 p-4 border-4 border-black">
-                <h3 className="font-mono font-bold text-black mb-3">COMPRESSION RESULTS:</h3>
-                <div className="grid grid-cols-2 gap-4 text-sm font-mono">
-                  <div>
-                    <span className="font-bold text-black">ORIGINAL SIZE:</span>
-                    <div className="text-red-600">{formatFileSize(result.originalSize)}</div>
+              <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-800">
+                <h3 className="font-semibold text-gray-800 dark:text-gray-200 mb-4">Compression Results</h3>
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div className="bg-white/50 dark:bg-gray-800/50 p-3 rounded-lg">
+                    <span className="font-medium text-gray-600 dark:text-gray-400 block">Original Size</span>
+                    <div className="text-red-600 dark:text-red-400 font-semibold">{formatFileSize(result.originalSize)}</div>
                   </div>
-                  <div>
-                    <span className="font-bold text-black">COMPRESSED SIZE:</span>
-                    <div className="text-green-600">{formatFileSize(result.compressedSize)}</div>
+                  <div className="bg-white/50 dark:bg-gray-800/50 p-3 rounded-lg">
+                    <span className="font-medium text-gray-600 dark:text-gray-400 block">Compressed Size</span>
+                    <div className="text-green-600 dark:text-green-400 font-semibold">{formatFileSize(result.compressedSize)}</div>
                   </div>
-                  <div>
-                    <span className="font-bold text-black">SPACE SAVED:</span>
-                    <div className="text-blue-600">{result.compressionRatio}%</div>
+                  <div className="bg-white/50 dark:bg-gray-800/50 p-3 rounded-lg">
+                    <span className="font-medium text-gray-600 dark:text-gray-400 block">Space Saved</span>
+                    <div className="text-blue-600 dark:text-blue-400 font-semibold">{result.compressionRatio}%</div>
                   </div>
-                  <div>
-                    <span className="font-bold text-black">QUALITY:</span>
-                    <div className="text-purple-600">{quality}%</div>
+                  <div className="bg-white/50 dark:bg-gray-800/50 p-3 rounded-lg">
+                    <span className="font-medium text-gray-600 dark:text-gray-400 block">Quality</span>
+                    <div className="text-purple-600 dark:text-purple-400 font-semibold">{quality}%</div>
                   </div>
                 </div>
               </div>
 
               {/* Dimensions */}
-              <div className="bg-blue-100 p-4 border-4 border-black">
-                <h3 className="font-mono font-bold text-black mb-3">DIMENSIONS:</h3>
-                <div className="grid grid-cols-2 gap-4 text-sm font-mono">
-                  <div>
-                    <span className="font-bold text-black">ORIGINAL:</span>
-                    <div className="text-black">
+              <div className="bg-gradient-to-r from-indigo-50 to-cyan-50 dark:from-indigo-900/20 dark:to-cyan-900/20 p-6 rounded-xl border border-indigo-200 dark:border-indigo-800">
+                <h3 className="font-semibold text-gray-800 dark:text-gray-200 mb-4">Dimensions</h3>
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div className="bg-white/50 dark:bg-gray-800/50 p-3 rounded-lg">
+                    <span className="font-medium text-gray-600 dark:text-gray-400 block">Original</span>
+                    <div className="text-gray-800 dark:text-gray-200 font-semibold">
                       {result.originalDimensions.width} × {result.originalDimensions.height}
                     </div>
                   </div>
-                  <div>
-                    <span className="font-bold text-black">COMPRESSED:</span>
-                    <div className="text-black">
+                  <div className="bg-white/50 dark:bg-gray-800/50 p-3 rounded-lg">
+                    <span className="font-medium text-gray-600 dark:text-gray-400 block">Compressed</span>
+                    <div className="text-gray-800 dark:text-gray-200 font-semibold">
                       {result.newDimensions.width} × {result.newDimensions.height}
                     </div>
                   </div>
@@ -357,17 +368,17 @@ const ImageCompressor = () => {
               
               <button
                 onClick={downloadImage}
-                className="btn-primary w-full flex items-center justify-center space-x-2 font-mono"
+                className="btn-modern btn-modern-primary w-full"
               >
-                <Download className="h-4 w-4" />
-                <span>DOWNLOAD COMPRESSED IMAGE</span>
+                <Download className="h-5 w-5" />
+                <span>Download Compressed Image</span>
               </button>
             </div>
           ) : (
-            <div className="flex flex-col items-center justify-center h-64 bg-gray-200 dark:bg-gray-600 border-4 border-black">
-              <ImageIcon className="h-16 w-16 mb-4 text-black dark:text-white" />
-              <p className="text-center font-mono font-bold text-black dark:text-white">
-                UPLOAD AN IMAGE AND CLICK "COMPRESS IMAGE" TO REDUCE FILE SIZE
+            <div className="flex flex-col items-center justify-center h-64 bg-gray-100 dark:bg-gray-800 rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-600">
+              <ImageIcon className="h-16 w-16 mb-4 text-gray-400" />
+              <p className="text-center text-gray-600 dark:text-gray-400 max-w-sm">
+                Upload an image and click "Compress Image" to reduce file size while maintaining quality
               </p>
             </div>
           )}
@@ -375,31 +386,40 @@ const ImageCompressor = () => {
       </div>
 
       {/* Tips Section */}
-      <div className="mt-8 card p-6">
-        <div className="bg-purple-500 text-white font-bold py-2 px-4 mb-4 border-b-4 border-black">
-          <h3 className="text-lg font-mono">
-            [TIPS] IMAGE OPTIMIZATION
+      <div className="mt-12 modern-card p-6">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="icon-container w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500">
+            <span className="text-xl">💡</span>
+          </div>
+          <h3 className="heading-3 mb-0">
+            Image Optimization Tips
           </h3>
         </div>
-        <div className="retro-alert retro-alert-warning">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-black font-mono font-bold">
-            <div>
-              {'>> COMPRESS IMAGES BEFORE UPLOADING'}
+        <div className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 p-6 rounded-xl border border-purple-200 dark:border-purple-800">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div className="flex items-center gap-3 p-3 bg-white/50 dark:bg-gray-800/50 rounded-lg">
+              <span className="text-green-500">✓</span>
+              <span className="text-gray-700 dark:text-gray-300">Compress images before uploading</span>
             </div>
-            <div>
-              {'>> 80% QUALITY IS USUALLY OPTIMAL'}
+            <div className="flex items-center gap-3 p-3 bg-white/50 dark:bg-gray-800/50 rounded-lg">
+              <span className="text-green-500">✓</span>
+              <span className="text-gray-700 dark:text-gray-300">80% quality is usually optimal</span>
             </div>
-            <div>
-              {'>> SMALLER IMAGES LOAD FASTER'}
+            <div className="flex items-center gap-3 p-3 bg-white/50 dark:bg-gray-800/50 rounded-lg">
+              <span className="text-green-500">✓</span>
+              <span className="text-gray-700 dark:text-gray-300">Smaller images load faster</span>
             </div>
-            <div>
-              {'>> USE JPG FOR PHOTOS, PNG FOR GRAPHICS'}
+            <div className="flex items-center gap-3 p-3 bg-white/50 dark:bg-gray-800/50 rounded-lg">
+              <span className="text-green-500">✓</span>
+              <span className="text-gray-700 dark:text-gray-300">Use JPG for photos, PNG for graphics</span>
             </div>
-            <div>
-              {'>> OPTIMIZE FOR WEB TO IMPROVE SEO'}
+            <div className="flex items-center gap-3 p-3 bg-white/50 dark:bg-gray-800/50 rounded-lg">
+              <span className="text-green-500">✓</span>
+              <span className="text-gray-700 dark:text-gray-300">Optimize for web to improve SEO</span>
             </div>
-            <div>
-              {'>> BATCH COMPRESS MULTIPLE IMAGES'}
+            <div className="flex items-center gap-3 p-3 bg-white/50 dark:bg-gray-800/50 rounded-lg">
+              <span className="text-green-500">✓</span>
+              <span className="text-gray-700 dark:text-gray-300">Batch compress multiple images</span>
             </div>
           </div>
         </div>

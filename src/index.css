@@ -2,9 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import Award-Winning Design System */
+@import './styles/award-winning.css';
+
 @layer base {
   html {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    scroll-behavior: smooth;
   }
   
   html.dark {
@@ -16,22 +20,94 @@
   }
   
   body {
-    @apply bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100;
+    @apply bg-neutral-0 dark:bg-dark-bg text-neutral-900 dark:text-dark-text;
     transition: background-color 0.3s ease, color 0.3s ease;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
 @layer components {
-  /* Clean, minimal components - no retro styling */
+  /* Award-winning component overrides */
+  .hero-modern {
+    @apply award-hero;
+  }
+  
+  .modern-card {
+    @apply award-card;
+  }
+  
+  .btn-modern {
+    @apply award-btn;
+  }
+  
+  .btn-modern-primary {
+    @apply award-btn-primary;
+  }
+  
+  .btn-modern-secondary {
+    @apply award-btn-secondary;
+  }
+  
+  .input-modern {
+    @apply award-input;
+  }
+  
+  .icon-container {
+    @apply award-icon;
+  }
+  
+  .heading-1 {
+    @apply award-heading-1;
+  }
+  
+  .heading-2 {
+    @apply award-heading-2;
+  }
+  
+  .heading-3 {
+    @apply award-heading-3;
+  }
+  
+  .progress-modern {
+    @apply award-progress;
+  }
+  
+  .progress-modern-fill {
+    @apply award-progress-fill;
+  }
+  
+  .glass-modern {
+    @apply award-glass;
+  }
+  
+  .spinner-modern {
+    @apply award-spinner;
+  }
+  
+  .animate-fade-in-up {
+    @apply award-animate-fade-in-up;
+  }
 }
 
 @layer utilities {
-  /* Clean utility classes */
+  /* Premium utility classes */
   .text-shadow {
-    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
   
   .dark .text-shadow {
-    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  }
+  
+  .gradient-text {
+    background: linear-gradient(135deg, var(--primary-600), var(--secondary-600));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .backdrop-blur-premium {
+    backdrop-filter: blur(20px);
   }
 }

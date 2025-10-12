@@ -141,221 +141,253 @@ const ImageResizer = () => {
   ]
 
   return (
-    <div className="min-h-screen">
-      {/* Minimal Header */}
-      <div className="minimal-hero">
-        <div className="minimal-container">
-          <div className="text-center max-w-3xl mx-auto">
-            <div className="flex items-center justify-center mb-6">
-              <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mr-3">
-                <ImageIcon className="h-6 w-6 text-white" />
-              </div>
-              <h1 className="minimal-h1 mb-0">
-                Image Resizer
-              </h1>
-            </div>
-            
-            <p className="minimal-text text-lg">
-              Resize your images to any dimensions while maintaining quality.
+    <div className="max-w-6xl mx-auto p-4">
+      {/* Modern Hero Section */}
+      <div className="hero-modern mb-12">
+        <div className="max-w-4xl mx-auto">
+          <div className="icon-container mx-auto mb-6">
+            <Maximize2 className="h-8 w-8" />
+          </div>
+          <h1 className="heading-1 text-white mb-4">
+            Image Resizer
+          </h1>
+          <p className="text-xl text-white/90 mb-6">
+            Resize your images to any dimensions while maintaining perfect quality
+          </p>
+          <div className="glass-modern rounded-xl p-4 inline-block">
+            <p className="text-white/80 text-sm">
+              ✨ Maintain aspect ratio • Social media presets • Instant preview • High quality output
             </p>
           </div>
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="py-16">
-        <div className="minimal-container">
-          <div className="minimal-grid minimal-grid-2">
-            {/* Upload and Settings Section */}
-            <div className="space-y-6">
-              {/* File Upload */}
-              <div className="minimal-card">
-                <h2 className="minimal-h2 mb-6">
-                  Upload Image
-                </h2>
-                
-                <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center">
-                  <input
-                    type="file"
-                    ref={fileInputRef}
-                    onChange={handleFileSelect}
-                    accept="image/*"
-                    className="hidden"
-                    id="imageUpload"
-                  />
-                  
-                  <label
-                    htmlFor="imageUpload"
-                    className="cursor-pointer flex flex-col items-center space-y-2"
-                  >
-                    <Upload className="h-12 w-12 text-gray-400" />
-                    <span className="text-lg font-medium text-gray-600 dark:text-gray-300">
-                      Click to upload an image
-                    </span>
-                    <span className="text-sm minimal-text">
-                      Supports JPG, PNG, GIF, WebP
-                    </span>
-                  </label>
-                </div>
-
-                {error && (
-                  <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
-                    <p className="text-red-700 dark:text-red-300 text-sm">{error}</p>
-                  </div>
-                )}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Upload and Settings Section */}
+        <div className="space-y-6">
+          {/* File Upload */}
+          <div className="modern-card p-6">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="icon-container w-12 h-12">
+                <Upload className="h-6 w-6" />
               </div>
-
-              {/* Resize Settings */}
-              {selectedFile && (
-                <div className="minimal-card">
-                  <h2 className="minimal-h2 mb-6">
-                    Resize Settings
-                  </h2>
-                  
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                          Width (px)
-                        </label>
-                        <input
-                          type="number"
-                          value={width}
-                          onChange={handleWidthChange}
-                          className="minimal-input"
-                          placeholder="Auto"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                          Height (px)
-                        </label>
-                        <input
-                          type="number"
-                          value={height}
-                          onChange={handleHeightChange}
-                          className="minimal-input"
-                          placeholder="Auto"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
-                        id="maintainAspect"
-                        checked={maintainAspect}
-                        onChange={(e) => setMaintainAspect(e.target.checked)}
-                        className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                      />
-                      <label htmlFor="maintainAspect" className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                        Maintain aspect ratio
-                      </label>
-                    </div>
-
-                    {/* Quick Presets */}
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        Quick Presets
-                      </label>
-                      <div className="grid grid-cols-2 gap-2">
-                        {presets.map((preset, index) => (
-                          <button
-                            key={index}
-                            onClick={() => {
-                              setWidth(preset.width.toString())
-                              setHeight(preset.height.toString())
-                            }}
-                            className="px-3 py-2 text-sm bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition-colors"
-                          >
-                            {preset.name} ({preset.width}×{preset.height})
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="flex space-x-3">
-                      <button
-                        onClick={resizeImage}
-                        disabled={loading || !selectedFile || (!width && !height)}
-                        className="minimal-button minimal-button-primary flex-1 disabled:opacity-50"
-                      >
-                        {loading ? (
-                          <>
-                            <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
-                            Processing...
-                          </>
-                        ) : (
-                          <>
-                            <Maximize2 className="h-4 w-4" />
-                            Resize Image
-                          </>
-                        )}
-                      </button>
-                      
-                      <button
-                        onClick={clearAll}
-                        className="minimal-button minimal-button-secondary"
-                      >
-                        <RotateCcw className="h-4 w-4" />
-                        Clear
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
+              <h2 className="heading-3 mb-0">
+                Upload Image
+              </h2>
+            </div>
+            
+            <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 rounded-xl p-8 text-center hover:border-blue-400 hover:bg-blue-50 dark:hover:bg-gray-700 transition-all">
+              <input
+                type="file"
+                ref={fileInputRef}
+                onChange={handleFileSelect}
+                accept="image/*"
+                className="hidden"
+                id="imageUpload"
+              />
+              
+              <label
+                htmlFor="imageUpload"
+                className="cursor-pointer flex flex-col items-center space-y-3"
+              >
+                <Upload className="h-16 w-16 text-gray-400" />
+                <span className="text-xl font-semibold text-gray-700 dark:text-gray-300">
+                  Click to upload an image
+                </span>
+                <span className="text-sm text-gray-500 dark:text-gray-400">
+                  Supports JPG, PNG, GIF, WebP • Drag & drop supported
+                </span>
+              </label>
             </div>
 
-            {/* Preview and Result Section */}
-            <div className="space-y-6">
-              {/* Original Preview */}
-              {preview && (
-                <div className="minimal-card">
-                  <h2 className="minimal-h2 mb-6">
-                    Original Image
-                  </h2>
-                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
-                    <img
-                      src={preview}
-                      alt="Original"
-                      className="max-w-full h-auto mx-auto rounded-lg shadow-sm"
+            {error && (
+              <div className="bg-gradient-to-r from-red-50 to-pink-50 dark:from-red-900/20 dark:to-pink-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4">
+                <div className="flex items-center gap-2">
+                  <span className="text-red-600 dark:text-red-400">⚠️</span>
+                  <p className="text-red-700 dark:text-red-300 text-sm font-medium">{error}</p>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Resize Settings */}
+          {selectedFile && (
+            <div className="modern-card p-6">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="icon-container w-12 h-12 bg-gradient-to-br from-purple-500 to-indigo-500">
+                  <Maximize2 className="h-6 w-6" />
+                </div>
+                <h2 className="heading-3 mb-0">
+                  Resize Settings
+                </h2>
+              </div>
+              
+              <div className="space-y-6">
+                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-800">
+                  <h3 className="font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
+                    <span>📐</span> Dimensions
+                  </h3>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+                        Width (px)
+                      </label>
+                      <input
+                        type="number"
+                        value={width}
+                        onChange={handleWidthChange}
+                        className="input-modern"
+                        placeholder="Auto"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+                        Height (px)
+                      </label>
+                      <input
+                        type="number"
+                        value={height}
+                        onChange={handleHeightChange}
+                        className="input-modern"
+                        placeholder="Auto"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex items-center space-x-3 mt-4 p-3 bg-white/50 dark:bg-gray-800/50 rounded-lg">
+                    <input
+                      type="checkbox"
+                      id="maintainAspect"
+                      checked={maintainAspect}
+                      onChange={(e) => setMaintainAspect(e.target.checked)}
+                      className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 focus:ring-2"
                     />
-                    <p className="minimal-text text-sm mt-2 text-center">
-                      Original size: {selectedFile?.name}
+                    <label htmlFor="maintainAspect" className="text-sm font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                      <span>🔗</span> Maintain aspect ratio
+                    </label>
+                  </div>
+                </div>
+
+                {/* Quick Presets */}
+                <div className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 p-6 rounded-xl border border-purple-200 dark:border-purple-800">
+                  <h3 className="font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
+                    <span>⚡</span> Quick Presets
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {presets.map((preset, index) => (
+                      <button
+                        key={index}
+                        onClick={() => {
+                          setWidth(preset.width.toString())
+                          setHeight(preset.height.toString())
+                        }}
+                        className="p-3 text-sm bg-white/70 dark:bg-gray-800/70 hover:bg-white dark:hover:bg-gray-700 rounded-lg transition-all border border-purple-200/50 dark:border-purple-700/50 hover:border-purple-300 dark:hover:border-purple-600 hover:shadow-md"
+                      >
+                        <div className="font-semibold text-gray-800 dark:text-gray-200">{preset.name}</div>
+                        <div className="text-xs text-gray-600 dark:text-gray-400">{preset.width}×{preset.height}px</div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex gap-3">
+                  <button
+                    onClick={resizeImage}
+                    disabled={loading || !selectedFile || (!width && !height)}
+                    className="btn-modern btn-modern-primary flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {loading ? (
+                      <>
+                        <div className="spinner-modern"></div>
+                        <span>Processing...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Maximize2 className="h-5 w-5" />
+                        <span>Resize Image</span>
+                      </>
+                    )}
+                  </button>
+                  
+                  <button
+                    onClick={clearAll}
+                    className="btn-modern btn-modern-secondary"
+                  >
+                    <RotateCcw className="h-4 w-4" />
+                    <span>Clear</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Preview and Result Section */}
+        <div className="space-y-6">
+          {/* Original Preview */}
+          {preview && (
+            <div className="modern-card p-6">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="icon-container w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500">
+                  <ImageIcon className="h-6 w-6" />
+                </div>
+                <h2 className="heading-3 mb-0">
+                  Original Image
+                </h2>
+              </div>
+              <div className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
+                <img
+                  src={preview}
+                  alt="Original"
+                  className="max-w-full h-auto mx-auto rounded-lg shadow-lg"
+                />
+                <div className="mt-4 p-3 bg-white/50 dark:bg-gray-800/50 rounded-lg">
+                  <p className="text-sm text-gray-600 dark:text-gray-400 text-center font-medium">
+                    📁 {selectedFile?.name}
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Resized Result */}
+          {result && (
+            <div className="modern-card p-6">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="icon-container w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500">
+                  <Download className="h-6 w-6" />
+                </div>
+                <h2 className="heading-3 mb-0">
+                  Resized Image
+                </h2>
+              </div>
+              <div className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
+                <img
+                  src={result.url}
+                  alt="Resized"
+                  className="max-w-full h-auto mx-auto rounded-lg shadow-lg"
+                />
+                <div className="mt-6 space-y-4">
+                  <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-4 rounded-xl border border-green-200 dark:border-green-800">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-green-600 dark:text-green-400">✓</span>
+                      <span className="font-semibold text-green-800 dark:text-green-200">Resize Complete!</span>
+                    </div>
+                    <p className="text-sm text-green-700 dark:text-green-300">
+                      New dimensions: {result.width} × {result.height} pixels
                     </p>
                   </div>
+                  <button
+                    onClick={downloadResult}
+                    className="btn-modern btn-modern-primary w-full"
+                  >
+                    <Download className="h-5 w-5" />
+                    <span>Download Resized Image</span>
+                  </button>
                 </div>
-              )}
-
-              {/* Resized Result */}
-              {result && (
-                <div className="minimal-card">
-                  <h2 className="minimal-h2 mb-6">
-                    Resized Image
-                  </h2>
-                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
-                    <img
-                      src={result.url}
-                      alt="Resized"
-                      className="max-w-full h-auto mx-auto rounded-lg shadow-sm"
-                    />
-                    <div className="mt-4 text-center space-y-2">
-                      <p className="minimal-text text-sm">
-                        New size: {result.width} × {result.height} pixels
-                      </p>
-                      <button
-                        onClick={downloadResult}
-                        className="minimal-button minimal-button-primary"
-                      >
-                        <Download className="h-4 w-4" />
-                        Download Resized Image
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

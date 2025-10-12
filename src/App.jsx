@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { HelmetProvider } from 'react-helmet-async'
 import Navbar from './components/Navbar'
 import Layout from './components/Layout'
 import Footer from './components/Footer'
@@ -98,12 +99,13 @@ function App() {
   }
 
   return (
-    <Router>
-      <div className="min-h-screen bg-beige-50 dark:bg-gray-900 transition-colors duration-300">
-        <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
-        <main className="py-8">
-          <Layout>
-            <Routes>
+    <HelmetProvider>
+      <Router>
+        <div className="min-h-screen bg-beige-50 dark:bg-gray-900 transition-colors duration-300">
+          <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+          <main className="py-8">
+            <Layout>
+              <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/tools" element={<Tools />} />
               <Route path="/qr-generator" element={<QRGenerator />} />
@@ -129,12 +131,13 @@ function App() {
               <Route path="/keyword-research" element={<KeywordResearch />} />
               {/* New Image Tools Routes */}
               <Route path="/image-compressor" element={<ImageCompressor />} />
-            </Routes>
-          </Layout>
-        </main>
-        <Footer />
-      </div>
-    </Router>
+              </Routes>
+            </Layout>
+          </main>
+          <Footer />
+        </div>
+      </Router>
+    </HelmetProvider>
   )
 }
 
