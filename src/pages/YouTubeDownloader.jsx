@@ -144,7 +144,7 @@ const YouTubeDownloader = () => {
           
           <div className="space-y-6">
             <div>
-              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+              <label className="block text-sm font-semibold text-gray-700 mb-3">
                 YouTube Video URL
               </label>
               <input
@@ -157,17 +157,17 @@ const YouTubeDownloader = () => {
               />
               <div className="flex items-center gap-2 mt-2">
                 <span className="text-blue-500">💡</span>
-                <span className="text-sm text-gray-500 dark:text-gray-400">
+                <span className="text-sm text-gray-500">
                   Paste any YouTube video URL here and press Enter
                 </span>
               </div>
             </div>
 
             {error && (
-              <div className="bg-gradient-to-r from-red-50 to-pink-50 dark:from-red-900/20 dark:to-pink-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4">
+              <div className="bg-gradient-to-r from-red-50 to-pink-50 border border-red-200 rounded-xl p-4">
                 <div className="flex items-center gap-2">
-                  <span className="text-red-600 dark:text-red-400">⚠️</span>
-                  <span className="text-red-700 dark:text-red-300 text-sm font-medium">{error}</span>
+                  <span className="text-red-600">⚠️</span>
+                  <span className="text-red-700 text-sm font-medium">{error}</span>
                 </div>
               </div>
             )}
@@ -217,7 +217,7 @@ const YouTubeDownloader = () => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Video Thumbnail */}
               <div className="lg:col-span-1">
-                <div className="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700">
+                <div className="relative overflow-hidden rounded-xl border border-gray-200">
                   <img
                     src={videoInfo.thumbnail}
                     alt="Video thumbnail"
@@ -232,37 +232,37 @@ const YouTubeDownloader = () => {
               
               {/* Video Details */}
               <div className="lg:col-span-2 space-y-6">
-                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-800">
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-200">
+                  <h3 className="text-xl font-bold text-gray-900 mb-4">
                     {videoInfo.title}
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <div className="flex items-center gap-2 p-3 bg-white/50 dark:bg-gray-800/50 rounded-lg">
+                    <div className="flex items-center gap-2 p-3 bg-white/50 rounded-lg">
                       <span className="text-blue-500">📺</span>
                       <div>
-                        <div className="text-xs text-gray-500 dark:text-gray-400">Channel</div>
-                        <div className="font-medium text-gray-800 dark:text-gray-200">{videoInfo.channel}</div>
+                        <div className="text-xs text-gray-500">Channel</div>
+                        <div className="font-medium text-gray-800">{videoInfo.channel}</div>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 p-3 bg-white/50 dark:bg-gray-800/50 rounded-lg">
+                    <div className="flex items-center gap-2 p-3 bg-white/50 rounded-lg">
                       <span className="text-green-500">👀</span>
                       <div>
-                        <div className="text-xs text-gray-500 dark:text-gray-400">Views</div>
-                        <div className="font-medium text-gray-800 dark:text-gray-200">{videoInfo.views}</div>
+                        <div className="text-xs text-gray-500">Views</div>
+                        <div className="font-medium text-gray-800">{videoInfo.views}</div>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 p-3 bg-white/50 dark:bg-gray-800/50 rounded-lg">
+                    <div className="flex items-center gap-2 p-3 bg-white/50 rounded-lg">
                       <span className="text-purple-500">⏱️</span>
                       <div>
-                        <div className="text-xs text-gray-500 dark:text-gray-400">Duration</div>
-                        <div className="font-medium text-gray-800 dark:text-gray-200">{videoInfo.duration}</div>
+                        <div className="text-xs text-gray-500">Duration</div>
+                        <div className="font-medium text-gray-800">{videoInfo.duration}</div>
                       </div>
                     </div>
                   </div>
                 </div>
                 
-                <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-xl">
-                  <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                <div className="bg-gray-50 p-4 rounded-xl">
+                  <p className="text-gray-600 text-sm leading-relaxed">
                     {videoInfo.description}
                   </p>
                 </div>
@@ -297,19 +297,19 @@ const YouTubeDownloader = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {videoInfo.formats.map((format, index) => (
-                <div key={index} className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-6 hover:shadow-lg transition-all">
+                <div key={index} className="bg-gradient-to-r from-gray-50 to-gray-100 border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all">
                   <div className="flex justify-between items-center">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-2">
                         <span className="text-lg">
                           {format.quality.includes('Audio') ? '🎧' : '🎥'}
                         </span>
-                        <div className="font-bold text-gray-900 dark:text-white text-lg">
+                        <div className="font-bold text-gray-900 text-lg">
                           {format.quality}
                         </div>
                       </div>
-                      <div className="text-sm text-gray-600 dark:text-gray-400">
-                        <span className="bg-blue-100 dark:bg-blue-900/30 px-2 py-1 rounded-full text-xs font-medium">
+                      <div className="text-sm text-gray-600">
+                        <span className="bg-blue-100 px-2 py-1 rounded-full text-xs font-medium">
                           {format.format}
                         </span>
                         <span className="ml-2">• {format.size}</span>
@@ -327,14 +327,14 @@ const YouTubeDownloader = () => {
               ))}
             </div>
             
-            <div className="mt-8 bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 border border-yellow-200 dark:border-yellow-800 rounded-xl p-6">
+            <div className="mt-8 bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200 rounded-xl p-6">
               <div className="flex items-start gap-3">
                 <div className="icon-container w-10 h-10 bg-gradient-to-br from-yellow-500 to-orange-500 flex-shrink-0">
                   <span className="text-white text-sm">⚠️</span>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-yellow-800 dark:text-yellow-200 mb-2">Important Disclaimer</h4>
-                  <p className="text-sm text-yellow-700 dark:text-yellow-300 leading-relaxed">
+                  <h4 className="font-semibold text-yellow-800 mb-2">Important Disclaimer</h4>
+                  <p className="text-sm text-yellow-700 leading-relaxed">
                     This is a demo interface. Actual downloading requires server-side implementation and must comply with YouTube's Terms of Service. Only download videos you have permission to download.
                   </p>
                 </div>

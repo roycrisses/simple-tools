@@ -109,10 +109,10 @@ const KeywordResearch = () => {
     <div className="max-w-6xl mx-auto p-4">
       {/* Page Title */}
       <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">
           Keyword Research Tool
         </h1>
-        <p className="text-xl text-gray-600 dark:text-gray-300">
+        <p className="text-xl text-gray-600">
           Discover profitable keywords and analyze search trends
         </p>
       </div>
@@ -130,9 +130,9 @@ const KeywordResearch = () => {
             <div className="retro-window-control control-close"></div>
           </div>
         </div>
-        <div className="p-6 bg-gray-100 dark:bg-gray-700">
+        <div className="p-6 bg-gray-100">
           <div className="text-center mb-6">
-            <p className="text-lg font-bold text-black dark:text-white font-mono">
+            <p className="text-lg font-bold text-black font-mono">
               {'>> FIND HIGH-VALUE KEYWORDS FOR SEO SUCCESS <<'}
             </p>
           </div>
@@ -150,7 +150,7 @@ const KeywordResearch = () => {
           
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-bold text-black dark:text-white mb-2 font-mono">
+              <label className="block text-sm font-bold text-black mb-2 font-mono">
                 SEED KEYWORD:
               </label>
               <input
@@ -161,7 +161,7 @@ const KeywordResearch = () => {
                 className="input-field font-mono"
                 onKeyPress={(e) => e.key === 'Enter' && researchKeywords()}
               />
-              <div className="text-xs text-gray-600 dark:text-gray-400 mt-1 font-mono">
+              <div className="text-xs text-gray-600 mt-1 font-mono">
                 💡 TIP: Use 1-3 words for best results
               </div>
             </div>
@@ -248,7 +248,7 @@ const KeywordResearch = () => {
                 </div>
 
                 <div className="mt-4 flex justify-between items-center">
-                  <div className="text-xs font-mono text-black dark:text-white">
+                  <div className="text-xs font-mono text-black">
                     Researched: {result.searchedAt}
                   </div>
                   <button
@@ -335,9 +335,9 @@ const KeywordResearch = () => {
                 </h2>
               </div>
               
-              <div className="flex flex-col items-center justify-center h-64 bg-gray-200 dark:bg-gray-600 border-4 border-black">
-                <BarChart3 className="h-16 w-16 mb-4 text-black dark:text-white" />
-                <p className="text-center font-mono font-bold text-black dark:text-white">
+              <div className="flex flex-col items-center justify-center h-64 bg-gray-200 border-4 border-black">
+                <BarChart3 className="h-16 w-16 mb-4 text-black" />
+                <p className="text-center font-mono font-bold text-black">
                   ENTER A KEYWORD AND CLICK "RESEARCH KEYWORDS" TO DISCOVER OPPORTUNITIES
                 </p>
               </div>

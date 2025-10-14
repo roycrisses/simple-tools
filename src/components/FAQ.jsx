@@ -63,14 +63,14 @@ const FAQ = () => {
   }
 
   return (
-    <section className="py-16 bg-gray-50 dark:bg-gray-800">
+    <section className="py-16 bg-gray-50">
       <div className="award-container">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="award-heading-2 mb-4">
               Frequently Asked Questions
             </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300">
+            <p className="text-lg text-gray-600">
               Everything you need to know about Simple Tools
             </p>
           </div>
@@ -80,9 +80,9 @@ const FAQ = () => {
               <div key={index} className="modern-card">
                 <button
                   onClick={() => toggleItem(index)}
-                  className="w-full p-6 text-left flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors rounded-xl"
+                  className="w-full p-6 text-left flex justify-between items-center hover:bg-gray-50 transition-colors rounded-xl"
                 >
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white pr-4">
+                  <h3 className="text-lg font-semibold text-gray-900 pr-4">
                     {faq.question}
                   </h3>
                   {openItems[index] ? (
@@ -94,7 +94,7 @@ const FAQ = () => {
                 
                 {openItems[index] && (
                   <div className="px-6 pb-6">
-                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                    <p className="text-gray-600 leading-relaxed">
                       {faq.answer}
                     </p>
                   </div>
@@ -104,11 +104,11 @@ const FAQ = () => {
           </div>
 
           <div className="text-center mt-12">
-            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-800">
-              <h3 className="font-bold text-blue-800 dark:text-blue-200 mb-3">
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-200">
+              <h3 className="font-bold text-blue-800 mb-3">
                 Still have questions?
               </h3>
-              <p className="text-blue-700 dark:text-blue-300 mb-4">
+              <p className="text-blue-700 mb-4">
                 Can't find the answer you're looking for? We're here to help!
               </p>
               <a

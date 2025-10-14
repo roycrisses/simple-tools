@@ -126,9 +126,9 @@ RECOMMENDATIONS:
   }
 
   const getScoreColor = (score) => {
-    if (score >= 90) return 'text-green-600 dark:text-green-400'
-    if (score >= 70) return 'text-yellow-600 dark:text-yellow-400'
-    return 'text-red-600 dark:text-red-400'
+    if (score >= 90) return 'text-green-600'
+    if (score >= 70) return 'text-yellow-600'
+    return 'text-red-600'
   }
 
   const getScoreLabel = (score) => {
@@ -150,10 +150,10 @@ RECOMMENDATIONS:
     <div className="max-w-6xl mx-auto p-4">
       {/* Page Title */}
       <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">
           Grammar Checker
         </h1>
-        <p className="text-xl text-gray-600 dark:text-gray-300">
+        <p className="text-xl text-gray-600">
           Check your text for grammar, spelling, and style errors
         </p>
       </div>
@@ -171,9 +171,9 @@ RECOMMENDATIONS:
             <div className="retro-window-control control-close"></div>
           </div>
         </div>
-        <div className="p-6 bg-gray-100 dark:bg-gray-700">
+        <div className="p-6 bg-gray-100">
           <div className="text-center mb-6">
-            <p className="text-lg font-bold text-black dark:text-white font-mono">
+            <p className="text-lg font-bold text-black font-mono">
               {'>> PERFECT YOUR WRITING WITH ADVANCED GRAMMAR CHECKING <<'}
             </p>
           </div>
@@ -191,7 +191,7 @@ RECOMMENDATIONS:
           
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-bold text-black dark:text-white mb-2 font-mono">
+              <label className="block text-sm font-bold text-black mb-2 font-mono">
                 PASTE YOUR TEXT:
               </label>
               <textarea
@@ -201,7 +201,7 @@ RECOMMENDATIONS:
                 className="input-field h-64 resize-none font-mono text-sm"
                 maxLength={5000}
               />
-              <div className="text-sm text-black dark:text-white mt-1 font-mono font-bold">
+              <div className="text-sm text-black mt-1 font-mono font-bold">
                 {text.length}/5,000 CHARACTERS | {text.split(/\s+/).filter(w => w.length > 0).length} WORDS
               </div>
             </div>
@@ -302,7 +302,7 @@ RECOMMENDATIONS:
               {/* Errors List */}
               {result.errors.length > 0 ? (
                 <div>
-                  <h3 className="font-mono font-bold text-black dark:text-white mb-2">
+                  <h3 className="font-mono font-bold text-black mb-2">
                     ERRORS & SUGGESTIONS:
                   </h3>
                   <div className="space-y-2 max-h-64 overflow-y-auto">
@@ -363,9 +363,9 @@ RECOMMENDATIONS:
               </div>
             </div>
           ) : (
-            <div className="flex flex-col items-center justify-center h-64 bg-gray-200 dark:bg-gray-600 border-4 border-black">
-              <BookOpen className="h-16 w-16 mb-4 text-black dark:text-white" />
-              <p className="text-center font-mono font-bold text-black dark:text-white">
+            <div className="flex flex-col items-center justify-center h-64 bg-gray-200 border-4 border-black">
+              <BookOpen className="h-16 w-16 mb-4 text-black" />
+              <p className="text-center font-mono font-bold text-black">
                 PASTE YOUR TEXT AND CLICK "CHECK GRAMMAR" TO ANALYZE WRITING QUALITY
               </p>
             </div>

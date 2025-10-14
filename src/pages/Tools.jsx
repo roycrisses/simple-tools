@@ -172,69 +172,69 @@ const Tools = () => {
 
   const getStatusColor = (status) => {
     switch (status) {
-      case 'Popular': return 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300'
-      case 'New': return 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300'
-      case 'Fun': return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300'
-      case 'Coming Soon': return 'bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-300'
-      default: return 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300'
+      case 'Popular': return 'bg-red-100 text-red-800'
+      case 'New': return 'bg-green-100 text-green-800'
+      case 'Fun': return 'bg-yellow-100 text-yellow-800'
+      case 'Coming Soon': return 'bg-gray-100 text-gray-800'
+      default: return 'bg-blue-100 text-blue-800'
     }
   }
 
   const getColorClasses = (color) => {
     const colors = {
       blue: {
-        border: 'border-blue-200 dark:border-blue-700 hover:border-blue-300 dark:hover:border-blue-600',
-        iconBg: 'bg-blue-100 dark:bg-blue-900/30',
-        iconText: 'text-blue-600 dark:text-blue-400',
+        border: 'border-blue-200 hover:border-blue-300',
+        iconBg: 'bg-blue-100',
+        iconText: 'text-blue-600',
         button: 'bg-blue-500 hover:bg-blue-600',
         dot: 'bg-blue-500'
       },
       green: {
-        border: 'border-green-200 dark:border-green-700 hover:border-green-300 dark:hover:border-green-600',
-        iconBg: 'bg-green-100 dark:bg-green-900/30',
-        iconText: 'text-green-600 dark:text-green-400',
+        border: 'border-green-200 hover:border-green-300',
+        iconBg: 'bg-green-100',
+        iconText: 'text-green-600',
         button: 'bg-green-500 hover:bg-green-600',
         dot: 'bg-green-500'
       },
       red: {
-        border: 'border-red-200 dark:border-red-700 hover:border-red-300 dark:hover:border-red-600',
-        iconBg: 'bg-red-100 dark:bg-red-900/30',
-        iconText: 'text-red-600 dark:text-red-400',
+        border: 'border-red-200 hover:border-red-300',
+        iconBg: 'bg-red-100',
+        iconText: 'text-red-600',
         button: 'bg-red-500 hover:bg-red-600',
         dot: 'bg-red-500'
       },
       yellow: {
-        border: 'border-yellow-200 dark:border-yellow-700 hover:border-yellow-300 dark:hover:border-yellow-600',
-        iconBg: 'bg-yellow-100 dark:bg-yellow-900/30',
-        iconText: 'text-yellow-600 dark:text-yellow-400',
+        border: 'border-yellow-200 hover:border-yellow-300',
+        iconBg: 'bg-yellow-100',
+        iconText: 'text-yellow-600',
         button: 'bg-yellow-500 hover:bg-yellow-600',
         dot: 'bg-yellow-500'
       },
       purple: {
-        border: 'border-purple-200 dark:border-purple-700 hover:border-purple-300 dark:hover:border-purple-600',
-        iconBg: 'bg-purple-100 dark:bg-purple-900/30',
-        iconText: 'text-purple-600 dark:text-purple-400',
+        border: 'border-purple-200 hover:border-purple-300',
+        iconBg: 'bg-purple-100',
+        iconText: 'text-purple-600',
         button: 'bg-purple-500 hover:bg-purple-600',
         dot: 'bg-purple-500'
       },
       indigo: {
-        border: 'border-indigo-200 dark:border-indigo-700 hover:border-indigo-300 dark:hover:border-indigo-600',
-        iconBg: 'bg-indigo-100 dark:bg-indigo-900/30',
-        iconText: 'text-indigo-600 dark:text-indigo-400',
+        border: 'border-indigo-200 hover:border-indigo-300',
+        iconBg: 'bg-indigo-100',
+        iconText: 'text-indigo-600',
         button: 'bg-indigo-500 hover:bg-indigo-600',
         dot: 'bg-indigo-500'
       },
       pink: {
-        border: 'border-pink-200 dark:border-pink-700 hover:border-pink-300 dark:hover:border-pink-600',
-        iconBg: 'bg-pink-100 dark:bg-pink-900/30',
-        iconText: 'text-pink-600 dark:text-pink-400',
+        border: 'border-pink-200 hover:border-pink-300',
+        iconBg: 'bg-pink-100',
+        iconText: 'text-pink-600',
         button: 'bg-pink-500 hover:bg-pink-600',
         dot: 'bg-pink-500'
       },
       teal: {
-        border: 'border-teal-200 dark:border-teal-700 hover:border-teal-300 dark:hover:border-teal-600',
-        iconBg: 'bg-teal-100 dark:bg-teal-900/30',
-        iconText: 'text-teal-600 dark:text-teal-400',
+        border: 'border-teal-200 hover:border-teal-300',
+        iconBg: 'bg-teal-100',
+        iconText: 'text-teal-600',
         button: 'bg-teal-500 hover:bg-teal-600',
         dot: 'bg-teal-500'
       }
@@ -291,7 +291,7 @@ const Tools = () => {
               return (
                 <div
                   key={index}
-                  className={`bg-white dark:bg-gray-800 rounded-xl border-2 ${colorClasses.border} p-6 hover:shadow-lg transition-all duration-200 group`}
+                  className={`bg-white rounded-xl border-2 ${colorClasses.border} p-6 hover:shadow-lg transition-all duration-200 group`}
                 >
                   {/* Tool Header */}
                   <div className="flex items-start justify-between mb-4">
@@ -305,7 +305,7 @@ const Tools = () => {
 
                   {/* Tool Info */}
                   <div className="mb-4">
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
                       {tool.name}
                     </h3>
                     <p className="minimal-text text-sm mb-3">
@@ -348,7 +348,7 @@ const Tools = () => {
             <div className="minimal-card max-w-2xl mx-auto">
               <div className="flex items-center justify-center mb-4">
                 <Heart className="h-6 w-6 text-red-500 mr-2" />
-                <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+                <h2 className="text-xl font-semibold text-gray-900">
                   Love Our Tools?
                 </h2>
               </div>

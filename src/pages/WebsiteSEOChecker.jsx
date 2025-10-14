@@ -124,9 +124,9 @@ ${result.recommendations.map(rec => `- ${rec}`).join('\n')}
   }
 
   const getScoreColor = (score) => {
-    if (score >= 80) return 'text-green-600 dark:text-green-400'
-    if (score >= 60) return 'text-yellow-600 dark:text-yellow-400'
-    return 'text-red-600 dark:text-red-400'
+    if (score >= 80) return 'text-green-600'
+    if (score >= 60) return 'text-yellow-600'
+    return 'text-red-600'
   }
 
   const getScoreLabel = (score) => {
@@ -157,10 +157,10 @@ ${result.recommendations.map(rec => `- ${rec}`).join('\n')}
     <div className="max-w-6xl mx-auto p-4">
       {/* Page Title */}
       <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">
           Website SEO Checker
         </h1>
-        <p className="text-xl text-gray-600 dark:text-gray-300">
+        <p className="text-xl text-gray-600">
           Analyze your website's SEO performance and get improvement recommendations
         </p>
       </div>
@@ -178,9 +178,9 @@ ${result.recommendations.map(rec => `- ${rec}`).join('\n')}
             <div className="retro-window-control control-close"></div>
           </div>
         </div>
-        <div className="p-6 bg-gray-100 dark:bg-gray-700">
+        <div className="p-6 bg-gray-100">
           <div className="text-center mb-6">
-            <p className="text-lg font-bold text-black dark:text-white font-mono">
+            <p className="text-lg font-bold text-black font-mono">
               {'>> COMPREHENSIVE SEO ANALYSIS & OPTIMIZATION RECOMMENDATIONS <<'}
             </p>
           </div>
@@ -198,7 +198,7 @@ ${result.recommendations.map(rec => `- ${rec}`).join('\n')}
           
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-bold text-black dark:text-white mb-2 font-mono">
+              <label className="block text-sm font-bold text-black mb-2 font-mono">
                 WEBSITE URL:
               </label>
               <input
@@ -209,7 +209,7 @@ ${result.recommendations.map(rec => `- ${rec}`).join('\n')}
                 className="input-field font-mono"
                 onKeyPress={(e) => e.key === 'Enter' && checkSEO()}
               />
-              <div className="text-xs text-gray-600 dark:text-gray-400 mt-1 font-mono">
+              <div className="text-xs text-gray-600 mt-1 font-mono">
                 💡 TIP: Include https:// for best results
               </div>
             </div>
@@ -297,7 +297,7 @@ ${result.recommendations.map(rec => `- ${rec}`).join('\n')}
                 </div>
 
                 <div className="mt-4 flex justify-between items-center">
-                  <div className="text-xs font-mono text-black dark:text-white">
+                  <div className="text-xs font-mono text-black">
                     Analyzed: {result.checkedAt}
                   </div>
                   <button
@@ -376,9 +376,9 @@ ${result.recommendations.map(rec => `- ${rec}`).join('\n')}
                 </h2>
               </div>
               
-              <div className="flex flex-col items-center justify-center h-64 bg-gray-200 dark:bg-gray-600 border-4 border-black">
-                <Globe className="h-16 w-16 mb-4 text-black dark:text-white" />
-                <p className="text-center font-mono font-bold text-black dark:text-white">
+              <div className="flex flex-col items-center justify-center h-64 bg-gray-200 border-4 border-black">
+                <Globe className="h-16 w-16 mb-4 text-black" />
+                <p className="text-center font-mono font-bold text-black">
                   ENTER A WEBSITE URL AND CLICK "ANALYZE SEO" TO GET DETAILED REPORT
                 </p>
               </div>

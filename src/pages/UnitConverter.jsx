@@ -165,7 +165,7 @@ const UnitConverter = () => {
                     className={`p-3 rounded-lg font-medium transition-colors ${
                       activeCategory === key
                         ? 'bg-blue-500 text-white'
-                        : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                     }`}
                   >
                     {category.name}
@@ -184,7 +184,7 @@ const UnitConverter = () => {
                 {/* Input Section */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
                       From
                     </label>
                     <select
@@ -211,7 +211,7 @@ const UnitConverter = () => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
                       To
                     </label>
                     <select
@@ -231,7 +231,7 @@ const UnitConverter = () => {
                 {/* Value Input */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
                       Enter Value
                     </label>
                     <input
@@ -245,12 +245,12 @@ const UnitConverter = () => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
                       Result
                     </label>
-                    <div className="minimal-input bg-gray-50 dark:bg-gray-700 flex items-center">
+                    <div className="minimal-input bg-gray-50 flex items-center">
                       {result ? (
-                        <span className="font-semibold text-blue-600 dark:text-blue-400">
+                        <span className="font-semibold text-blue-600">
                           {result}
                         </span>
                       ) : (
@@ -264,12 +264,12 @@ const UnitConverter = () => {
 
                 {/* Result Display */}
                 {result && inputValue && (
-                  <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                     <div className="text-center">
-                      <div className="text-lg font-semibold text-gray-900 dark:text-white">
+                      <div className="text-lg font-semibold text-gray-900">
                         {inputValue} {conversions[activeCategory].units[fromUnit].name} = 
                       </div>
-                      <div className="text-2xl font-bold text-blue-600 dark:text-blue-400 mt-1">
+                      <div className="text-2xl font-bold text-blue-600 mt-1">
                         {result} {conversions[activeCategory].units[toUnit].name}
                       </div>
                     </div>

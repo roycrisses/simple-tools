@@ -136,15 +136,15 @@ const TextTools = () => {
 
             {/* Tab Selection */}
             <div className="minimal-card">
-              <div className="flex mb-6 bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
+              <div className="flex mb-6 bg-gray-100 rounded-lg p-1">
                 {Object.entries(transformations).map(([key, category]) => (
                   <button
                     key={key}
                     onClick={() => setActiveTab(key)}
                     className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${
                       activeTab === key
-                        ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
-                        : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
+                        ? 'bg-white text-gray-900 shadow-sm'
+                        : 'text-gray-600 hover:text-gray-900'
                     }`}
                   >
                     {category.name}
@@ -154,8 +154,8 @@ const TextTools = () => {
                   onClick={() => setActiveTab('stats')}
                   className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${
                     activeTab === 'stats'
-                      ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
-                      : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
+                      ? 'bg-white text-gray-900 shadow-sm'
+                      : 'text-gray-600 hover:text-gray-900'
                   }`}
                 >
                   Statistics
@@ -170,18 +170,18 @@ const TextTools = () => {
                     {transformations[activeTab].operations.map((operation, index) => {
                       const result = inputText ? operation.func(inputText) : ''
                       return (
-                        <div key={index} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                        <div key={index} className="border border-gray-200 rounded-lg p-4">
                           <div className="flex justify-between items-center mb-2">
                             <h4 className="font-medium text-sm">{operation.name}</h4>
                             <button
                               onClick={() => copyToClipboard(result, operation.name)}
-                              className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
+                              className="p-1 hover:bg-gray-100 rounded"
                               disabled={!result}
                             >
                               <Copy className="h-3 w-3" />
                             </button>
                           </div>
-                          <div className="bg-gray-50 dark:bg-gray-800 rounded p-2 text-sm min-h-[3rem] overflow-auto">
+                          <div className="bg-gray-50 rounded p-2 text-sm min-h-[3rem] overflow-auto">
                             {result || <span className="minimal-text">Result will appear here</span>}
                           </div>
                         </div>
@@ -197,39 +197,39 @@ const TextTools = () => {
                   <h3 className="text-lg font-semibold">Text Statistics</h3>
                   
                   <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-                    <div className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                    <div className="text-center p-4 bg-gray-50 rounded-lg">
                       <div className="text-2xl font-bold text-blue-600">{stats.characters}</div>
                       <div className="text-sm minimal-text">Characters</div>
                     </div>
                     
-                    <div className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                    <div className="text-center p-4 bg-gray-50 rounded-lg">
                       <div className="text-2xl font-bold text-green-600">{stats.charactersNoSpaces}</div>
                       <div className="text-sm minimal-text">No Spaces</div>
                     </div>
                     
-                    <div className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                    <div className="text-center p-4 bg-gray-50 rounded-lg">
                       <div className="text-2xl font-bold text-purple-600">{stats.words}</div>
                       <div className="text-sm minimal-text">Words</div>
                     </div>
                     
-                    <div className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                    <div className="text-center p-4 bg-gray-50 rounded-lg">
                       <div className="text-2xl font-bold text-orange-600">{stats.sentences}</div>
                       <div className="text-sm minimal-text">Sentences</div>
                     </div>
                     
-                    <div className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                    <div className="text-center p-4 bg-gray-50 rounded-lg">
                       <div className="text-2xl font-bold text-red-600">{stats.paragraphs}</div>
                       <div className="text-sm minimal-text">Paragraphs</div>
                     </div>
                     
-                    <div className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                    <div className="text-center p-4 bg-gray-50 rounded-lg">
                       <div className="text-2xl font-bold text-cyan-600">{stats.lines}</div>
                       <div className="text-sm minimal-text">Lines</div>
                     </div>
                   </div>
 
                   {inputText && (
-                    <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                       <h4 className="font-semibold mb-2">Reading Time Estimate</h4>
                       <p className="minimal-text">
                         Average reading time: {Math.ceil(stats.words / 200)} minute(s) 
@@ -243,7 +243,7 @@ const TextTools = () => {
               {/* Copy Message */}
               {copyMessage && (
                 <div className="text-center mt-4">
-                  <div className="inline-block bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-300 px-4 py-2 rounded-lg text-sm font-medium">
+                  <div className="inline-block bg-green-100 text-green-700 px-4 py-2 rounded-lg text-sm font-medium">
                     {copyMessage}
                   </div>
                 </div>

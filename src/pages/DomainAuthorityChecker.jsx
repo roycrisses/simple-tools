@@ -58,11 +58,11 @@ const DomainAuthorityChecker = () => {
   }
 
   const getDAColor = (da) => {
-    if (da >= 80) return 'text-green-600 dark:text-green-400'
-    if (da >= 60) return 'text-blue-600 dark:text-blue-400'
-    if (da >= 40) return 'text-yellow-600 dark:text-yellow-400'
-    if (da >= 20) return 'text-orange-600 dark:text-orange-400'
-    return 'text-red-600 dark:text-red-400'
+    if (da >= 80) return 'text-green-600'
+    if (da >= 60) return 'text-blue-600'
+    if (da >= 40) return 'text-yellow-600'
+    if (da >= 20) return 'text-orange-600'
+    return 'text-red-600'
   }
 
   const getDALabel = (da) => {
@@ -107,7 +107,7 @@ const DomainAuthorityChecker = () => {
           
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Domain Name
                   </label>
                   <input
@@ -124,8 +124,8 @@ const DomainAuthorityChecker = () => {
                 </div>
 
                 {error && (
-                  <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-                    <span className="text-red-700 dark:text-red-300 text-sm">{error}</span>
+                  <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
+                    <span className="text-red-700 text-sm">{error}</span>
                   </div>
                 )}
 
@@ -168,10 +168,10 @@ const DomainAuthorityChecker = () => {
               {result ? (
                 <div className="space-y-6">
                   {/* Domain Info */}
-                  <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                  <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
                     <div className="flex items-center mb-2">
                       <Globe className="h-4 w-4 text-blue-500 mr-2" />
-                      <span className="font-semibold text-gray-900 dark:text-white">
+                      <span className="font-semibold text-gray-900">
                         {result.domain}
                       </span>
                     </div>
@@ -182,30 +182,30 @@ const DomainAuthorityChecker = () => {
 
                   {/* Main Metrics */}
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="text-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                    <div className="text-center p-4 bg-gray-50 rounded-lg">
                       <div className="text-3xl font-bold mb-1">
                         <span className={getDAColor(result.domainAuthority)}>
                           {result.domainAuthority}
                         </span>
                       </div>
-                      <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">
+                      <div className="text-sm font-medium text-gray-600 mb-1">
                         Domain Authority
                       </div>
-                      <div className="text-xs px-2 py-1 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300">
+                      <div className="text-xs px-2 py-1 rounded bg-blue-100 text-blue-700">
                         {getDALabel(result.domainAuthority)}
                       </div>
                     </div>
 
-                    <div className="text-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                    <div className="text-center p-4 bg-gray-50 rounded-lg">
                       <div className="text-3xl font-bold mb-1">
                         <span className={getDAColor(result.pageAuthority)}>
                           {result.pageAuthority}
                         </span>
                       </div>
-                      <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">
+                      <div className="text-sm font-medium text-gray-600 mb-1">
                         Page Authority
                       </div>
-                      <div className="text-xs px-2 py-1 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300">
+                      <div className="text-xs px-2 py-1 rounded bg-blue-100 text-blue-700">
                         {getDALabel(result.pageAuthority)}
                       </div>
                     </div>
@@ -213,13 +213,13 @@ const DomainAuthorityChecker = () => {
 
                   {/* Additional Metrics */}
                   <div className="space-y-3">
-                    <h3 className="font-semibold text-gray-900 dark:text-white">Detailed Metrics</h3>
+                    <h3 className="font-semibold text-gray-900">Detailed Metrics</h3>
                     <div className="space-y-2">
-                      <div className="flex justify-between py-2 border-b border-gray-200 dark:border-gray-700">
+                      <div className="flex justify-between py-2 border-b border-gray-200">
                         <span className="minimal-text">Backlinks</span>
                         <span className="font-medium">{result.backlinks.toLocaleString()}</span>
                       </div>
-                      <div className="flex justify-between py-2 border-b border-gray-200 dark:border-gray-700">
+                      <div className="flex justify-between py-2 border-b border-gray-200">
                         <span className="minimal-text">Referring Domains</span>
                         <span className="font-medium">{result.referringDomains.toLocaleString()}</span>
                       </div>
@@ -252,10 +252,10 @@ const DomainAuthorityChecker = () => {
                 </div>
               ) : (
                 <div className="flex flex-col items-center justify-center h-48 text-center">
-                  <div className="w-12 h-12 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center mb-4">
+                  <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-4">
                     <BarChart3 className="h-6 w-6 text-gray-400" />
                   </div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
+                  <h3 className="font-semibold text-gray-900 mb-2">
                     Ready to Analyze
                   </h3>
                   <p className="minimal-text text-sm">

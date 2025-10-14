@@ -50,10 +50,10 @@ const About = () => {
     <div className="max-w-4xl mx-auto">
       {/* Header */}
       <div className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
           About Simple Tools
         </h1>
-        <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
           We believe that useful tools should be simple, fast, and accessible to everyone. 
           That's why we created this collection of everyday utilities that just work.
         </p>
@@ -61,10 +61,10 @@ const About = () => {
 
       {/* Mission Statement */}
       <div className="card p-8 mb-12">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 text-center">
+        <h2 className="text-2xl font-bold text-gray-900 mb-4 text-center">
           Our Mission
         </h2>
-        <p className="text-lg text-gray-600 dark:text-gray-300 text-center leading-relaxed">
+        <p className="text-lg text-gray-600 text-center leading-relaxed">
           To provide high-quality, free tools that solve everyday problems without the complexity, 
           ads, or privacy concerns found in other solutions. We focus on simplicity, speed, and user experience.
         </p>
@@ -72,7 +72,7 @@ const About = () => {
 
       {/* Features */}
       <div className="mb-12">
-        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+        <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
           Why Choose Our Tools?
         </h2>
         
@@ -82,14 +82,14 @@ const About = () => {
             return (
               <div key={index} className="card p-6">
                 <div className="flex items-start space-x-4">
-                  <div className="p-3 bg-primary-100 dark:bg-primary-900/30 rounded-xl">
-                    <IconComponent className="h-6 w-6 text-primary-600 dark:text-primary-400" />
+                  <div className="p-3 bg-primary-100 rounded-xl">
+                    <IconComponent className="h-6 w-6 text-primary-600" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
                       {feature.title}
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300">
+                    <p className="text-gray-600">
                       {feature.description}
                     </p>
                   </div>
@@ -102,7 +102,7 @@ const About = () => {
 
       {/* Available Tools */}
       <div className="mb-12">
-        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+        <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
           Available Tools
         </h2>
         
@@ -111,10 +111,10 @@ const About = () => {
             <div key={index} className="card p-6">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between">
                 <div className="mb-4 md:mb-0">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
                     {tool.name}
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-300">
+                  <p className="text-gray-600">
                     {tool.description}
                   </p>
                 </div>
@@ -126,16 +126,16 @@ const About = () => {
 
       {/* Technology Stack */}
       <div className="card p-8 mb-12">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
+        <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
           Built With Modern Technology
         </h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+            <h3 className="text-lg font-semibold text-gray-900 mb-3">
               Frontend
             </h3>
-            <ul className="space-y-2 text-gray-600 dark:text-gray-300">
+            <ul className="space-y-2 text-gray-600">
               <li>• React 18 - Modern UI framework</li>
               <li>• Tailwind CSS - Utility-first styling</li>
               <li>• Vite - Lightning-fast build tool</li>
@@ -144,10 +144,10 @@ const About = () => {
           </div>
           
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+            <h3 className="text-lg font-semibold text-gray-900 mb-3">
               Backend
             </h3>
-            <ul className="space-y-2 text-gray-600 dark:text-gray-300">
+            <ul className="space-y-2 text-gray-600">
               <li>• FastAPI - High-performance Python API</li>
               <li>• Pillow - Advanced image processing</li>
               <li>• yt-dlp - YouTube download capabilities</li>
@@ -158,12 +158,12 @@ const About = () => {
       </div>
 
       {/* Privacy & Security */}
-      <div className="card p-8 mb-12 bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-700">
-        <h2 className="text-2xl font-bold text-green-800 dark:text-green-200 mb-4 text-center">
+      <div className="card p-8 mb-12 bg-green-50 border-green-200">
+        <h2 className="text-2xl font-bold text-green-800 mb-4 text-center">
           Privacy & Security
         </h2>
         
-        <div className="space-y-4 text-green-700 dark:text-green-300">
+        <div className="space-y-4 text-green-700">
           <div className="flex items-start space-x-3">
             <Shield className="h-5 w-5 mt-0.5 flex-shrink-0" />
             <p>
@@ -196,44 +196,44 @@ const About = () => {
 
       {/* Future Plans */}
       <div className="card p-8 mb-12">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 text-center">
+        <h2 className="text-2xl font-bold text-gray-900 mb-4 text-center">
           Coming Soon
         </h2>
         
-        <p className="text-gray-600 dark:text-gray-300 text-center mb-6">
+        <p className="text-gray-600 text-center mb-6">
           We're constantly working to add more useful tools. Here's what's planned:
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
-            <h4 className="font-medium text-gray-900 dark:text-white mb-2">PDF Tools</h4>
-            <p className="text-sm text-gray-600 dark:text-gray-300">Merge, split, and convert PDF files</p>
+          <div className="p-4 bg-gray-50 rounded-lg">
+            <h4 className="font-medium text-gray-900 mb-2">PDF Tools</h4>
+            <p className="text-sm text-gray-600">Merge, split, and convert PDF files</p>
           </div>
           
-          <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
-            <h4 className="font-medium text-gray-900 dark:text-white mb-2">Text Tools</h4>
-            <p className="text-sm text-gray-600 dark:text-gray-300">Word count, case converter, and more</p>
+          <div className="p-4 bg-gray-50 rounded-lg">
+            <h4 className="font-medium text-gray-900 mb-2">Text Tools</h4>
+            <p className="text-sm text-gray-600">Word count, case converter, and more</p>
           </div>
           
-          <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
-            <h4 className="font-medium text-gray-900 dark:text-white mb-2">Color Tools</h4>
-            <p className="text-sm text-gray-600 dark:text-gray-300">Color picker, palette generator</p>
+          <div className="p-4 bg-gray-50 rounded-lg">
+            <h4 className="font-medium text-gray-900 mb-2">Color Tools</h4>
+            <p className="text-sm text-gray-600">Color picker, palette generator</p>
           </div>
           
-          <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
-            <h4 className="font-medium text-gray-900 dark:text-white mb-2">Unit Converter</h4>
-            <p className="text-sm text-gray-600 dark:text-gray-300">Length, weight, temperature, and more</p>
+          <div className="p-4 bg-gray-50 rounded-lg">
+            <h4 className="font-medium text-gray-900 mb-2">Unit Converter</h4>
+            <p className="text-sm text-gray-600">Length, weight, temperature, and more</p>
           </div>
         </div>
       </div>
 
       {/* Contact */}
       <div className="card p-8 text-center">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+        <h2 className="text-2xl font-bold text-gray-900 mb-4">
           Get in Touch
         </h2>
         
-        <p className="text-gray-600 dark:text-gray-300 mb-6">
+        <p className="text-gray-600 mb-6">
           Have suggestions for new tools or found a bug? We'd love to hear from you!
         </p>
         
@@ -250,7 +250,7 @@ const About = () => {
             href="https://github.com/roycrisses"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center space-x-2 px-6 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 font-medium rounded-xl transition-colors duration-200"
+            className="inline-flex items-center justify-center space-x-2 px-6 py-3 border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium rounded-xl transition-colors duration-200"
           >
             <Github className="h-4 w-4" />
             <span>View on GitHub</span>

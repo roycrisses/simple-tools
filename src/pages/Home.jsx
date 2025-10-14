@@ -117,18 +117,18 @@ const Home = () => {
         <div className="absolute bottom-40 right-10 w-12 h-12 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full opacity-20 animate-pulse" style={{animationDelay: '0.5s'}}></div>
       </section>
       {/* Premium Tools Section */}
-      <section id="tools" className="py-24 bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-dark-bg dark:to-dark-surface">
+      <section id="tools" className="py-24 bg-gradient-to-br from-neutral-50 to-neutral-100">
         <div className="award-container">
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 bg-primary-100 dark:bg-primary-900/20 rounded-full px-4 py-2 mb-6">
+            <div className="inline-flex items-center gap-2 bg-primary-100 rounded-full px-4 py-2 mb-6">
               <Star className="h-4 w-4 text-primary-600" />
-              <span className="text-primary-700 dark:text-primary-300 text-sm font-medium">Premium Collection</span>
+              <span className="text-primary-700 text-sm font-medium">Premium Collection</span>
             </div>
             
             <h2 className="award-heading-2 mb-6">
               Award-Winning Tools
             </h2>
-            <p className="text-xl text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto">
+            <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
               Discover our meticulously crafted suite of professional-grade utilities, 
               designed to elevate your productivity to new heights.
             </p>
@@ -156,11 +156,11 @@ const Home = () => {
                     </div>
                   </div>
                   
-                  <p className="text-neutral-600 dark:text-neutral-400 mb-6 leading-relaxed">
+                  <p className="text-neutral-600 mb-6 leading-relaxed">
                     {tool.description}
                   </p>
                   
-                  <div className="flex items-center text-primary-600 dark:text-primary-400 font-semibold group-hover:text-secondary-600 dark:group-hover:text-secondary-400 transition-colors">
+                  <div className="flex items-center text-primary-600 font-semibold group-hover:text-secondary-600 transition-colors">
                     <span>Experience Now</span>
                     <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-2 transition-transform" />
                   </div>
@@ -180,7 +180,7 @@ const Home = () => {
           <div className="text-center">
             <div className="award-glass p-8 rounded-3xl max-w-2xl mx-auto">
               <h3 className="award-heading-3 mb-4">Ready to Transform Your Workflow?</h3>
-              <p className="text-neutral-600 dark:text-neutral-400 mb-6">
+              <p className="text-neutral-600 mb-6">
                 Join millions of professionals who trust our premium tools for their daily tasks.
               </p>
               <Link
@@ -197,7 +197,7 @@ const Home = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-16 bg-gray-50 dark:bg-gray-800">
+      <section className="py-16 bg-gray-50">
         <div className="minimal-container">
           <div className="text-center mb-12">
             <h2 className="minimal-h2 mb-4">
@@ -270,29 +270,29 @@ const Home = () => {
       </section>
 
       {/* Comprehensive Content Section */}
-      <section className="py-16 bg-white dark:bg-gray-900">
+      <section className="py-16 bg-white">
         <div className="award-container">
           <div className="max-w-4xl mx-auto">
             <h2 className="award-heading-2 text-center mb-12">
               Why Simple Tools is Your Ultimate Productivity Solution
             </h2>
             
-            <div className="prose prose-lg dark:prose-invert max-w-none">
-              <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+            <div className="prose prose-lg max-w-none">
+              <p className="text-lg text-gray-600 mb-6 leading-relaxed">
                 In today's fast-paced digital world, having access to reliable, efficient tools can make all the difference 
                 in your productivity. Simple Tools has emerged as the leading platform for free online utilities, offering 
                 a comprehensive suite of professional-grade tools that cater to every aspect of your digital workflow.
               </p>
               
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">
                 Comprehensive Tool Categories
               </h3>
               
-              <p className="text-gray-600 dark:text-gray-300 mb-4">
+              <p className="text-gray-600 mb-4">
                 Our platform is organized into several key categories, each designed to address specific needs:
               </p>
               
-              <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 mb-6 space-y-2">
+              <ul className="list-disc pl-6 text-gray-600 mb-6 space-y-2">
                 <li><strong>Image Processing Tools:</strong> QR code generator, image resizer, image compressor, and color tools for all your visual content needs</li>
                 <li><strong>Document Management:</strong> PDF tools for merging, splitting, and converting documents with ease</li>
                 <li><strong>SEO & Marketing Tools:</strong> Domain authority checker, backlink analyzer, website SEO checker, and keyword research tools</li>
@@ -301,15 +301,15 @@ const Home = () => {
                 <li><strong>Utility Tools:</strong> Unit converter, coin flip, and other everyday productivity tools</li>
               </ul>
               
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">
                 Advanced Features That Set Us Apart
               </h3>
               
-              <p className="text-gray-600 dark:text-gray-300 mb-4">
+              <p className="text-gray-600 mb-4">
                 What makes Simple Tools the preferred choice for millions of users worldwide?
               </p>
               
-              <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 mb-6 space-y-2">
+              <ul className="list-disc pl-6 text-gray-600 mb-6 space-y-2">
                 <li><strong>Lightning-Fast Processing:</strong> All tools are optimized for speed, delivering results in seconds</li>
                 <li><strong>Privacy-First Approach:</strong> Your data never leaves your device for most operations, ensuring complete privacy</li>
                 <li><strong>No Registration Required:</strong> Start using any tool immediately without creating accounts or providing personal information</li>
@@ -318,15 +318,15 @@ const Home = () => {
                 <li><strong>Regular Updates:</strong> We continuously add new tools and improve existing ones based on user feedback</li>
               </ul>
               
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">
                 Perfect for Every User Type
               </h3>
               
-              <p className="text-gray-600 dark:text-gray-300 mb-4">
+              <p className="text-gray-600 mb-4">
                 Whether you're a content creator, digital marketer, student, or business professional, our tools are designed to enhance your workflow:
               </p>
               
-              <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 mb-6 space-y-2">
+              <ul className="list-disc pl-6 text-gray-600 mb-6 space-y-2">
                 <li><strong>Content Creators:</strong> Generate QR codes, resize images, and download media content for your projects</li>
                 <li><strong>Digital Marketers:</strong> Analyze website performance, research keywords, and check domain authority for SEO campaigns</li>
                 <li><strong>Students & Educators:</strong> Check grammar, detect plagiarism, and convert documents for academic work</li>
@@ -334,19 +334,19 @@ const Home = () => {
                 <li><strong>Web Developers:</strong> Optimize images, generate QR codes, and analyze website performance</li>
               </ul>
               
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">
                 Trusted by Millions Worldwide
               </h3>
               
-              <p className="text-gray-600 dark:text-gray-300 mb-6">
+              <p className="text-gray-600 mb-6">
                 With over 10 million satisfied users and 99.9% uptime, Simple Tools has established itself as the most 
                 reliable platform for free online utilities. Our commitment to quality, privacy, and user experience 
                 has earned us recognition as the go-to solution for productivity tools.
               </p>
               
-              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-800">
-                <h4 className="font-bold text-blue-800 dark:text-blue-200 mb-3">Ready to Boost Your Productivity?</h4>
-                <p className="text-blue-700 dark:text-blue-300">
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-200">
+                <h4 className="font-bold text-blue-800 mb-3">Ready to Boost Your Productivity?</h4>
+                <p className="text-blue-700">
                   Join millions of users who trust Simple Tools for their daily productivity needs. 
                   Start exploring our comprehensive collection of free online utilities today and experience 
                   the difference that professional-grade tools can make in your workflow.

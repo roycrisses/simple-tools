@@ -107,10 +107,10 @@ const Contact = () => {
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">
           Contact Us
         </h1>
-        <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        <p className="text-xl text-gray-600 max-w-2xl mx-auto">
           Have questions, suggestions, or need help? We'd love to hear from you!
         </p>
       </div>
@@ -118,20 +118,20 @@ const Contact = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         {/* Contact Information */}
         <div className="space-y-8">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
-            <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-6">
+          <div className="bg-white rounded-lg shadow-lg p-8">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-6">
               Get in Touch
             </h2>
             
             <div className="space-y-6">
               <div className="flex items-start space-x-4">
                 <div className="flex-shrink-0">
-                  <Mail className="w-6 h-6 text-primary-600 dark:text-primary-400" />
+                  <Mail className="w-6 h-6 text-primary-600" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white">Email</h3>
-                  <p className="text-gray-600 dark:text-gray-300">krishna21karki@gmail.com</p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                  <h3 className="font-semibold text-gray-900">Email</h3>
+                  <p className="text-gray-600">krishna21karki@gmail.com</p>
+                  <p className="text-sm text-gray-500">
                     We typically respond within 24 hours
                   </p>
                 </div>
@@ -139,12 +139,12 @@ const Contact = () => {
 
               <div className="flex items-start space-x-4">
                 <div className="flex-shrink-0">
-                  <MapPin className="w-6 h-6 text-primary-600 dark:text-primary-400" />
+                  <MapPin className="w-6 h-6 text-primary-600" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white">Location</h3>
-                  <p className="text-gray-600 dark:text-gray-300">Kathmandu, Nepal</p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                  <h3 className="font-semibold text-gray-900">Location</h3>
+                  <p className="text-gray-600">Kathmandu, Nepal</p>
+                  <p className="text-sm text-gray-500">
                     Leapfrog PVT LTD
                   </p>
                 </div>
@@ -152,12 +152,12 @@ const Contact = () => {
 
               <div className="flex items-start space-x-4">
                 <div className="flex-shrink-0">
-                  <Clock className="w-6 h-6 text-primary-600 dark:text-primary-400" />
+                  <Clock className="w-6 h-6 text-primary-600" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white">Response Time</h3>
-                  <p className="text-gray-600 dark:text-gray-300">24-48 hours</p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                  <h3 className="font-semibold text-gray-900">Response Time</h3>
+                  <p className="text-gray-600">24-48 hours</p>
+                  <p className="text-sm text-gray-500">
                     Monday to Friday, 9 AM - 6 PM (NPT)
                   </p>
                 </div>
@@ -165,8 +165,8 @@ const Contact = () => {
             </div>
 
             {/* Social Links */}
-            <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
+            <div className="mt-8 pt-6 border-t border-gray-200">
+              <h3 className="font-semibold text-gray-900 mb-4">
                 Connect With Us
               </h3>
               <div className="flex space-x-4">
@@ -174,44 +174,44 @@ const Contact = () => {
                   href="https://github.com/roycrisses"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center w-10 h-10 bg-gray-100 dark:bg-gray-700 rounded-full hover:bg-primary-100 dark:hover:bg-primary-900 transition-colors"
+                  className="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full hover:bg-primary-100 transition-colors"
                 >
-                  <Github className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+                  <Github className="w-5 h-5 text-gray-600" />
                 </a>
                 <button
                   onClick={() => {
                     document.getElementById('message').focus()
                     document.getElementById('message').scrollIntoView({ behavior: 'smooth' })
                   }}
-                  className="flex items-center justify-center w-10 h-10 bg-gray-100 dark:bg-gray-700 rounded-full hover:bg-primary-100 dark:hover:bg-primary-900 transition-colors"
+                  className="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full hover:bg-primary-100 transition-colors"
                   title="Send us a message"
                 >
-                  <Mail className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+                  <Mail className="w-5 h-5 text-gray-600" />
                 </button>
               </div>
             </div>
           </div>
 
           {/* Developer Info */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
-            <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-6">
+          <div className="bg-white rounded-lg shadow-lg p-8">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-6">
               About the Developer
             </h2>
             <div className="space-y-4">
               <div>
-                <h3 className="font-semibold text-gray-900 dark:text-white">Krishna Karki</h3>
-                <p className="text-gray-600 dark:text-gray-300">Full Stack Developer</p>
+                <h3 className="font-semibold text-gray-900">Krishna Karki</h3>
+                <p className="text-gray-600">Full Stack Developer</p>
               </div>
               <div>
-                <p className="text-gray-600 dark:text-gray-300">
+                <p className="text-gray-600">
                   🎓 IT Student from Kathmandu, Nepal
                 </p>
-                <p className="text-gray-600 dark:text-gray-300">
+                <p className="text-gray-600">
                   🏢 Leapfrog PVT LTD
                 </p>
               </div>
               <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
+                <p className="text-sm text-gray-500">
                   Passionate about creating useful, free tools that make daily tasks easier for everyone.
                 </p>
               </div>
@@ -220,19 +220,19 @@ const Contact = () => {
         </div>
 
         {/* Contact Form */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
-          <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-6">
+        <div className="bg-white rounded-lg shadow-lg p-8">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-6">
             Send us a Message
           </h2>
           
           {submitStatus === 'success' && (
-            <div className="mb-6 p-4 bg-green-100 dark:bg-green-900 border border-green-400 dark:border-green-600 rounded-lg flex items-center space-x-3">
-              <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400 flex-shrink-0" />
+            <div className="mb-6 p-4 bg-green-100 border border-green-400 rounded-lg flex items-center space-x-3">
+              <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
               <div>
-                <p className="text-green-700 dark:text-green-300 font-medium">
+                <p className="text-green-700 font-medium">
                   Message sent successfully!
                 </p>
-                <p className="text-green-600 dark:text-green-400 text-sm">
+                <p className="text-green-600 text-sm">
                   Thank you for reaching out. We'll get back to you within 24 hours.
                 </p>
               </div>
@@ -240,13 +240,13 @@ const Contact = () => {
           )}
 
           {submitStatus === 'error' && (
-            <div className="mb-6 p-4 bg-red-100 dark:bg-red-900 border border-red-400 dark:border-red-600 rounded-lg flex items-center space-x-3">
-              <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400 flex-shrink-0" />
+            <div className="mb-6 p-4 bg-red-100 border border-red-400 rounded-lg flex items-center space-x-3">
+              <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
               <div>
-                <p className="text-red-700 dark:text-red-300 font-medium">
+                <p className="text-red-700 font-medium">
                   Failed to send message
                 </p>
-                <p className="text-red-600 dark:text-red-400 text-sm">
+                <p className="text-red-600 text-sm">
                   Please try again or contact us directly at krishna21karki@gmail.com
                 </p>
               </div>
@@ -256,7 +256,7 @@ const Contact = () => {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                   Name *
                 </label>
                 <input
@@ -266,12 +266,12 @@ const Contact = () => {
                   value={formData.name}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white text-gray-900"
                   placeholder="Your name"
                 />
               </div>
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                   Email *
                 </label>
                 <input
@@ -281,14 +281,14 @@ const Contact = () => {
                   value={formData.email}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white text-gray-900"
                   placeholder="your@email.com"
                 />
               </div>
             </div>
 
             <div>
-              <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
                 Subject *
               </label>
               <input
@@ -298,13 +298,13 @@ const Contact = () => {
                 value={formData.subject}
                 onChange={handleInputChange}
                 required
-                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white text-gray-900"
                 placeholder="What's this about?"
               />
             </div>
 
             <div>
-              <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
                 Message *
               </label>
               <textarea
@@ -314,7 +314,7 @@ const Contact = () => {
                 onChange={handleInputChange}
                 required
                 rows={6}
-                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white text-gray-900"
                 placeholder="Tell us more about your question or feedback..."
               />
             </div>
@@ -338,7 +338,7 @@ const Contact = () => {
             </button>
           </form>
 
-          <div className="mt-6 text-sm text-gray-500 dark:text-gray-400">
+          <div className="mt-6 text-sm text-gray-500">
             <p>
               * Required fields. We respect your privacy and will never share your information.
             </p>
@@ -347,40 +347,40 @@ const Contact = () => {
       </div>
 
       {/* FAQ Section */}
-      <div className="mt-16 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
-        <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-6">
+      <div className="mt-16 bg-white rounded-lg shadow-lg p-8">
+        <h2 className="text-2xl font-semibold text-gray-900 mb-6">
           Frequently Asked Questions
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
-            <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
+            <h3 className="font-semibold text-gray-900 mb-2">
               Are your tools really free?
             </h3>
-            <p className="text-gray-600 dark:text-gray-300 text-sm">
+            <p className="text-gray-600 text-sm">
               Yes! All our tools are completely free to use with no hidden costs or premium features.
             </p>
           </div>
           <div>
-            <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
+            <h3 className="font-semibold text-gray-900 mb-2">
               Do you store my files?
             </h3>
-            <p className="text-gray-600 dark:text-gray-300 text-sm">
+            <p className="text-gray-600 text-sm">
               No, we process files temporarily and delete them automatically. We don't store your data.
             </p>
           </div>
           <div>
-            <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
+            <h3 className="font-semibold text-gray-900 mb-2">
               Can I suggest new tools?
             </h3>
-            <p className="text-gray-600 dark:text-gray-300 text-sm">
+            <p className="text-gray-600 text-sm">
               Absolutely! We love hearing ideas for new tools. Send us your suggestions via the contact form.
             </p>
           </div>
           <div>
-            <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
+            <h3 className="font-semibold text-gray-900 mb-2">
               Is the site mobile-friendly?
             </h3>
-            <p className="text-gray-600 dark:text-gray-300 text-sm">
+            <p className="text-gray-600 text-sm">
               Yes, all our tools are fully responsive and work great on mobile devices and tablets.
             </p>
           </div>

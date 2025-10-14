@@ -71,10 +71,10 @@ const ContactFormCDN = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+    <div className="max-w-md mx-auto bg-white rounded-xl shadow-lg p-6">
       <div className="flex items-center space-x-2 mb-6">
-        <Mail className="h-6 w-6 text-primary-600 dark:text-primary-400" />
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <Mail className="h-6 w-6 text-primary-600" />
+        <h2 className="text-2xl font-bold text-gray-900">
           Contact Us
         </h2>
       </div>
@@ -82,7 +82,7 @@ const ContactFormCDN = () => {
       <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
         {/* Name Field */}
         <div>
-          <label htmlFor="from_name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <label htmlFor="from_name" className="block text-sm font-medium text-gray-700 mb-2">
             <User className="inline h-4 w-4 mr-1" />
             Your Name *
           </label>
@@ -91,7 +91,7 @@ const ContactFormCDN = () => {
             id="from_name"
             name="from_name"
             required
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white text-gray-900"
             placeholder="Your full name"
             disabled={isLoading}
           />
@@ -99,7 +99,7 @@ const ContactFormCDN = () => {
 
         {/* Email Field */}
         <div>
-          <label htmlFor="from_email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <label htmlFor="from_email" className="block text-sm font-medium text-gray-700 mb-2">
             <Mail className="inline h-4 w-4 mr-1" />
             Your Email *
           </label>
@@ -108,7 +108,7 @@ const ContactFormCDN = () => {
             id="from_email"
             name="from_email"
             required
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white text-gray-900"
             placeholder="your.email@example.com"
             disabled={isLoading}
           />
@@ -116,7 +116,7 @@ const ContactFormCDN = () => {
 
         {/* Subject Field */}
         <div>
-          <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
             Subject *
           </label>
           <input
@@ -124,7 +124,7 @@ const ContactFormCDN = () => {
             id="subject"
             name="subject"
             required
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white text-gray-900"
             placeholder="What's this about?"
             disabled={isLoading}
           />
@@ -132,7 +132,7 @@ const ContactFormCDN = () => {
 
         {/* Message Field */}
         <div>
-          <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
             <MessageSquare className="inline h-4 w-4 mr-1" />
             Message *
           </label>
@@ -141,7 +141,7 @@ const ContactFormCDN = () => {
             name="message"
             required
             rows={5}
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white resize-none"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white text-gray-900 resize-none"
             placeholder="Tell us about your suggestion, bug report, or feedback..."
             disabled={isLoading}
           />
@@ -172,15 +172,15 @@ const ContactFormCDN = () => {
 
         {/* Status indicator */}
         <div className="text-center">
-          <p className={`text-xs ${isEmailJSReady ? 'text-green-600 dark:text-green-400' : 'text-yellow-600 dark:text-yellow-400'}`}>
+          <p className={`text-xs ${isEmailJSReady ? 'text-green-600' : 'text-yellow-600'}`}>
             {isEmailJSReady ? '✓ Email service ready' : '⏳ Loading email service...'}
           </p>
         </div>
       </form>
 
       {/* Footer Note */}
-      <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
-        <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
+      <div className="mt-6 pt-4 border-t border-gray-200">
+        <p className="text-xs text-gray-500 text-center">
           Your email will be sent securely. We respect your privacy and won't share your information.
         </p>
       </div>

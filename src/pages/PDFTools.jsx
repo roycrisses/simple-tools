@@ -120,13 +120,13 @@ const PDFTools = () => {
           <div className="max-w-4xl mx-auto space-y-8">
             {/* Tab Selection */}
             <div className="minimal-card">
-              <div className="flex mb-6 bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
+              <div className="flex mb-6 bg-gray-100 rounded-lg p-1">
                 <button
                   onClick={() => setActiveTab('merge')}
                   className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${
                     activeTab === 'merge'
-                      ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
-                      : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
+                      ? 'bg-white text-gray-900 shadow-sm'
+                      : 'text-gray-600 hover:text-gray-900'
                   }`}
                 >
                   <Merge className="h-4 w-4 inline mr-2" />
@@ -136,8 +136,8 @@ const PDFTools = () => {
                   onClick={() => setActiveTab('split')}
                   className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${
                     activeTab === 'split'
-                      ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
-                      : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
+                      ? 'bg-white text-gray-900 shadow-sm'
+                      : 'text-gray-600 hover:text-gray-900'
                   }`}
                 >
                   <Scissors className="h-4 w-4 inline mr-2" />
@@ -148,16 +148,16 @@ const PDFTools = () => {
               {/* Instructions */}
               <div className="mb-6">
                 {activeTab === 'merge' ? (
-                  <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-                    <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">Merge PDFs</h3>
-                    <p className="text-blue-700 dark:text-blue-300 text-sm">
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <h3 className="font-semibold text-blue-900 mb-2">Merge PDFs</h3>
+                    <p className="text-blue-700 text-sm">
                       Select multiple PDF files to combine them into a single document. You can reorder files by dragging them.
                     </p>
                   </div>
                 ) : (
-                  <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-                    <h3 className="font-semibold text-green-900 dark:text-green-100 mb-2">Split PDF</h3>
-                    <p className="text-green-700 dark:text-green-300 text-sm">
+                  <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                    <h3 className="font-semibold text-green-900 mb-2">Split PDF</h3>
+                    <p className="text-green-700 text-sm">
                       Select a PDF file to split it into separate pages or page ranges.
                     </p>
                   </div>
@@ -167,10 +167,10 @@ const PDFTools = () => {
               {/* File Upload */}
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Select PDF Files
                   </label>
-                  <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center">
+                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
                     <input
                       type="file"
                       ref={fileInputRef}
@@ -186,7 +186,7 @@ const PDFTools = () => {
                       className="cursor-pointer flex flex-col items-center space-y-2"
                     >
                       <Upload className="h-12 w-12 text-gray-400" />
-                      <span className="text-lg font-medium text-gray-600 dark:text-gray-300">
+                      <span className="text-lg font-medium text-gray-600">
                         Click to upload PDF files
                       </span>
                       <span className="text-sm minimal-text">
@@ -197,8 +197,8 @@ const PDFTools = () => {
                 </div>
 
                 {error && (
-                  <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-                    <span className="text-red-700 dark:text-red-300 text-sm">{error}</span>
+                  <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
+                    <span className="text-red-700 text-sm">{error}</span>
                   </div>
                 )}
               </div>
@@ -213,11 +213,11 @@ const PDFTools = () => {
                 
                 <div className="space-y-3">
                   {files.map((file, index) => (
-                    <div key={index} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                    <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                       <div className="flex items-center space-x-3">
                         <FileText className="h-5 w-5 text-red-500" />
                         <div>
-                          <div className="font-medium text-gray-900 dark:text-white">
+                          <div className="font-medium text-gray-900">
                             {file.name}
                           </div>
                           <div className="text-sm minimal-text">
@@ -232,7 +232,7 @@ const PDFTools = () => {
                             {index > 0 && (
                               <button
                                 onClick={() => moveFile(index, index - 1)}
-                                className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded"
+                                className="p-1 hover:bg-gray-200 rounded"
                                 title="Move up"
                               >
                                 ↑
@@ -241,7 +241,7 @@ const PDFTools = () => {
                             {index < files.length - 1 && (
                               <button
                                 onClick={() => moveFile(index, index + 1)}
-                                className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded"
+                                className="p-1 hover:bg-gray-200 rounded"
                                 title="Move down"
                               >
                                 ↓
@@ -251,7 +251,7 @@ const PDFTools = () => {
                         )}
                         <button
                           onClick={() => removeFile(index)}
-                          className="p-1 hover:bg-red-100 dark:hover:bg-red-900/20 text-red-600 rounded"
+                          className="p-1 hover:bg-red-100 text-red-600 rounded"
                           title="Remove file"
                         >
                           ×
@@ -298,15 +298,15 @@ const PDFTools = () => {
                   Processing Complete
                 </h2>
                 
-                <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-6">
+                <div className="bg-green-50 border border-green-200 rounded-lg p-6">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
                       <FileText className="h-8 w-8 text-green-600" />
                       <div>
-                        <div className="font-semibold text-green-900 dark:text-green-100">
+                        <div className="font-semibold text-green-900">
                           {result.filename}
                         </div>
-                        <div className="text-sm text-green-700 dark:text-green-300">
+                        <div className="text-sm text-green-700">
                           {result.size} • {result.pages} pages
                         </div>
                       </div>
@@ -322,8 +322,8 @@ const PDFTools = () => {
                   </div>
                 </div>
                 
-                <div className="mt-4 p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
-                  <div className="text-sm text-yellow-700 dark:text-yellow-300">
+                <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                  <div className="text-sm text-yellow-700">
                     <strong>Note:</strong> This is a demo interface. Actual PDF processing requires server-side implementation with PDF manipulation libraries.
                   </div>
                 </div>

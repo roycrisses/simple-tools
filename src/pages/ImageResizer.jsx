@@ -176,7 +176,7 @@ const ImageResizer = () => {
               </h2>
             </div>
             
-            <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 rounded-xl p-8 text-center hover:border-blue-400 hover:bg-blue-50 dark:hover:bg-gray-700 transition-all">
+            <div className="border-2 border-dashed border-gray-300 bg-gray-50 rounded-xl p-8 text-center hover:border-blue-400 hover:bg-blue-50 transition-all">
               <input
                 type="file"
                 ref={fileInputRef}
@@ -191,20 +191,20 @@ const ImageResizer = () => {
                 className="cursor-pointer flex flex-col items-center space-y-3"
               >
                 <Upload className="h-16 w-16 text-gray-400" />
-                <span className="text-xl font-semibold text-gray-700 dark:text-gray-300">
+                <span className="text-xl font-semibold text-gray-700">
                   Click to upload an image
                 </span>
-                <span className="text-sm text-gray-500 dark:text-gray-400">
+                <span className="text-sm text-gray-500">
                   Supports JPG, PNG, GIF, WebP • Drag & drop supported
                 </span>
               </label>
             </div>
 
             {error && (
-              <div className="bg-gradient-to-r from-red-50 to-pink-50 dark:from-red-900/20 dark:to-pink-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4">
+              <div className="bg-gradient-to-r from-red-50 to-pink-50 border border-red-200 rounded-xl p-4">
                 <div className="flex items-center gap-2">
-                  <span className="text-red-600 dark:text-red-400">⚠️</span>
-                  <p className="text-red-700 dark:text-red-300 text-sm font-medium">{error}</p>
+                  <span className="text-red-600">⚠️</span>
+                  <p className="text-red-700 text-sm font-medium">{error}</p>
                 </div>
               </div>
             )}
@@ -223,13 +223,13 @@ const ImageResizer = () => {
               </div>
               
               <div className="space-y-6">
-                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-800">
-                  <h3 className="font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
+                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-200">
+                  <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
                     <span>📐</span> Dimensions
                   </h3>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+                      <label className="block text-sm font-semibold text-gray-700 mb-3">
                         Width (px)
                       </label>
                       <input
@@ -241,7 +241,7 @@ const ImageResizer = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+                      <label className="block text-sm font-semibold text-gray-700 mb-3">
                         Height (px)
                       </label>
                       <input
@@ -254,7 +254,7 @@ const ImageResizer = () => {
                     </div>
                   </div>
 
-                  <div className="flex items-center space-x-3 mt-4 p-3 bg-white/50 dark:bg-gray-800/50 rounded-lg">
+                  <div className="flex items-center space-x-3 mt-4 p-3 bg-white/50 rounded-lg">
                     <input
                       type="checkbox"
                       id="maintainAspect"
@@ -262,15 +262,15 @@ const ImageResizer = () => {
                       onChange={(e) => setMaintainAspect(e.target.checked)}
                       className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 focus:ring-2"
                     />
-                    <label htmlFor="maintainAspect" className="text-sm font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                    <label htmlFor="maintainAspect" className="text-sm font-semibold text-gray-700 flex items-center gap-2">
                       <span>🔗</span> Maintain aspect ratio
                     </label>
                   </div>
                 </div>
 
                 {/* Quick Presets */}
-                <div className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 p-6 rounded-xl border border-purple-200 dark:border-purple-800">
-                  <h3 className="font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
+                <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-xl border border-purple-200">
+                  <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
                     <span>⚡</span> Quick Presets
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -281,10 +281,10 @@ const ImageResizer = () => {
                           setWidth(preset.width.toString())
                           setHeight(preset.height.toString())
                         }}
-                        className="p-3 text-sm bg-white/70 dark:bg-gray-800/70 hover:bg-white dark:hover:bg-gray-700 rounded-lg transition-all border border-purple-200/50 dark:border-purple-700/50 hover:border-purple-300 dark:hover:border-purple-600 hover:shadow-md"
+                        className="p-3 text-sm bg-white/70 hover:bg-white rounded-lg transition-all border border-purple-200/50 hover:border-purple-300 hover:shadow-md"
                       >
-                        <div className="font-semibold text-gray-800 dark:text-gray-200">{preset.name}</div>
-                        <div className="text-xs text-gray-600 dark:text-gray-400">{preset.width}×{preset.height}px</div>
+                        <div className="font-semibold text-gray-800">{preset.name}</div>
+                        <div className="text-xs text-gray-600">{preset.width}×{preset.height}px</div>
                       </button>
                     ))}
                   </div>
@@ -335,14 +335,14 @@ const ImageResizer = () => {
                   Original Image
                 </h2>
               </div>
-              <div className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
+              <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-6 border border-gray-200">
                 <img
                   src={preview}
                   alt="Original"
                   className="max-w-full h-auto mx-auto rounded-lg shadow-lg"
                 />
-                <div className="mt-4 p-3 bg-white/50 dark:bg-gray-800/50 rounded-lg">
-                  <p className="text-sm text-gray-600 dark:text-gray-400 text-center font-medium">
+                <div className="mt-4 p-3 bg-white/50 rounded-lg">
+                  <p className="text-sm text-gray-600 text-center font-medium">
                     📁 {selectedFile?.name}
                   </p>
                 </div>
@@ -361,19 +361,19 @@ const ImageResizer = () => {
                   Resized Image
                 </h2>
               </div>
-              <div className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
+              <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-6 border border-gray-200">
                 <img
                   src={result.url}
                   alt="Resized"
                   className="max-w-full h-auto mx-auto rounded-lg shadow-lg"
                 />
                 <div className="mt-6 space-y-4">
-                  <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-4 rounded-xl border border-green-200 dark:border-green-800">
+                  <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-4 rounded-xl border border-green-200">
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="text-green-600 dark:text-green-400">✓</span>
-                      <span className="font-semibold text-green-800 dark:text-green-200">Resize Complete!</span>
+                      <span className="text-green-600">✓</span>
+                      <span className="font-semibold text-green-800">Resize Complete!</span>
                     </div>
-                    <p className="text-sm text-green-700 dark:text-green-300">
+                    <p className="text-sm text-green-700">
                       New dimensions: {result.width} × {result.height} pixels
                     </p>
                   </div>

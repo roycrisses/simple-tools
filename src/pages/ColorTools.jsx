@@ -151,13 +151,13 @@ const ColorTools = () => {
           <div className="max-w-4xl mx-auto space-y-8">
             {/* Tab Selection */}
             <div className="minimal-card">
-              <div className="flex mb-6 bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
+              <div className="flex mb-6 bg-gray-100 rounded-lg p-1">
                 <button
                   onClick={() => setActiveTab('picker')}
                   className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${
                     activeTab === 'picker'
-                      ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
-                      : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
+                      ? 'bg-white text-gray-900 shadow-sm'
+                      : 'text-gray-600 hover:text-gray-900'
                   }`}
                 >
                   Color Picker
@@ -166,8 +166,8 @@ const ColorTools = () => {
                   onClick={() => setActiveTab('palette')}
                   className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${
                     activeTab === 'palette'
-                      ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
-                      : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
+                      ? 'bg-white text-gray-900 shadow-sm'
+                      : 'text-gray-600 hover:text-gray-900'
                   }`}
                 >
                   Color Palette
@@ -176,8 +176,8 @@ const ColorTools = () => {
                   onClick={() => setActiveTab('converter')}
                   className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${
                     activeTab === 'converter'
-                      ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
-                      : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
+                      ? 'bg-white text-gray-900 shadow-sm'
+                      : 'text-gray-600 hover:text-gray-900'
                   }`}
                 >
                   Color Converter
@@ -189,7 +189,7 @@ const ColorTools = () => {
                 <div className="space-y-6">
                   <div className="text-center">
                     <div 
-                      className="w-32 h-32 mx-auto rounded-2xl shadow-lg border-4 border-white dark:border-gray-700"
+                      className="w-32 h-32 mx-auto rounded-2xl shadow-lg border-4 border-white"
                       style={{ backgroundColor: selectedColor }}
                     ></div>
                     <p className="mt-4 text-lg font-semibold">{selectedColor}</p>
@@ -200,7 +200,7 @@ const ColorTools = () => {
                       type="color"
                       value={selectedColor}
                       onChange={(e) => setSelectedColor(e.target.value)}
-                      className="w-16 h-16 rounded-lg border-2 border-gray-300 dark:border-gray-600 cursor-pointer"
+                      className="w-16 h-16 rounded-lg border-2 border-gray-300 cursor-pointer"
                     />
                     
                     <input
@@ -231,7 +231,7 @@ const ColorTools = () => {
                       {colorPalette.map((item, index) => (
                         <div key={index} className="text-center">
                           <div
-                            className="w-full h-16 rounded-lg shadow-sm border border-gray-200 dark:border-gray-600 cursor-pointer hover:scale-105 transition-transform"
+                            className="w-full h-16 rounded-lg shadow-sm border border-gray-200 cursor-pointer hover:scale-105 transition-transform"
                             style={{ backgroundColor: item.color }}
                             onClick={() => copyToClipboard(item.color, 'Color')}
                             title={`Click to copy ${item.color}`}
@@ -250,7 +250,7 @@ const ColorTools = () => {
                 <div className="space-y-6">
                   <div className="text-center">
                     <div 
-                      className="w-24 h-24 mx-auto rounded-xl shadow-lg border-4 border-white dark:border-gray-700 mb-4"
+                      className="w-24 h-24 mx-auto rounded-xl shadow-lg border-4 border-white mb-4"
                       style={{ backgroundColor: selectedColor }}
                     ></div>
                   </div>
@@ -258,7 +258,7 @@ const ColorTools = () => {
                   <div className="space-y-4">
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
                           HEX
                         </label>
                         <div className="flex">
@@ -270,7 +270,7 @@ const ColorTools = () => {
                           />
                           <button
                             onClick={() => copyToClipboard(formats.hex, 'HEX')}
-                            className="px-3 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 border border-l-0 border-gray-300 dark:border-gray-600 rounded-r-lg transition-colors"
+                            className="px-3 bg-gray-200 hover:bg-gray-300 border border-l-0 border-gray-300 rounded-r-lg transition-colors"
                           >
                             <Copy className="h-4 w-4" />
                           </button>
@@ -278,7 +278,7 @@ const ColorTools = () => {
                       </div>
                       
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
                           RGB
                         </label>
                         <div className="flex">
@@ -290,7 +290,7 @@ const ColorTools = () => {
                           />
                           <button
                             onClick={() => copyToClipboard(formats.rgb, 'RGB')}
-                            className="px-3 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 border border-l-0 border-gray-300 dark:border-gray-600 rounded-r-lg transition-colors"
+                            className="px-3 bg-gray-200 hover:bg-gray-300 border border-l-0 border-gray-300 rounded-r-lg transition-colors"
                           >
                             <Copy className="h-4 w-4" />
                           </button>
@@ -298,7 +298,7 @@ const ColorTools = () => {
                       </div>
                       
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
                           HSL
                         </label>
                         <div className="flex">
@@ -310,7 +310,7 @@ const ColorTools = () => {
                           />
                           <button
                             onClick={() => copyToClipboard(formats.hsl, 'HSL')}
-                            className="px-3 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 border border-l-0 border-gray-300 dark:border-gray-600 rounded-r-lg transition-colors"
+                            className="px-3 bg-gray-200 hover:bg-gray-300 border border-l-0 border-gray-300 rounded-r-lg transition-colors"
                           >
                             <Copy className="h-4 w-4" />
                           </button>
@@ -324,7 +324,7 @@ const ColorTools = () => {
               {/* Copy Message */}
               {copyMessage && (
                 <div className="text-center">
-                  <div className="inline-block bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-300 px-4 py-2 rounded-lg text-sm font-medium">
+                  <div className="inline-block bg-green-100 text-green-700 px-4 py-2 rounded-lg text-sm font-medium">
                     {copyMessage}
                   </div>
                 </div>

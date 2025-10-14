@@ -210,13 +210,13 @@ const QRGenerator = () => {
           </div>
               
           {/* Tab Selection */}
-          <div className="flex mb-6 bg-gray-100 dark:bg-gray-800 rounded-xl p-1">
+          <div className="flex mb-6 bg-gray-100 rounded-xl p-1">
             <button
               onClick={() => setActiveTab('text')}
               className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all ${
                 activeTab === 'text'
-                  ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-md transform scale-105'
-                  : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700'
+                  ? 'bg-white text-gray-900 shadow-md transform scale-105'
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
               }`}
             >
               📝 Text Input
@@ -225,8 +225,8 @@ const QRGenerator = () => {
               onClick={() => setActiveTab('image')}
               className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all ${
                 activeTab === 'image'
-                  ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-md transform scale-105'
-                  : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700'
+                  ? 'bg-white text-gray-900 shadow-md transform scale-105'
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
               }`}
             >
               🖼️ Image Upload
@@ -236,7 +236,7 @@ const QRGenerator = () => {
           <div className="space-y-6">
             {activeTab === 'text' ? (
               <div>
-                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+                <label className="block text-sm font-semibold text-gray-700 mb-3">
                   Text or URL
                 </label>
                 <textarea
@@ -248,26 +248,26 @@ const QRGenerator = () => {
                   data-testid="qr-text-input"
                 />
                 <div className="flex justify-between items-center mt-2">
-                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                  <div className="text-sm text-gray-500">
                     {text.length}/1000 characters
                   </div>
-                  <div className="text-xs text-gray-400 dark:text-gray-500">
+                  <div className="text-xs text-gray-400">
                     💡 Supports URLs, text, phone numbers, emails
                   </div>
                 </div>
               </div>
             ) : (
               <div>
-                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+                <label className="block text-sm font-semibold text-gray-700 mb-3">
                   Upload Image
                 </label>
-                <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg border border-blue-200 dark:border-blue-800 mb-4">
-                  <p className="text-sm text-blue-800 dark:text-blue-200">
+                <div className="bg-blue-50 p-3 rounded-lg border border-blue-200 mb-4">
+                  <p className="text-sm text-blue-800">
                     💡 Images will be uploaded to a hosting service and the QR code will contain the image URL
                   </p>
                 </div>
                 
-                <div className="p-6 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl bg-gray-50 dark:bg-gray-800 hover:border-blue-400 hover:bg-blue-50 dark:hover:bg-gray-700 transition-all">
+                <div className="p-6 border-2 border-dashed border-gray-300 rounded-xl bg-gray-50 hover:border-blue-400 hover:bg-blue-50 transition-all">
                   <input
                     type="file"
                     ref={fileInputRef}
@@ -286,19 +286,19 @@ const QRGenerator = () => {
                         <img
                           src={uploadedImage}
                           alt="Uploaded"
-                          className="max-h-20 max-w-20 object-contain mb-3 rounded-lg border border-gray-200 dark:border-gray-600"
+                          className="max-h-20 max-w-20 object-contain mb-3 rounded-lg border border-gray-200"
                         />
-                        <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                        <p className="text-sm font-semibold text-gray-700">
                           Click to change image
                         </p>
                       </div>
                     ) : (
                       <div className="flex flex-col items-center">
                         <FileImage className="h-12 w-12 text-gray-400 mb-3" />
-                        <p className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-1">
+                        <p className="text-lg font-semibold text-gray-700 mb-1">
                           Click to upload image
                         </p>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                        <p className="text-sm text-gray-500">
                           JPG, PNG, GIF, WebP supported
                         </p>
                       </div>
@@ -307,19 +307,19 @@ const QRGenerator = () => {
                 </div>
                 
                 {uploadingToHost && (
-                  <div className="mt-4 p-4 bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 border border-yellow-200 dark:border-yellow-800 rounded-xl">
+                  <div className="mt-4 p-4 bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200 rounded-xl">
                     <div className="flex items-center gap-3">
                       <div className="spinner-modern"></div>
-                      <span className="text-sm font-medium text-yellow-700 dark:text-yellow-300">Uploading image to hosting service...</span>
+                      <span className="text-sm font-medium text-yellow-700">Uploading image to hosting service...</span>
                     </div>
                   </div>
                 )}
                 
                 {uploadedImage && !qrResult && (
-                  <div className="mt-4 p-4 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border border-green-200 dark:border-green-800 rounded-xl">
+                  <div className="mt-4 p-4 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl">
                     <div className="flex items-center gap-2">
-                      <span className="text-green-600 dark:text-green-400">✓</span>
-                      <span className="text-sm font-medium text-green-700 dark:text-green-300">Image ready! Click Generate QR Code to proceed</span>
+                      <span className="text-green-600">✓</span>
+                      <span className="text-sm font-medium text-green-700">Image ready! Click Generate QR Code to proceed</span>
                     </div>
                   </div>
                 )}
@@ -327,21 +327,21 @@ const QRGenerator = () => {
             )}
 
             {error && (
-              <div className="p-4 bg-gradient-to-r from-red-50 to-pink-50 dark:from-red-900/20 dark:to-pink-900/20 border border-red-200 dark:border-red-800 rounded-xl">
+              <div className="p-4 bg-gradient-to-r from-red-50 to-pink-50 border border-red-200 rounded-xl">
                 <div className="flex items-center gap-2">
-                  <span className="text-red-600 dark:text-red-400">⚠️</span>
-                  <span className="text-red-700 dark:text-red-300 text-sm font-medium">{error}</span>
+                  <span className="text-red-600">⚠️</span>
+                  <span className="text-red-700 text-sm font-medium">{error}</span>
                 </div>
               </div>
             )}
 
-            <div className="bg-gradient-to-r from-purple-50 to-indigo-50 dark:from-purple-900/20 dark:to-indigo-900/20 p-6 rounded-xl border border-purple-200 dark:border-purple-800">
-              <h3 className="font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
+            <div className="bg-gradient-to-r from-purple-50 to-indigo-50 p-6 rounded-xl border border-purple-200">
+              <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
                 <span>⚙️</span> Customization Options
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+                  <label className="block text-sm font-semibold text-gray-700 mb-3">
                     Size: {size} modules ({size * 20}px)
                   </label>
                   <input
@@ -350,16 +350,16 @@ const QRGenerator = () => {
                     max="20"
                     value={size}
                     onChange={(e) => setSize(parseInt(e.target.value))}
-                    className="w-full h-3 bg-gray-200 dark:bg-gray-700 rounded-full appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full h-3 bg-gray-200 rounded-full appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-purple-500"
                   />
-                  <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-2">
+                  <div className="flex justify-between text-xs text-gray-500 mt-2">
                     <span>Small</span>
                     <span>Large</span>
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+                  <label className="block text-sm font-semibold text-gray-700 mb-3">
                     Border: {border} modules
                   </label>
                   <input
@@ -368,9 +368,9 @@ const QRGenerator = () => {
                     max="10"
                     value={border}
                     onChange={(e) => setBorder(parseInt(e.target.value))}
-                    className="w-full h-3 bg-gray-200 dark:bg-gray-700 rounded-full appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full h-3 bg-gray-200 rounded-full appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-purple-500"
                   />
-                  <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-2">
+                  <div className="flex justify-between text-xs text-gray-500 mt-2">
                     <span>No border</span>
                     <span>Thick border</span>
                   </div>
@@ -423,7 +423,7 @@ const QRGenerator = () => {
 
           {qrResult ? (
             <div className="space-y-6">
-              <div className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 p-8 rounded-xl border border-gray-200 dark:border-gray-700 flex justify-center shadow-inner">
+              <div className="bg-gradient-to-br from-white to-gray-50 p-8 rounded-xl border border-gray-200 flex justify-center shadow-inner">
                 <img
                   src={qrResult}
                   alt="Generated QR Code"
@@ -432,12 +432,12 @@ const QRGenerator = () => {
                 />
               </div>
 
-              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-4 rounded-xl border border-blue-200 dark:border-blue-800">
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-xl border border-blue-200">
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-blue-600 dark:text-blue-400">✓</span>
-                  <span className="font-semibold text-blue-800 dark:text-blue-200">QR Code Generated Successfully!</span>
+                  <span className="text-blue-600">✓</span>
+                  <span className="font-semibold text-blue-800">QR Code Generated Successfully!</span>
                 </div>
-                <p className="text-sm text-blue-700 dark:text-blue-300">
+                <p className="text-sm text-blue-700">
                   Size: {size * 20}px × {size * 20}px • Border: {border} modules • Ready to download
                 </p>
               </div>
@@ -463,14 +463,14 @@ const QRGenerator = () => {
               </div>
             </div>
           ) : (
-            <div className="flex flex-col items-center justify-center h-64 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-600">
+            <div className="flex flex-col items-center justify-center h-64 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl border-2 border-dashed border-gray-300">
               <div className="icon-container w-16 h-16 mb-4 bg-gradient-to-br from-gray-400 to-gray-500">
                 <QrCode className="h-8 w-8 text-white" />
               </div>
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-2 text-lg">
+              <h3 className="font-semibold text-gray-900 mb-2 text-lg">
                 Ready to Generate
               </h3>
-              <p className="text-gray-600 dark:text-gray-400 text-center max-w-sm">
+              <p className="text-gray-600 text-center max-w-sm">
                 Enter some text or upload an image, then click generate to create your QR code
               </p>
             </div>

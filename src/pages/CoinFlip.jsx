@@ -103,7 +103,7 @@ const CoinFlip = () => {
               <div className={`inline-block px-6 py-3 rounded-full text-white font-bold text-xl mb-3 ${result === 'heads' ? 'bg-gradient-to-r from-blue-500 to-blue-600' : 'bg-gradient-to-r from-green-500 to-green-600'} shadow-lg`}>
                 {result.toUpperCase()}!
               </div>
-              <p className="text-gray-600 dark:text-gray-400">
+              <p className="text-gray-600">
                 The coin landed on <span className="font-semibold">{result}</span>
               </p>
             </div>
@@ -111,12 +111,12 @@ const CoinFlip = () => {
 
           {isFlipping && (
             <div className="mb-8">
-              <div className="bg-gradient-to-r from-purple-50 to-indigo-50 dark:from-purple-900/20 dark:to-indigo-900/20 p-6 rounded-xl border border-purple-200 dark:border-purple-800">
-                <div className="text-xl font-bold text-purple-700 dark:text-purple-300 mb-2 flex items-center justify-center gap-2">
+              <div className="bg-gradient-to-r from-purple-50 to-indigo-50 p-6 rounded-xl border border-purple-200">
+                <div className="text-xl font-bold text-purple-700 mb-2 flex items-center justify-center gap-2">
                   <div className="spinner-modern"></div>
                   Flipping...
                 </div>
-                <p className="text-purple-600 dark:text-purple-400 text-sm">
+                <p className="text-purple-600 text-sm">
                   The coin is spinning in the air ✨
                 </p>
               </div>
@@ -158,40 +158,40 @@ const CoinFlip = () => {
             </div>
             
             <div className="space-y-6">
-              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-800">
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-200">
                 <div className="text-center mb-4">
-                  <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">{totalFlips}</div>
-                  <div className="text-sm font-medium text-blue-700 dark:text-blue-300">Total Flips</div>
+                  <div className="text-3xl font-bold text-blue-600">{totalFlips}</div>
+                  <div className="text-sm font-medium text-blue-700">Total Flips</div>
                 </div>
               </div>
               
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 p-4 rounded-xl border border-blue-200 dark:border-blue-700">
+                <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-xl border border-blue-200">
                   <div className="flex items-center gap-3 mb-3">
                     <div className="w-4 h-4 bg-blue-500 rounded-full"></div>
-                    <span className="font-semibold text-blue-800 dark:text-blue-200">Heads</span>
+                    <span className="font-semibold text-blue-800">Heads</span>
                   </div>
-                  <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">{stats.heads}</div>
-                  <div className="text-sm text-blue-600 dark:text-blue-400">({headsPercentage}%)</div>
+                  <div className="text-2xl font-bold text-blue-600">{stats.heads}</div>
+                  <div className="text-sm text-blue-600">({headsPercentage}%)</div>
                 </div>
                 
-                <div className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 p-4 rounded-xl border border-green-200 dark:border-green-700">
+                <div className="bg-gradient-to-br from-green-50 to-green-100 p-4 rounded-xl border border-green-200">
                   <div className="flex items-center gap-3 mb-3">
                     <div className="w-4 h-4 bg-green-500 rounded-full"></div>
-                    <span className="font-semibold text-green-800 dark:text-green-200">Tails</span>
+                    <span className="font-semibold text-green-800">Tails</span>
                   </div>
-                  <div className="text-2xl font-bold text-green-600 dark:text-green-400">{stats.tails}</div>
-                  <div className="text-sm text-green-600 dark:text-green-400">({tailsPercentage}%)</div>
+                  <div className="text-2xl font-bold text-green-600">{stats.tails}</div>
+                  <div className="text-sm text-green-600">({tailsPercentage}%)</div>
                 </div>
               </div>
 
               {/* Progress Bars */}
               {totalFlips > 0 && (
                 <div className="space-y-4">
-                  <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-xl">
+                  <div className="bg-gray-50 p-4 rounded-xl">
                     <div className="flex justify-between items-center mb-2">
-                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Heads Distribution</span>
-                      <span className="text-sm font-bold text-blue-600 dark:text-blue-400">{headsPercentage}%</span>
+                      <span className="text-sm font-medium text-gray-700">Heads Distribution</span>
+                      <span className="text-sm font-bold text-blue-600">{headsPercentage}%</span>
                     </div>
                     <div className="progress-modern">
                       <div 
@@ -200,10 +200,10 @@ const CoinFlip = () => {
                       ></div>
                     </div>
                   </div>
-                  <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-xl">
+                  <div className="bg-gray-50 p-4 rounded-xl">
                     <div className="flex justify-between items-center mb-2">
-                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Tails Distribution</span>
-                      <span className="text-sm font-bold text-green-600 dark:text-green-400">{tailsPercentage}%</span>
+                      <span className="text-sm font-medium text-gray-700">Tails Distribution</span>
+                      <span className="text-sm font-bold text-green-600">{tailsPercentage}%</span>
                     </div>
                     <div className="progress-modern">
                       <div 
@@ -229,7 +229,7 @@ const CoinFlip = () => {
                 </h2>
               </div>
               
-              <div className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 p-6 rounded-xl border border-purple-200 dark:border-purple-800">
+              <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-xl border border-purple-200">
                 <div className="flex flex-wrap gap-3 mb-4">
                   {history.map((flip, index) => (
                     <div
@@ -245,7 +245,7 @@ const CoinFlip = () => {
                   ))}
                 </div>
                 
-                <p className="text-sm text-purple-700 dark:text-purple-300 text-center">
+                <p className="text-sm text-purple-700 text-center">
                   Last {history.length} flips (newest first) • 
                   {history.filter(f => f === 'heads').length}H / {history.filter(f => f === 'tails').length}T
                 </p>
