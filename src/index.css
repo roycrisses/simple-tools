@@ -20,75 +20,13 @@
   }
   
   body {
-    @apply bg-neutral-0 dark:bg-dark-bg text-neutral-900 dark:text-dark-text;
     transition: background-color 0.3s ease, color 0.3s ease;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 }
 
-@layer components {
-  /* Award-winning component overrides */
-  .hero-modern {
-    @apply award-hero;
-  }
-  
-  .modern-card {
-    @apply award-card;
-  }
-  
-  .btn-modern {
-    @apply award-btn;
-  }
-  
-  .btn-modern-primary {
-    @apply award-btn-primary;
-  }
-  
-  .btn-modern-secondary {
-    @apply award-btn-secondary;
-  }
-  
-  .input-modern {
-    @apply award-input;
-  }
-  
-  .icon-container {
-    @apply award-icon;
-  }
-  
-  .heading-1 {
-    @apply award-heading-1;
-  }
-  
-  .heading-2 {
-    @apply award-heading-2;
-  }
-  
-  .heading-3 {
-    @apply award-heading-3;
-  }
-  
-  .progress-modern {
-    @apply award-progress;
-  }
-  
-  .progress-modern-fill {
-    @apply award-progress-fill;
-  }
-  
-  .glass-modern {
-    @apply award-glass;
-  }
-  
-  .spinner-modern {
-    @apply award-spinner;
-  }
-  
-  .animate-fade-in-up {
-    @apply award-animate-fade-in-up;
-  }
-}
+/* component aliases moved to award-winning.css */
 
 @layer utilities {
   /* Premium utility classes */
