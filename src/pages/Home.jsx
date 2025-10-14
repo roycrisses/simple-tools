@@ -269,7 +269,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Comprehensive Content Section for AdSense */}
+      {/* Comprehensive Content Section */}
       <section className="py-16 bg-white dark:bg-gray-900">
         <div className="award-container">
           <div className="max-w-4xl mx-auto">

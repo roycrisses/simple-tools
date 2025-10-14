@@ -1,9 +1,9 @@
+/* Import Award-Winning Design System */
+@import './styles/award-winning.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Import Award-Winning Design System */
-@import './styles/award-winning.css';
 
 @layer base {
   html {

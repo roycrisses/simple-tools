@@ -15,9 +15,6 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
-    sourcemap: true,
-    rollupOptions: {
-      external: ['react-helmet-async']
-    }
+    sourcemap: true
   }
 })

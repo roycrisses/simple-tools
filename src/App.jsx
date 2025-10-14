@@ -103,7 +103,7 @@ function App() {
       <Router>
         <div className="min-h-screen bg-beige-50 dark:bg-gray-900 transition-colors duration-300">
           <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
-          <main className="py-8">
+          <main className="pt-20">
             <Layout>
               <Routes>
               <Route path="/" element={<Home />} />

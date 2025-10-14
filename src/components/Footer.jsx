@@ -172,7 +172,7 @@ const Footer = () => {
         {/* Additional Info */}
         <div className="mt-6 text-xs text-gray-500 dark:text-gray-400 text-center">
           <p>
-            This website uses cookies to enhance user experience and may display advertisements.
+            This website uses cookies to enhance user experience.
             By using this site, you agree to our{' '}
             <Link to="/privacy-policy" className="underline hover:text-primary-600">
               Privacy Policy

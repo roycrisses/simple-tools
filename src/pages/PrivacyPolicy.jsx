@@ -62,10 +62,10 @@ const PrivacyPolicy = () => {
               Our website may use third-party services that have their own privacy policies:
             </p>
             <ul className="list-disc pl-6 text-gray-700 dark:text-gray-300 mb-4">
-              <li><strong>Google AdSense:</strong> For displaying advertisements. Google may use cookies and similar technologies to show ads based on your visits to this site and other sites on the Internet. You can opt out of personalized advertising by visiting <a href="https://www.google.com/settings/ads" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">Google Ad Settings</a>.</li>
               <li><strong>Analytics Services:</strong> For understanding site usage patterns and improving user experience</li>
               <li><strong>CDN Services:</strong> For faster content delivery and improved performance</li>
               <li><strong>Image Hosting:</strong> For temporary storage of uploaded images in QR code generation</li>
+              <li><strong>EmailJS:</strong> For handling contact form submissions securely</li>
             </ul>
           </section>
 
@@ -79,8 +79,7 @@ const PrivacyPolicy = () => {
             <ul className="list-disc pl-6 text-gray-700 dark:text-gray-300 mb-4">
               <li>Remembering your theme preferences (dark/light mode)</li>
               <li>Analytics and performance monitoring</li>
-              <li>Advertising (through Google AdSense) - includes personalized ads based on your browsing history</li>
-              <li>Social media integration and sharing features</li>
+              <li>Essential functionality and user experience improvements</li>
             </ul>
             <p className="text-gray-700 dark:text-gray-300 mb-4">
               You can control cookies through your browser settings.
