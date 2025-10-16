@@ -8,7 +8,7 @@ const Footer = () => {
   const [isEmailModalOpen, setIsEmailModalOpen] = useState(false)
 
   return (
-    <footer className="bg-white border-t border-gray-200 mt-16">
+    <footer className="bg-white border-t border-gray-200 mt-0">
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand Section */}
@@ -24,14 +24,14 @@ const Footer = () => {
                 href="https://github.com/roycrisses"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-primary-600 transition-colors"
+                className="text-gray-400 hover:text-black transition-colors"
                 aria-label="GitHub"
               >
                 <Github className="w-5 h-5" />
               </a>
               <button
                 onClick={() => setIsEmailModalOpen(true)}
-                className="text-gray-400 hover:text-primary-600 transition-colors"
+                className="text-gray-400 hover:text-black transition-colors"
                 aria-label="Email"
               >
                 <Mail className="w-5 h-5" />
@@ -48,7 +48,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/qr-generator"
-                  className="text-gray-600 hover:text-primary-600 transition-colors"
+                  className="text-gray-600 hover:text-black transition-colors"
                 >
                   QR Code Generator
                 </Link>
@@ -56,7 +56,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/image-resizer"
-                  className="text-gray-600 hover:text-primary-600 transition-colors"
+                  className="text-gray-600 hover:text-black transition-colors"
                 >
                   Image Resizer
                 </Link>
@@ -64,7 +64,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/youtube-downloader"
-                  className="text-gray-600 hover:text-primary-600 transition-colors"
+                  className="text-gray-600 hover:text-black transition-colors"
                 >
                   YouTube Downloader
                 </Link>
@@ -72,7 +72,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/pdf-tools"
-                  className="text-gray-600 hover:text-primary-600 transition-colors"
+                  className="text-gray-600 hover:text-black transition-colors"
                 >
                   PDF Tools
                 </Link>
@@ -80,7 +80,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/tools"
-                  className="text-gray-600 hover:text-primary-600 transition-colors"
+                  className="text-gray-600 hover:text-black transition-colors"
                 >
                   View All Tools
                 </Link>
@@ -97,7 +97,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/privacy-policy"
-                  className="text-gray-600 hover:text-primary-600 transition-colors flex items-center space-x-1"
+                  className="text-gray-600 hover:text-black transition-colors flex items-center space-x-1"
                 >
                   <Shield className="w-4 h-4" />
                   <span>Privacy Policy</span>
@@ -106,7 +106,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/terms-of-service"
-                  className="text-gray-600 hover:text-primary-600 transition-colors flex items-center space-x-1"
+                  className="text-gray-600 hover:text-black transition-colors flex items-center space-x-1"
                 >
                   <FileText className="w-4 h-4" />
                   <span>Terms of Service</span>
@@ -115,7 +115,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/contact"
-                  className="text-gray-600 hover:text-primary-600 transition-colors flex items-center space-x-1"
+                  className="text-gray-600 hover:text-black transition-colors flex items-center space-x-1"
                 >
                   <Phone className="w-4 h-4" />
                   <span>Contact Us</span>
@@ -124,7 +124,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/about"
-                  className="text-gray-600 hover:text-primary-600 transition-colors"
+                  className="text-gray-600 hover:text-black transition-colors"
                 >
                   About Us
                 </Link>
@@ -145,7 +145,7 @@ const Footer = () => {
               <p>Leapfrog PVT LTD</p>
               <button
                 onClick={() => setIsEmailModalOpen(true)}
-                className="text-primary-600 hover:underline text-left"
+                className="text-black hover:underline text-left"
               >
                 krishna21karki@gmail.com
               </button>
@@ -174,11 +174,11 @@ const Footer = () => {
           <p>
             This website uses cookies to enhance user experience.
             By using this site, you agree to our{' '}
-            <Link to="/privacy-policy" className="underline hover:text-primary-600">
+            <Link to="/privacy-policy" className="underline hover:text-black">
               Privacy Policy
             </Link>{' '}
             and{' '}
-            <Link to="/terms-of-service" className="underline hover:text-primary-600">
+            <Link to="/terms-of-service" className="underline hover:text-black">
               Terms of Service
             </Link>
             .

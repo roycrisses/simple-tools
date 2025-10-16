@@ -32,56 +32,49 @@ const Navbar = () => {
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       isScrolled 
-        ? 'bg-white/80 backdrop-blur-xl border-b border-neutral-200/50 shadow-lg' 
-        : 'bg-transparent'
+        ? 'bg-white border-b border-gray-200' 
+        : 'bg-white border-b border-gray-200'
     }`}>
       <div className="award-container">
         <div className="flex justify-between items-center h-20">
-          {/* Premium Logo */}
+          {/* Logo */}
           <Link to="/" className="flex items-center space-x-3 group">
             <div className="award-icon w-12 h-12 group-hover:scale-110 transition-transform">
               <Sparkles className="h-6 w-6" />
             </div>
             <div className="flex flex-col">
-              <span className="text-2xl font-black gradient-text">
+              <span className="text-2xl font-bold text-black">
                 Simple Tools
-              </span>
-              <span className="text-xs text-neutral-500 font-medium -mt-1">
-                Premium Suite
               </span>
             </div>
           </Link>
 
-          {/* Premium Desktop Navigation */}
+          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-2">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 to={item.href}
-                className={`relative px-6 py-3 rounded-2xl font-semibold transition-all duration-300 group ${
+                className={`relative px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
                   isActive(item.href)
-                    ? 'text-white bg-gradient-to-r from-primary-600 to-secondary-600 shadow-lg'
-                    : 'text-neutral-700 hover:text-primary-600 hover:bg-neutral-100'
+                    ? 'text-white bg-black'
+                    : 'text-gray-700 hover:text-black hover:bg-gray-100'
                 }`}
               >
                 <span className="relative z-10">{item.name}</span>
-                {!isActive(item.href) && (
-                  <div className="absolute inset-0 bg-gradient-to-r from-primary-600 to-secondary-600 rounded-2xl opacity-0 group-hover:opacity-10 transition-opacity"></div>
-                )}
               </Link>
             ))}
 
-            {/* Premium CTA */}
+            {/* CTA */}
             <Link
               to="/tools"
               className="award-btn award-btn-primary ml-4 px-6 py-3"
             >
-              <Zap className="h-4 w-4" />
               <span>Get Started</span>
             </Link>
           </div>
 
-          {/* Premium Mobile Controls */}
+          {/* Mobile Controls */}
           <div className="md:hidden flex items-center space-x-3">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -92,9 +85,9 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Premium Mobile Navigation */}
+        {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-xl border-b border-neutral-200/50 shadow-2xl">
+          <div className="md:hidden absolute top-full left-0 right-0 bg-white border-b border-gray-200">
             <div className="award-container py-6">
               <div className="space-y-3">
                 {navigation.map((item, index) => (
@@ -102,10 +95,10 @@ const Navbar = () => {
                     key={item.name}
                     to={item.href}
                     onClick={() => setIsMenuOpen(false)}
-                    className={`block px-6 py-4 rounded-2xl font-semibold transition-all duration-300 award-animate-fade-in-up ${
+                    className={`block px-6 py-4 rounded-lg font-semibold transition-all duration-300 award-animate-fade-in-up ${
                       isActive(item.href)
-                        ? 'text-white bg-gradient-to-r from-primary-600 to-secondary-600 shadow-lg'
-                        : 'text-neutral-700 hover:text-primary-600 hover:bg-neutral-100'
+                        ? 'text-white bg-black'
+                        : 'text-gray-700 hover:text-black hover:bg-gray-100'
                     }`}
                     style={{animationDelay: `${index * 0.1}s`}}
                   >
@@ -113,13 +106,12 @@ const Navbar = () => {
                   </Link>
                 ))}
                 
-                <div className="pt-4 border-t border-neutral-200">
+                <div className="pt-4 border-t border-gray-200">
                   <Link
                     to="/tools"
                     onClick={() => setIsMenuOpen(false)}
                     className="award-btn award-btn-primary w-full justify-center py-4 text-lg"
                   >
-                    <Zap className="h-5 w-5" />
                     <span>Get Started</span>
                   </Link>
                 </div>

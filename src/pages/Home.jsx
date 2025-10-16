@@ -42,46 +42,43 @@ const Home = () => {
 
   return (
     <div className="min-h-screen overflow-hidden">
-      {/* Award-Winning Hero Section */}
+      {/* Hero Section */}
       <section className="award-hero relative">
         <div className="award-container relative z-10">
           <div className={`text-center max-w-5xl mx-auto ${isVisible ? 'award-animate-fade-in-up' : 'opacity-0'}`}>
-            {/* Premium Badge */}
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-6 py-2 mb-8 border border-white/20">
-              <Star className="h-4 w-4 text-yellow-300" />
-              <span className="text-white/90 text-sm font-medium">Award-Winning Design • 120+ Premium Tools</span>
-              <Sparkles className="h-4 w-4 text-yellow-300" />
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 bg-gray-100 rounded-full px-6 py-2 mb-8 border border-gray-200">
+              <span className="text-gray-700 text-sm font-medium">120+ Free Tools</span>
             </div>
             
-            <h1 className="text-6xl md:text-8xl font-black text-white mb-6 leading-tight">
-              <span className="gradient-text">Simple Tools</span>
+            <h1 className="text-6xl md:text-8xl font-black text-black mb-6 leading-tight">
+              Simple Tools
               <br />
-              <span className="text-white/90">for Everyone</span>
+              <span className="text-gray-700">for Everyone</span>
             </h1>
             
-            <p className="text-xl md:text-2xl text-white/80 mb-12 max-w-3xl mx-auto leading-relaxed">
-              Experience the future of productivity with our premium collection of 
-              <span className="text-yellow-300 font-semibold"> {toolsCount} cutting-edge tools</span>. 
-              From QR code generation to advanced SEO analysis, we provide professional-grade utilities 
-              that boost your productivity instantly. No sign-up, no limits, just pure efficiency.
+            <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
+              Free online tools for everyone. 
+              <span className="text-black font-semibold">{toolsCount} utilities</span> from QR codes to SEO analysis.
+              No sign-up required.
             </p>
             
             {/* Feature Highlights */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 max-w-4xl mx-auto">
-              <div className="award-glass p-6 rounded-2xl">
-                <Zap className="h-8 w-8 text-yellow-300 mx-auto mb-3" />
-                <h3 className="text-white font-semibold mb-2">Lightning Fast</h3>
-                <p className="text-white/70 text-sm">Optimized for speed and performance</p>
+              <div className="award-glass p-6 rounded-xl">
+                <Zap className="h-8 w-8 text-black mx-auto mb-3" />
+                <h3 className="text-black font-semibold mb-2">Fast</h3>
+                <p className="text-gray-600 text-sm">Quick processing</p>
               </div>
-              <div className="award-glass p-6 rounded-2xl">
-                <Shield className="h-8 w-8 text-green-300 mx-auto mb-3" />
-                <h3 className="text-white font-semibold mb-2">100% Secure</h3>
-                <p className="text-white/70 text-sm">Your data never leaves your device</p>
+              <div className="award-glass p-6 rounded-xl">
+                <Shield className="h-8 w-8 text-black mx-auto mb-3" />
+                <h3 className="text-black font-semibold mb-2">Secure</h3>
+                <p className="text-gray-600 text-sm">Privacy first</p>
               </div>
-              <div className="award-glass p-6 rounded-2xl">
-                <Users className="h-8 w-8 text-blue-300 mx-auto mb-3" />
-                <h3 className="text-white font-semibold mb-2">Trusted by Millions</h3>
-                <p className="text-white/70 text-sm">Join our global community</p>
+              <div className="award-glass p-6 rounded-xl">
+                <Users className="h-8 w-8 text-black mx-auto mb-3" />
+                <h3 className="text-black font-semibold mb-2">Free</h3>
+                <p className="text-gray-600 text-sm">No limits</p>
               </div>
             </div>
             
@@ -94,43 +91,29 @@ const Home = () => {
                   document.getElementById('tools')?.scrollIntoView({ behavior: 'smooth' })
                 }}
               >
-                <Sparkles className="h-5 w-5" />
-                Explore Premium Tools
+                Explore Tools
                 <ArrowRight className="h-5 w-5" />
               </Link>
               
               <Link
                 to="/about"
-                className="award-btn award-btn-secondary px-8 py-4 text-lg font-semibold backdrop-blur-md"
+                className="award-btn award-btn-secondary px-8 py-4 text-lg font-semibold"
               >
-                <BookOpen className="h-5 w-5" />
                 Learn More
               </Link>
             </div>
           </div>
         </div>
-        
-        {/* Floating Elements */}
-        <div className="absolute top-20 left-10 w-20 h-20 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full opacity-20 animate-pulse"></div>
-        <div className="absolute top-40 right-20 w-16 h-16 bg-gradient-to-r from-pink-400 to-red-500 rounded-full opacity-20 animate-pulse" style={{animationDelay: '1s'}}></div>
-        <div className="absolute bottom-20 left-20 w-24 h-24 bg-gradient-to-r from-green-400 to-blue-500 rounded-full opacity-20 animate-pulse" style={{animationDelay: '2s'}}></div>
-        <div className="absolute bottom-40 right-10 w-12 h-12 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full opacity-20 animate-pulse" style={{animationDelay: '0.5s'}}></div>
       </section>
-      {/* Premium Tools Section */}
-      <section id="tools" className="py-24 bg-gradient-to-br from-neutral-50 to-neutral-100">
+      {/* Tools Section */}
+      <section id="tools" className="py-24 bg-gray-50">
         <div className="award-container">
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 bg-primary-100 rounded-full px-4 py-2 mb-6">
-              <Star className="h-4 w-4 text-primary-600" />
-              <span className="text-primary-700 text-sm font-medium">Premium Collection</span>
-            </div>
-            
             <h2 className="award-heading-2 mb-6">
-              Award-Winning Tools
+              All Tools
             </h2>
-            <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
-              Discover our meticulously crafted suite of professional-grade utilities, 
-              designed to elevate your productivity to new heights.
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Simple, fast, and free utilities for your daily tasks.
             </p>
           </div>
           
@@ -149,28 +132,20 @@ const Home = () => {
                       <IconComponent className="h-8 w-8" />
                     </div>
                     <div>
-                      <h3 className="award-heading-3 mb-1 group-hover:gradient-text transition-all">
+                      <h3 className="award-heading-3 mb-1 transition-all">
                         {tool.name}
                       </h3>
-                      <div className="w-12 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
                     </div>
                   </div>
                   
-                  <p className="text-neutral-600 mb-6 leading-relaxed">
+                  <p className="text-gray-600 mb-6 leading-relaxed">
                     {tool.description}
                   </p>
                   
-                  <div className="flex items-center text-primary-600 font-semibold group-hover:text-secondary-600 transition-colors">
-                    <span>Experience Now</span>
+                  <div className="flex items-center text-black font-semibold transition-colors">
+                    <span>Try it</span>
                     <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-2 transition-transform" />
                   </div>
-                  
-                  {/* Premium Badge for Featured Tools */}
-                  {index < 6 && (
-                    <div className="absolute top-4 right-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full">
-                      ⭐ Premium
-                    </div>
-                  )}
                 </Link>
               )
             })}
@@ -179,15 +154,14 @@ const Home = () => {
           {/* Call to Action */}
           <div className="text-center">
             <div className="award-glass p-8 rounded-3xl max-w-2xl mx-auto">
-              <h3 className="award-heading-3 mb-4">Ready to Transform Your Workflow?</h3>
-              <p className="text-neutral-600 mb-6">
-                Join millions of professionals who trust our premium tools for their daily tasks.
+              <h3 className="award-heading-3 mb-4">Need More Tools?</h3>
+              <p className="text-gray-600 mb-6">
+                Browse our complete collection.
               </p>
               <Link
                 to="/tools"
                 className="award-btn award-btn-primary px-8 py-3"
               >
-                <Sparkles className="h-5 w-5" />
                 View All Tools
                 <ArrowRight className="h-5 w-5" />
               </Link>
@@ -197,84 +171,84 @@ const Home = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="minimal-container">
+      <section className="py-16 bg-white">
+        <div className="award-container">
           <div className="text-center mb-12">
-            <h2 className="minimal-h2 mb-4">
+            <h2 className="award-heading-2 mb-4">
               Why Choose Simple Tools?
             </h2>
           </div>
           
-          <div className="minimal-grid minimal-grid-3">
-            <div className="minimal-card text-center">
-              <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <span className="text-xl">⚡</span>
+          <div className="award-grid award-grid-3">
+            <div className="award-card text-center">
+              <div className="w-12 h-12 bg-black rounded-lg flex items-center justify-center mx-auto mb-4">
+                <span className="text-xl text-white">⚡</span>
               </div>
-              <h3 className="minimal-h2 mb-2">
+              <h3 className="award-heading-3 mb-2">
                 Fast & Simple
               </h3>
-              <p className="minimal-text">
-                No registration required. Just upload, process, and download.
+              <p className="text-gray-600">
+                No registration. Just use.
               </p>
             </div>
             
-            <div className="minimal-card text-center">
-              <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <span className="text-xl">🔒</span>
+            <div className="award-card text-center">
+              <div className="w-12 h-12 bg-black rounded-lg flex items-center justify-center mx-auto mb-4">
+                <span className="text-xl text-white">🔒</span>
               </div>
-              <h3 className="minimal-h2 mb-2">
+              <h3 className="award-heading-3 mb-2">
                 Privacy First
               </h3>
-              <p className="minimal-text">
-                Your files are processed locally. We never store your data.
+              <p className="text-gray-600">
+                Local processing. No data storage.
               </p>
             </div>
             
-            <div className="minimal-card text-center">
-              <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <span className="text-xl">💯</span>
+            <div className="award-card text-center">
+              <div className="w-12 h-12 bg-black rounded-lg flex items-center justify-center mx-auto mb-4">
+                <span className="text-xl text-white">💯</span>
               </div>
-              <h3 className="minimal-h2 mb-2">
-                Completely Free
+              <h3 className="award-heading-3 mb-2">
+                Free
               </h3>
-              <p className="minimal-text">
-                All tools are free to use with no hidden costs or limits.
+              <p className="text-gray-600">
+                No limits. No costs.
               </p>
             </div>
           </div>
         </div>
       </section>
       
-      {/* Premium Stats Section */}
-      <section className="py-20 bg-gradient-to-r from-primary-600 to-secondary-600">
+      {/* Stats Section */}
+      <section className="py-20 bg-black">
         <div className="award-container">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
             <div className="award-animate-fade-in-up">
               <div className="text-4xl font-black text-white mb-2">120+</div>
-              <div className="text-white/80">Premium Tools</div>
+              <div className="text-gray-400">Tools</div>
             </div>
             <div className="award-animate-fade-in-up" style={{animationDelay: '0.1s'}}>
               <div className="text-4xl font-black text-white mb-2">10M+</div>
-              <div className="text-white/80">Happy Users</div>
+              <div className="text-gray-400">Users</div>
             </div>
             <div className="award-animate-fade-in-up" style={{animationDelay: '0.2s'}}>
               <div className="text-4xl font-black text-white mb-2">99.9%</div>
-              <div className="text-white/80">Uptime</div>
+              <div className="text-gray-400">Uptime</div>
             </div>
             <div className="award-animate-fade-in-up" style={{animationDelay: '0.3s'}}>
               <div className="text-4xl font-black text-white mb-2">24/7</div>
-              <div className="text-white/80">Available</div>
+              <div className="text-gray-400">Available</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Comprehensive Content Section */}
-      <section className="py-16 bg-white">
+      {/* Content Section */}
+      <section className="py-16 bg-gray-50">
         <div className="award-container">
           <div className="max-w-4xl mx-auto">
             <h2 className="award-heading-2 text-center mb-12">
-              Why Simple Tools is Your Ultimate Productivity Solution
+              Simple Tools for Everyone
             </h2>
             
             <div className="prose prose-lg max-w-none">
