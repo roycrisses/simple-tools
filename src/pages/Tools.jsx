@@ -172,108 +172,56 @@ const Tools = () => {
 
   const getStatusColor = (status) => {
     switch (status) {
-      case 'Popular': return 'bg-red-100 text-red-800'
-      case 'New': return 'bg-green-100 text-green-800'
-      case 'Fun': return 'bg-yellow-100 text-yellow-800'
-      case 'Coming Soon': return 'bg-gray-100 text-gray-800'
-      default: return 'bg-blue-100 text-blue-800'
+      case 'Popular': return 'bg-black text-white'
+      case 'New': return 'bg-gray-800 text-white'
+      case 'Fun': return 'bg-gray-600 text-white'
+      case 'Coming Soon': return 'bg-gray-400 text-white'
+      default: return 'bg-gray-700 text-white'
     }
   }
 
   const getColorClasses = (color) => {
-    const colors = {
-      blue: {
-        border: 'border-blue-200 hover:border-blue-300',
-        iconBg: 'bg-blue-100',
-        iconText: 'text-blue-600',
-        button: 'bg-blue-500 hover:bg-blue-600',
-        dot: 'bg-blue-500'
-      },
-      green: {
-        border: 'border-green-200 hover:border-green-300',
-        iconBg: 'bg-green-100',
-        iconText: 'text-green-600',
-        button: 'bg-green-500 hover:bg-green-600',
-        dot: 'bg-green-500'
-      },
-      red: {
-        border: 'border-red-200 hover:border-red-300',
-        iconBg: 'bg-red-100',
-        iconText: 'text-red-600',
-        button: 'bg-red-500 hover:bg-red-600',
-        dot: 'bg-red-500'
-      },
-      yellow: {
-        border: 'border-yellow-200 hover:border-yellow-300',
-        iconBg: 'bg-yellow-100',
-        iconText: 'text-yellow-600',
-        button: 'bg-yellow-500 hover:bg-yellow-600',
-        dot: 'bg-yellow-500'
-      },
-      purple: {
-        border: 'border-purple-200 hover:border-purple-300',
-        iconBg: 'bg-purple-100',
-        iconText: 'text-purple-600',
-        button: 'bg-purple-500 hover:bg-purple-600',
-        dot: 'bg-purple-500'
-      },
-      indigo: {
-        border: 'border-indigo-200 hover:border-indigo-300',
-        iconBg: 'bg-indigo-100',
-        iconText: 'text-indigo-600',
-        button: 'bg-indigo-500 hover:bg-indigo-600',
-        dot: 'bg-indigo-500'
-      },
-      pink: {
-        border: 'border-pink-200 hover:border-pink-300',
-        iconBg: 'bg-pink-100',
-        iconText: 'text-pink-600',
-        button: 'bg-pink-500 hover:bg-pink-600',
-        dot: 'bg-pink-500'
-      },
-      teal: {
-        border: 'border-teal-200 hover:border-teal-300',
-        iconBg: 'bg-teal-100',
-        iconText: 'text-teal-600',
-        button: 'bg-teal-500 hover:bg-teal-600',
-        dot: 'bg-teal-500'
-      }
+    return {
+      border: 'border-gray-200 hover:border-gray-400',
+      iconBg: 'bg-black',
+      iconText: 'text-white',
+      button: 'bg-black hover:bg-gray-800',
+      dot: 'bg-black'
     }
-    return colors[color] || colors.blue
   }
 
   return (
     <div className="min-h-screen">
-      {/* Minimal Header */}
-      <div className="minimal-hero">
-        <div className="minimal-container">
+      {/* Header */}
+      <div className="award-hero">
+        <div className="award-container">
           <div className="text-center max-w-4xl mx-auto">
             <div className="flex items-center justify-center mb-6">
-              <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mr-3">
+              <div className="w-12 h-12 bg-black rounded-lg flex items-center justify-center mr-3">
                 <Zap className="h-6 w-6 text-white" />
               </div>
-              <h1 className="minimal-h1 mb-0">
+              <h1 className="award-heading-1 mb-0">
                 All Tools
               </h1>
             </div>
             
-            <p className="minimal-text text-lg mb-8">
-              Complete collection of free utilities for daily use. Everything you need in one place.
+            <p className="text-lg text-gray-600 mb-8">
+              Complete collection of free utilities for daily use.
             </p>
 
             {/* Stats */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-2xl mx-auto">
               <div className="text-center">
-                <div className="text-3xl font-bold text-blue-600 mb-2">{tools.length}</div>
-                <div className="minimal-text">Total Tools</div>
+                <div className="text-3xl font-bold text-black mb-2">{tools.length}</div>
+                <div className="text-gray-600">Total Tools</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-green-600 mb-2">100%</div>
-                <div className="minimal-text">Free to Use</div>
+                <div className="text-3xl font-bold text-black mb-2">100%</div>
+                <div className="text-gray-600">Free to Use</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-purple-600 mb-2">24/7</div>
-                <div className="minimal-text">Available</div>
+                <div className="text-3xl font-bold text-black mb-2">24/7</div>
+                <div className="text-gray-600">Available</div>
               </div>
             </div>
           </div>
@@ -281,8 +229,8 @@ const Tools = () => {
       </div>
 
       {/* Tools Grid */}
-      <div className="py-16">
-        <div className="minimal-container">
+      <div className="py-16 bg-gray-50">
+        <div className="award-container">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {tools.map((tool, index) => {
               const Icon = tool.icon
@@ -291,7 +239,7 @@ const Tools = () => {
               return (
                 <div
                   key={index}
-                  className={`bg-white rounded-xl border-2 ${colorClasses.border} p-6 hover:shadow-lg transition-all duration-200 group`}
+                  className={`award-card p-6 group`}
                 >
                   {/* Tool Header */}
                   <div className="flex items-start justify-between mb-4">
@@ -305,10 +253,10 @@ const Tools = () => {
 
                   {/* Tool Info */}
                   <div className="mb-4">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                    <h3 className="award-heading-3 mb-2">
                       {tool.name}
                     </h3>
-                    <p className="minimal-text text-sm mb-3">
+                    <p className="text-gray-600 text-sm mb-3">
                       {tool.description}
                     </p>
                   </div>
@@ -317,13 +265,13 @@ const Tools = () => {
                   <div className="mb-6">
                     <ul className="space-y-1">
                       {tool.features.slice(0, 3).map((feature, featureIndex) => (
-                        <li key={featureIndex} className="flex items-center text-sm minimal-text">
+                        <li key={featureIndex} className="flex items-center text-sm text-gray-600">
                           <div className={`w-1.5 h-1.5 ${colorClasses.dot} rounded-full mr-2 flex-shrink-0`}></div>
                           {feature}
                         </li>
                       ))}
                       {tool.features.length > 3 && (
-                        <li className="text-xs minimal-text ml-3.5">
+                        <li className="text-xs text-gray-500 ml-3.5">
                           +{tool.features.length - 3} more features
                         </li>
                       )}
@@ -333,7 +281,7 @@ const Tools = () => {
                   {/* Action Button */}
                   <Link
                     to={tool.path}
-                    className={`w-full ${colorClasses.button} text-white font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2 group-hover:shadow-md`}
+                    className="award-btn award-btn-primary w-full flex items-center justify-center space-x-2"
                   >
                     <span>Use Tool</span>
                     <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
@@ -345,26 +293,26 @@ const Tools = () => {
 
           {/* Call to Action */}
           <div className="mt-16 text-center">
-            <div className="minimal-card max-w-2xl mx-auto">
+            <div className="award-card max-w-2xl mx-auto p-8">
               <div className="flex items-center justify-center mb-4">
-                <Heart className="h-6 w-6 text-red-500 mr-2" />
-                <h2 className="text-xl font-semibold text-gray-900">
+                <Heart className="h-6 w-6 text-black mr-2" />
+                <h2 className="award-heading-3 mb-0">
                   Love Our Tools?
                 </h2>
               </div>
-              <p className="minimal-text mb-6">
-                All tools are completely free to use. Bookmark this page and share with others who might find these tools helpful!
+              <p className="text-gray-600 mb-6">
+                All tools are completely free to use. Bookmark this page and share with others!
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link
                   to="/contact"
-                  className="minimal-button minimal-button-primary"
+                  className="award-btn award-btn-primary"
                 >
                   Contact Us
                 </Link>
                 <Link
                   to="/about"
-                  className="minimal-button minimal-button-secondary"
+                  className="award-btn award-btn-secondary"
                 >
                   Learn More
                 </Link>

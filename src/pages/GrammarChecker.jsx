@@ -126,9 +126,9 @@ RECOMMENDATIONS:
   }
 
   const getScoreColor = (score) => {
-    if (score >= 90) return 'text-green-600'
-    if (score >= 70) return 'text-yellow-600'
-    return 'text-red-600'
+    if (score >= 90) return 'text-black'
+    if (score >= 70) return 'text-gray-700'
+    return 'text-gray-900'
   }
 
   const getScoreLabel = (score) => {
@@ -139,18 +139,18 @@ RECOMMENDATIONS:
 
   const getSeverityColor = (severity) => {
     switch (severity) {
-      case 'high': return 'border-red-400 bg-red-100'
-      case 'medium': return 'border-yellow-400 bg-yellow-100'
-      case 'low': return 'border-blue-400 bg-blue-100'
-      default: return 'border-gray-400 bg-gray-100'
+      case 'high': return 'border-gray-400 bg-gray-100'
+      case 'medium': return 'border-gray-300 bg-gray-50'
+      case 'low': return 'border-gray-300 bg-gray-50'
+      default: return 'border-gray-300 bg-gray-50'
     }
   }
 
   return (
     <div className="max-w-6xl mx-auto p-4">
       {/* Page Title */}
-      <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">
+      <div className="text-center mb-12">
+        <h1 className="award-heading-1 mb-4">
           Grammar Checker
         </h1>
         <p className="text-xl text-gray-600">
@@ -158,57 +158,33 @@ RECOMMENDATIONS:
         </p>
       </div>
 
-      {/* Retro Window Header */}
-      <div className="retro-window mb-8">
-        <div className="retro-window-header">
-          <div className="flex items-center space-x-3">
-            <BookOpen className="h-6 w-6" />
-            <span className="text-lg font-bold">GRAMMAR ANALYZER v1.0</span>
-          </div>
-          <div className="retro-window-controls">
-            <div className="retro-window-control control-minimize"></div>
-            <div className="retro-window-control control-maximize"></div>
-            <div className="retro-window-control control-close"></div>
-          </div>
-        </div>
-        <div className="p-6 bg-gray-100">
-          <div className="text-center mb-6">
-            <p className="text-lg font-bold text-black font-mono">
-              {'>> PERFECT YOUR WRITING WITH ADVANCED GRAMMAR CHECKING <<'}
-            </p>
-          </div>
-        </div>
-      </div>
-
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Input Section */}
-        <div className="card p-6">
-          <div className="bg-blue-500 text-white font-bold py-2 px-4 mb-4 border-b-4 border-black">
-            <h2 className="text-xl font-mono">
-              [INPUT] TEXT TO CHECK
-            </h2>
-          </div>
+        <div className="award-card p-6">
+          <h2 className="award-heading-3 mb-4 pb-3 border-b border-gray-200">
+            Text to Check
+          </h2>
           
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-bold text-black mb-2 font-mono">
-                PASTE YOUR TEXT:
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Paste Your Text
               </label>
               <textarea
                 value={text}
                 onChange={(e) => setText(e.target.value)}
-                placeholder="PASTE YOUR TEXT HERE TO CHECK FOR GRAMMAR, SPELLING, AND STYLE ERRORS..."
-                className="input-field h-64 resize-none font-mono text-sm"
+                placeholder="Paste your text here to check for grammar, spelling, and style errors..."
+                className="award-input h-64 resize-none text-sm"
                 maxLength={5000}
               />
-              <div className="text-sm text-black mt-1 font-mono font-bold">
-                {text.length}/5,000 CHARACTERS | {text.split(/\s+/).filter(w => w.length > 0).length} WORDS
+              <div className="text-sm text-gray-600 mt-1">
+                {text.length}/5,000 characters | {text.split(/\s+/).filter(w => w.length > 0).length} words
               </div>
             </div>
 
             {error && (
-              <div className="retro-alert retro-alert-error font-mono font-bold">
-                ERROR: {error}
+              <div className="bg-gray-100 border border-gray-300 rounded-lg p-3 text-sm text-gray-700">
+                {error}
               </div>
             )}
 
@@ -216,85 +192,83 @@ RECOMMENDATIONS:
               <button
                 onClick={checkGrammar}
                 disabled={loading || !text.trim()}
-                className="btn-primary flex-1 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed font-mono"
+                className="award-btn award-btn-primary flex-1 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? (
                   <>
-                    <div className="retro-spinner"></div>
-                    <span>CHECKING...</span>
+                    <div className="award-spinner"></div>
+                    <span>Checking...</span>
                   </>
                 ) : (
                   <>
                     <Search className="h-4 w-4" />
-                    <span>CHECK GRAMMAR</span>
+                    <span>Check Grammar</span>
                   </>
                 )}
               </button>
 
               <button
                 onClick={clearAll}
-                className="btn-secondary flex items-center justify-center space-x-2 font-mono px-4 py-2"
+                className="award-btn award-btn-secondary flex items-center justify-center space-x-2 px-4 py-2"
               >
                 <RotateCcw className="h-4 w-4" />
-                <span>CLEAR</span>
+                <span>Clear</span>
               </button>
             </div>
           </div>
         </div>
 
         {/* Result Section */}
-        <div className="card p-6">
-          <div className="bg-green-500 text-black font-bold py-2 px-4 mb-4 border-b-4 border-black">
-            <h2 className="text-xl font-mono">
-              [OUTPUT] GRAMMAR ANALYSIS
-            </h2>
-          </div>
+        <div className="award-card p-6">
+          <h2 className="award-heading-3 mb-4 pb-3 border-b border-gray-200">
+            Grammar Analysis
+          </h2>
           
           {result ? (
             <div className="space-y-4">
               {/* Score Summary */}
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-white p-4 border-4 border-black text-center">
-                  <div className={`text-3xl font-bold font-mono mb-2 ${getScoreColor(result.accuracyScore)}`}>
+                <div className="bg-gray-50 p-4 border border-gray-200 rounded-lg text-center">
+                  <div className={`text-3xl font-bold mb-2 ${getScoreColor(result.accuracyScore)}`}>
                     {result.accuracyScore}%
                   </div>
-                  <div className="text-sm font-mono font-bold text-black">ACCURACY SCORE</div>
-                  <div className={`text-xs font-mono font-bold ${getScoreColor(result.accuracyScore)}`}>
+                  <div className="text-sm font-semibold text-gray-900">Accuracy Score</div>
+                  <div className={`text-xs font-medium ${getScoreColor(result.accuracyScore)}`}>
                     {getScoreLabel(result.accuracyScore)}
                   </div>
                 </div>
 
-                <div className="bg-white p-4 border-4 border-black text-center">
-                  <div className={`text-3xl font-bold font-mono mb-2 ${getScoreColor(result.readabilityScore)}`}>
+                <div className="bg-gray-50 p-4 border border-gray-200 rounded-lg text-center">
+                  <div className={`text-3xl font-bold mb-2 ${getScoreColor(result.readabilityScore)}`}>
                     {result.readabilityScore}%
                   </div>
-                  <div className="text-sm font-mono font-bold text-black">READABILITY</div>
-                  <div className={`text-xs font-mono font-bold ${getScoreColor(result.readabilityScore)}`}>
+                  <div className="text-sm font-semibold text-gray-900">Readability</div>
+                  <div className={`text-xs font-medium ${getScoreColor(result.readabilityScore)}`}>
                     {getScoreLabel(result.readabilityScore)}
                   </div>
                 </div>
               </div>
 
               {/* Stats */}
-              <div className="bg-gray-100 p-4 border-4 border-black">
-                <div className="grid grid-cols-2 gap-4 text-sm font-mono">
+              <div className="bg-gray-50 p-4 border border-gray-200 rounded-lg">
+                <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
-                    <span className="font-bold text-black">TOTAL WORDS:</span>
-                    <span className="text-black ml-2">{result.totalWords}</span>
+                    <span className="font-semibold text-gray-700">Total Words:</span>
+                    <span className="text-gray-900 ml-2">{result.totalWords}</span>
                   </div>
                   <div>
-                    <span className="font-bold text-black">SENTENCES:</span>
-                    <span className="text-black ml-2">{result.totalSentences}</span>
+                    <span className="font-semibold text-gray-700">Sentences:</span>
+                    <span className="text-gray-900 ml-2">{result.totalSentences}</span>
                   </div>
                   <div>
-                    <span className="font-bold text-black">ERRORS FOUND:</span>
-                    <span className={`ml-2 ${result.errorCount > 0 ? 'text-red-600' : 'text-green-600'}`}>
+                    <span className="font-semibold text-gray-700">Errors Found:</span>
+                    <span className="text-gray-900 ml-2">
                       {result.errorCount}
                     </span>
                   </div>
                   <div>
-                    <span className="font-bold text-black">CHECKED:</span>
-                    <span className="text-black ml-2">{result.checkedAt}</span>
+                    <span className="font-semibold text-gray-700">Checked:</span>
+                    <span className="text-gray-900 ml-2">{result.checkedAt}</span>
                   </div>
                 </div>
               </div>
@@ -302,33 +276,30 @@ RECOMMENDATIONS:
               {/* Errors List */}
               {result.errors.length > 0 ? (
                 <div>
-                  <h3 className="font-mono font-bold text-black mb-2">
-                    ERRORS & SUGGESTIONS:
+                  <h3 className="font-semibold text-gray-900 mb-2">
+                    Errors & Suggestions
                   </h3>
                   <div className="space-y-2 max-h-64 overflow-y-auto">
                     {result.errors.map((error, index) => (
-                      <div key={error.id} className={`p-3 border-2 ${getSeverityColor(error.severity)}`}>
+                      <div key={error.id} className={`p-3 border rounded-lg ${getSeverityColor(error.severity)}`}>
                         <div className="flex items-start justify-between mb-2">
                           <div className="flex items-center space-x-2">
-                            <AlertCircle className="h-4 w-4 text-red-600" />
-                            <span className="font-mono font-bold text-black text-sm">
-                              {error.type.toUpperCase()}
+                            <AlertCircle className="h-4 w-4 text-gray-700" />
+                            <span className="font-semibold text-gray-900 text-sm">
+                              {error.type}
                             </span>
-                            <span className={`text-xs font-mono px-2 py-1 border border-black ${
-                              error.severity === 'high' ? 'bg-red-200' : 
-                              error.severity === 'medium' ? 'bg-yellow-200' : 'bg-blue-200'
-                            }`}>
-                              {error.severity.toUpperCase()}
+                            <span className="text-xs px-2 py-1 bg-gray-200 text-gray-700 rounded">
+                              {error.severity}
                             </span>
                           </div>
                         </div>
-                        <div className="text-sm font-mono text-black mb-1">
+                        <div className="text-sm text-gray-700 mb-1">
                           <strong>Issue:</strong> "{error.text}" - {error.message}
                         </div>
-                        <div className="text-sm font-mono text-green-700">
+                        <div className="text-sm text-gray-700">
                           <strong>Suggestion:</strong> {error.suggestion}
                         </div>
-                        <div className="text-xs font-mono text-gray-600 mt-1">
+                        <div className="text-xs text-gray-500 mt-1">
                           In: "{error.sentence}"
                         </div>
                       </div>
@@ -336,10 +307,10 @@ RECOMMENDATIONS:
                   </div>
                 </div>
               ) : (
-                <div className="bg-green-100 p-4 border-2 border-green-400 text-center">
-                  <CheckCircle className="h-8 w-8 text-green-600 mx-auto mb-2" />
-                  <p className="font-mono font-bold text-green-700">
-                    EXCELLENT! NO GRAMMAR ERRORS FOUND
+                <div className="bg-gray-50 p-4 border border-gray-200 rounded-lg text-center">
+                  <CheckCircle className="h-8 w-8 text-black mx-auto mb-2" />
+                  <p className="font-semibold text-gray-900">
+                    Excellent! No grammar errors found
                   </p>
                 </div>
               )}
@@ -348,25 +319,25 @@ RECOMMENDATIONS:
               <div className="flex flex-col sm:flex-row gap-4">
                 <button
                   onClick={downloadReport}
-                  className="btn-primary flex-1 flex items-center justify-center space-x-2 font-mono"
+                  className="award-btn award-btn-primary flex-1 flex items-center justify-center space-x-2"
                 >
                   <Download className="h-4 w-4" />
-                  <span>DOWNLOAD REPORT</span>
+                  <span>Download Report</span>
                 </button>
                 <button
                   onClick={checkGrammar}
-                  className="btn-secondary flex items-center justify-center space-x-2 font-mono"
+                  className="award-btn award-btn-secondary flex items-center justify-center space-x-2"
                 >
                   <Search className="h-4 w-4" />
-                  <span>RECHECK</span>
+                  <span>Recheck</span>
                 </button>
               </div>
             </div>
           ) : (
-            <div className="flex flex-col items-center justify-center h-64 bg-gray-200 border-4 border-black">
-              <BookOpen className="h-16 w-16 mb-4 text-black" />
-              <p className="text-center font-mono font-bold text-black">
-                PASTE YOUR TEXT AND CLICK "CHECK GRAMMAR" TO ANALYZE WRITING QUALITY
+            <div className="flex flex-col items-center justify-center h-64 bg-gray-50 border border-gray-200 rounded-lg">
+              <BookOpen className="h-16 w-16 mb-4 text-gray-400" />
+              <p className="text-center text-gray-600">
+                Paste your text and click "Check Grammar" to analyze writing quality
               </p>
             </div>
           )}
@@ -374,31 +345,29 @@ RECOMMENDATIONS:
       </div>
 
       {/* Tips Section */}
-      <div className="mt-8 card p-6">
-        <div className="bg-purple-500 text-white font-bold py-2 px-4 mb-4 border-b-4 border-black">
-          <h3 className="text-lg font-mono">
-            [TIPS] WRITING IMPROVEMENT
-          </h3>
-        </div>
-        <div className="retro-alert retro-alert-warning">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-black font-mono font-bold">
+      <div className="mt-8 award-card p-6">
+        <h3 className="award-heading-3 mb-4 pb-3 border-b border-gray-200">
+          Writing Improvement Tips
+        </h3>
+        <div className="bg-gray-50 p-4 border border-gray-200 rounded-lg">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-700">
             <div>
-              {'>> READ YOUR TEXT ALOUD TO CATCH ERRORS'}
+              • Read your text aloud to catch errors
             </div>
             <div>
-              {'>> USE ACTIVE VOICE FOR CLARITY'}
+              • Use active voice for clarity
             </div>
             <div>
-              {'>> KEEP SENTENCES CONCISE & CLEAR'}
+              • Keep sentences concise & clear
             </div>
             <div>
-              {'>> CHECK SUBJECT-VERB AGREEMENT'}
+              • Check subject-verb agreement
             </div>
             <div>
-              {'>> PROOFREAD BEFORE PUBLISHING'}
+              • Proofread before publishing
             </div>
             <div>
-              {'>> AIM FOR 90%+ ACCURACY SCORE'}
+              • Aim for 90%+ accuracy score
             </div>
           </div>
         </div>
