@@ -193,35 +193,35 @@ const Tools = () => {
   return (
     <div className="min-h-screen">
       {/* Header */}
-      <div className="award-hero">
-        <div className="award-container">
-          <div className="text-center max-w-4xl mx-auto">
+      <div className="clean-hero">
+        <div className="clean-container">
+          <div className="text-center max-w-3xl mx-auto">
             <div className="flex items-center justify-center mb-6">
-              <div className="w-12 h-12 bg-black rounded-lg flex items-center justify-center mr-3">
-                <Zap className="h-6 w-6 text-white" />
+              <div className="clean-icon w-10 h-10 mr-3">
+                <Zap className="h-5 w-5" />
               </div>
-              <h1 className="award-heading-1 mb-0">
+              <h1 className="clean-h1 mb-0">
                 All Tools
               </h1>
             </div>
             
-            <p className="text-lg text-gray-600 mb-8">
-              Complete collection of free utilities for daily use.
+            <p className="text-base text-gray-600 mb-8">
+              Complete collection of free utilities.
             </p>
 
             {/* Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-2xl mx-auto">
+            <div className="grid grid-cols-3 gap-4 max-w-xl mx-auto">
               <div className="text-center">
-                <div className="text-3xl font-bold text-black mb-2">{tools.length}</div>
-                <div className="text-gray-600">Total Tools</div>
+                <div className="text-2xl font-bold text-black mb-1">{tools.length}</div>
+                <div className="text-gray-600 text-sm">Tools</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-black mb-2">100%</div>
-                <div className="text-gray-600">Free to Use</div>
+                <div className="text-2xl font-bold text-black mb-1">100%</div>
+                <div className="text-gray-600 text-sm">Free</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-black mb-2">24/7</div>
-                <div className="text-gray-600">Available</div>
+                <div className="text-2xl font-bold text-black mb-1">24/7</div>
+                <div className="text-gray-600 text-sm">Available</div>
               </div>
             </div>
           </div>
@@ -230,8 +230,8 @@ const Tools = () => {
 
       {/* Tools Grid */}
       <div className="py-16 bg-gray-50">
-        <div className="award-container">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="clean-container">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {tools.map((tool, index) => {
               const Icon = tool.icon
               const colorClasses = getColorClasses(tool.color)
@@ -239,21 +239,21 @@ const Tools = () => {
               return (
                 <div
                   key={index}
-                  className={`award-card p-6 group`}
+                  className="clean-card p-6 group"
                 >
                   {/* Tool Header */}
                   <div className="flex items-start justify-between mb-4">
-                    <div className={`w-12 h-12 ${colorClasses.iconBg} rounded-lg flex items-center justify-center`}>
-                      <Icon className={`h-6 w-6 ${colorClasses.iconText}`} />
+                    <div className={`clean-icon w-10 h-10`}>
+                      <Icon className="h-5 w-5" />
                     </div>
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(tool.status)}`}>
+                    <span className={`px-2 py-1 text-xs font-medium ${getStatusColor(tool.status)}`}>
                       {tool.status}
                     </span>
                   </div>
 
                   {/* Tool Info */}
                   <div className="mb-4">
-                    <h3 className="award-heading-3 mb-2">
+                    <h3 className="clean-h3 mb-2">
                       {tool.name}
                     </h3>
                     <p className="text-gray-600 text-sm mb-3">
@@ -265,14 +265,14 @@ const Tools = () => {
                   <div className="mb-6">
                     <ul className="space-y-1">
                       {tool.features.slice(0, 3).map((feature, featureIndex) => (
-                        <li key={featureIndex} className="flex items-center text-sm text-gray-600">
-                          <div className={`w-1.5 h-1.5 ${colorClasses.dot} rounded-full mr-2 flex-shrink-0`}></div>
+                        <li key={featureIndex} className="flex items-start text-sm text-gray-600">
+                          <span className="mr-2 flex-shrink-0">•</span>
                           {feature}
                         </li>
                       ))}
                       {tool.features.length > 3 && (
-                        <li className="text-xs text-gray-500 ml-3.5">
-                          +{tool.features.length - 3} more features
+                        <li className="text-xs text-gray-500 ml-4">
+                          +{tool.features.length - 3} more
                         </li>
                       )}
                     </ul>
@@ -281,10 +281,10 @@ const Tools = () => {
                   {/* Action Button */}
                   <Link
                     to={tool.path}
-                    className="award-btn award-btn-primary w-full flex items-center justify-center space-x-2"
+                    className="clean-btn clean-btn-primary w-full flex items-center justify-center gap-2"
                   >
                     <span>Use Tool</span>
-                    <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="h-4 w-4" />
                   </Link>
                 </div>
               )
@@ -292,27 +292,27 @@ const Tools = () => {
           </div>
 
           {/* Call to Action */}
-          <div className="mt-16 text-center">
-            <div className="award-card max-w-2xl mx-auto p-8">
-              <div className="flex items-center justify-center mb-4">
-                <Heart className="h-6 w-6 text-black mr-2" />
-                <h2 className="award-heading-3 mb-0">
+          <div className="mt-12 text-center">
+            <div className="clean-card max-w-xl mx-auto p-8">
+              <div className="flex items-center justify-center mb-3">
+                <Heart className="h-5 w-5 text-black mr-2" />
+                <h2 className="clean-h3 mb-0">
                   Love Our Tools?
                 </h2>
               </div>
-              <p className="text-gray-600 mb-6">
-                All tools are completely free to use. Bookmark this page and share with others!
+              <p className="text-gray-600 mb-6 text-sm">
+                All tools are completely free. Bookmark and share!
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link
                   to="/contact"
-                  className="award-btn award-btn-primary"
+                  className="clean-btn clean-btn-primary"
                 >
                   Contact Us
                 </Link>
                 <Link
                   to="/about"
-                  className="award-btn award-btn-secondary"
+                  className="clean-btn clean-btn-secondary"
                 >
                   Learn More
                 </Link>

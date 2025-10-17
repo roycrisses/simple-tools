@@ -27,8 +27,11 @@ export default {
         'sans': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
-        'lg': '0.875rem',
-        'xl': '1.25rem',
+        'none': '0',
+        'sm': '2px',
+        'md': '4px',
+        'lg': '4px',
+        'xl': '4px',
       }
     },
   },

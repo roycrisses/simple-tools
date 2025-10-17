@@ -43,61 +43,57 @@ const Home = () => {
   return (
     <div className="min-h-screen overflow-hidden">
       {/* Hero Section */}
-      <section className="award-hero relative">
-        <div className="award-container relative z-10">
-          <div className={`text-center max-w-5xl mx-auto ${isVisible ? 'award-animate-fade-in-up' : 'opacity-0'}`}>
+      <section className="clean-hero">
+        <div className="clean-container">
+          <div className="text-center max-w-4xl mx-auto">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-gray-100 rounded-full px-6 py-2 mb-8 border border-gray-200">
+            <div className="inline-flex items-center gap-2 bg-gray-100 border border-gray-300 px-5 py-2 mb-8">
               <span className="text-gray-700 text-sm font-medium">120+ Free Tools</span>
             </div>
             
-            <h1 className="text-6xl md:text-8xl font-black text-black mb-6 leading-tight">
+            <h1 className="text-5xl md:text-7xl font-black text-black mb-6 leading-tight">
               Simple Tools
-              <br />
-              <span className="text-gray-700">for Everyone</span>
             </h1>
             
-            <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
-              Free online tools for everyone. 
-              <span className="text-black font-semibold">{toolsCount} utilities</span> from QR codes to SEO analysis.
-              No sign-up required.
+            <p className="text-lg md:text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
+              Professional online utilities. No sign-up. No limits. <span className="text-black font-semibold">{toolsCount} tools</span> ready to use.
             </p>
             
             {/* Feature Highlights */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 max-w-4xl mx-auto">
-              <div className="award-glass p-6 rounded-xl">
-                <Zap className="h-8 w-8 text-black mx-auto mb-3" />
-                <h3 className="text-black font-semibold mb-2">Fast</h3>
-                <p className="text-gray-600 text-sm">Quick processing</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12 max-w-3xl mx-auto">
+              <div className="bg-white border-2 border-gray-200 p-6">
+                <Zap className="h-7 w-7 text-black mx-auto mb-3" />
+                <h3 className="text-black font-semibold mb-1">Fast</h3>
+                <p className="text-gray-600 text-sm">Instant results</p>
               </div>
-              <div className="award-glass p-6 rounded-xl">
-                <Shield className="h-8 w-8 text-black mx-auto mb-3" />
-                <h3 className="text-black font-semibold mb-2">Secure</h3>
+              <div className="bg-white border-2 border-gray-200 p-6">
+                <Shield className="h-7 w-7 text-black mx-auto mb-3" />
+                <h3 className="text-black font-semibold mb-1">Secure</h3>
                 <p className="text-gray-600 text-sm">Privacy first</p>
               </div>
-              <div className="award-glass p-6 rounded-xl">
-                <Users className="h-8 w-8 text-black mx-auto mb-3" />
-                <h3 className="text-black font-semibold mb-2">Free</h3>
-                <p className="text-gray-600 text-sm">No limits</p>
+              <div className="bg-white border-2 border-gray-200 p-6">
+                <Users className="h-7 w-7 text-black mx-auto mb-3" />
+                <h3 className="text-black font-semibold mb-1">Free</h3>
+                <p className="text-gray-600 text-sm">Always free</p>
               </div>
             </div>
             
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 to="#tools"
-                className="award-btn award-btn-primary px-10 py-4 text-lg font-semibold"
+                className="clean-btn clean-btn-primary px-8 py-3 text-base"
                 onClick={(e) => {
                   e.preventDefault()
                   document.getElementById('tools')?.scrollIntoView({ behavior: 'smooth' })
                 }}
               >
-                Explore Tools
+                Browse Tools
                 <ArrowRight className="h-5 w-5" />
               </Link>
               
               <Link
                 to="/about"
-                className="award-btn award-btn-secondary px-8 py-4 text-lg font-semibold"
+                className="clean-btn clean-btn-secondary px-8 py-3 text-base"
               >
                 Learn More
               </Link>
@@ -106,45 +102,43 @@ const Home = () => {
         </div>
       </section>
       {/* Tools Section */}
-      <section id="tools" className="py-24 bg-gray-50">
-        <div className="award-container">
-          <div className="text-center mb-16">
-            <h2 className="award-heading-2 mb-6">
+      <section id="tools" className="py-20 bg-gray-50">
+        <div className="clean-container">
+          <div className="text-center mb-12">
+            <h2 className="clean-h2 mb-4">
               All Tools
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Simple, fast, and free utilities for your daily tasks.
+            <p className="text-base text-gray-600 max-w-2xl mx-auto">
+              Professional utilities for everyday tasks.
             </p>
           </div>
           
-          <div className="award-grid award-grid-3 mb-16">
+          <div className="clean-grid clean-grid-3 mb-12">
             {tools.map((tool, index) => {
               const IconComponent = tool.icon
               return (
                 <Link
                   key={index}
                   to={tool.path}
-                  className="award-card p-8 group block award-animate-fade-in-up"
-                  style={{animationDelay: `${index * 0.1}s`}}
+                  className="clean-card p-6 group block"
                 >
-                  <div className="flex items-center mb-6">
-                    <div className="award-icon w-16 h-16 mr-4 group-hover:scale-110 transition-transform">
-                      <IconComponent className="h-8 w-8" />
+                  <div className="flex items-start mb-4">
+                    <div className="clean-icon w-12 h-12 mr-3 flex-shrink-0">
+                      <IconComponent className="h-6 w-6" />
                     </div>
                     <div>
-                      <h3 className="award-heading-3 mb-1 transition-all">
+                      <h3 className="clean-h3 mb-1">
                         {tool.name}
                       </h3>
+                      <p className="text-gray-600 text-sm">
+                        {tool.description}
+                      </p>
                     </div>
                   </div>
                   
-                  <p className="text-gray-600 mb-6 leading-relaxed">
-                    {tool.description}
-                  </p>
-                  
-                  <div className="flex items-center text-black font-semibold transition-colors">
-                    <span>Try it</span>
-                    <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-2 transition-transform" />
+                  <div className="flex items-center text-black font-medium text-sm">
+                    <span>Use tool</span>
+                    <ArrowRight className="h-4 w-4 ml-1" />
                   </div>
                 </Link>
               )
@@ -153,14 +147,14 @@ const Home = () => {
           
           {/* Call to Action */}
           <div className="text-center">
-            <div className="award-glass p-8 rounded-3xl max-w-2xl mx-auto">
-              <h3 className="award-heading-3 mb-4">Need More Tools?</h3>
-              <p className="text-gray-600 mb-6">
+            <div className="bg-white border-2 border-gray-200 p-8 max-w-xl mx-auto">
+              <h3 className="clean-h3 mb-3">Need More Tools?</h3>
+              <p className="text-gray-600 mb-6 text-sm">
                 Browse our complete collection.
               </p>
               <Link
                 to="/tools"
-                className="award-btn award-btn-primary px-8 py-3"
+                className="clean-btn clean-btn-primary px-6 py-3"
               >
                 View All Tools
                 <ArrowRight className="h-5 w-5" />
@@ -172,46 +166,46 @@ const Home = () => {
 
       {/* Features Section */}
       <section className="py-16 bg-white">
-        <div className="award-container">
-          <div className="text-center mb-12">
-            <h2 className="award-heading-2 mb-4">
+        <div className="clean-container">
+          <div className="text-center mb-10">
+            <h2 className="clean-h2 mb-3">
               Why Choose Simple Tools?
             </h2>
           </div>
           
-          <div className="award-grid award-grid-3">
-            <div className="award-card text-center">
-              <div className="w-12 h-12 bg-black rounded-lg flex items-center justify-center mx-auto mb-4">
-                <span className="text-xl text-white">⚡</span>
+          <div className="clean-grid clean-grid-3">
+            <div className="clean-card text-center">
+              <div className="w-10 h-10 bg-black flex items-center justify-center mx-auto mb-3">
+                <span className="text-lg text-white">⚡</span>
               </div>
-              <h3 className="award-heading-3 mb-2">
+              <h3 className="clean-h3 mb-2">
                 Fast & Simple
               </h3>
-              <p className="text-gray-600">
+              <p className="text-gray-600 text-sm">
                 No registration. Just use.
               </p>
             </div>
             
-            <div className="award-card text-center">
-              <div className="w-12 h-12 bg-black rounded-lg flex items-center justify-center mx-auto mb-4">
-                <span className="text-xl text-white">🔒</span>
+            <div className="clean-card text-center">
+              <div className="w-10 h-10 bg-black flex items-center justify-center mx-auto mb-3">
+                <span className="text-lg text-white">🔒</span>
               </div>
-              <h3 className="award-heading-3 mb-2">
+              <h3 className="clean-h3 mb-2">
                 Privacy First
               </h3>
-              <p className="text-gray-600">
+              <p className="text-gray-600 text-sm">
                 Local processing. No data storage.
               </p>
             </div>
             
-            <div className="award-card text-center">
-              <div className="w-12 h-12 bg-black rounded-lg flex items-center justify-center mx-auto mb-4">
-                <span className="text-xl text-white">💯</span>
+            <div className="clean-card text-center">
+              <div className="w-10 h-10 bg-black flex items-center justify-center mx-auto mb-3">
+                <span className="text-lg text-white">💯</span>
               </div>
-              <h3 className="award-heading-3 mb-2">
+              <h3 className="clean-h3 mb-2">
                 Free
               </h3>
-              <p className="text-gray-600">
+              <p className="text-gray-600 text-sm">
                 No limits. No costs.
               </p>
             </div>
@@ -220,24 +214,24 @@ const Home = () => {
       </section>
       
       {/* Stats Section */}
-      <section className="py-20 bg-black">
-        <div className="award-container">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
-            <div className="award-animate-fade-in-up">
-              <div className="text-4xl font-black text-white mb-2">120+</div>
-              <div className="text-gray-400">Tools</div>
+      <section className="py-16 bg-black">
+        <div className="clean-container">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div>
+              <div className="text-3xl font-bold text-white mb-1">120+</div>
+              <div className="text-gray-400 text-sm">Tools</div>
             </div>
-            <div className="award-animate-fade-in-up" style={{animationDelay: '0.1s'}}>
-              <div className="text-4xl font-black text-white mb-2">10M+</div>
-              <div className="text-gray-400">Users</div>
+            <div>
+              <div className="text-3xl font-bold text-white mb-1">10M+</div>
+              <div className="text-gray-400 text-sm">Users</div>
             </div>
-            <div className="award-animate-fade-in-up" style={{animationDelay: '0.2s'}}>
-              <div className="text-4xl font-black text-white mb-2">99.9%</div>
-              <div className="text-gray-400">Uptime</div>
+            <div>
+              <div className="text-3xl font-bold text-white mb-1">99.9%</div>
+              <div className="text-gray-400 text-sm">Uptime</div>
             </div>
-            <div className="award-animate-fade-in-up" style={{animationDelay: '0.3s'}}>
-              <div className="text-4xl font-black text-white mb-2">24/7</div>
-              <div className="text-gray-400">Available</div>
+            <div>
+              <div className="text-3xl font-bold text-white mb-1">24/7</div>
+              <div className="text-gray-400 text-sm">Available</div>
             </div>
           </div>
         </div>
@@ -318,9 +312,9 @@ const Home = () => {
                 has earned us recognition as the go-to solution for productivity tools.
               </p>
               
-              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-200">
-                <h4 className="font-bold text-blue-800 mb-3">Ready to Boost Your Productivity?</h4>
-                <p className="text-blue-700">
+              <div className="bg-gray-50 p-6 border-2 border-gray-200">
+                <h4 className="font-bold text-black mb-3">Ready to Boost Your Productivity?</h4>
+                <p className="text-gray-700">
                   Join millions of users who trust Simple Tools for their daily productivity needs. 
                   Start exploring our comprehensive collection of free online utilities today and experience 
                   the difference that professional-grade tools can make in your workflow.

@@ -8,8 +8,8 @@ const Footer = () => {
   const [isEmailModalOpen, setIsEmailModalOpen] = useState(false)
 
   return (
-    <footer className="bg-white border-t border-gray-200 mt-0">
-      <div className="max-w-7xl mx-auto px-4 py-12">
+    <footer className="bg-white border-t-2 border-gray-200 mt-0">
+      <div className="clean-container py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand Section */}
           <div className="space-y-4">
@@ -154,7 +154,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="mt-12 pt-8 border-t border-gray-200">
+        <div className="mt-12 pt-8 border-t-2 border-gray-200">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-sm text-gray-600">
               <p className="flex items-center space-x-1">
