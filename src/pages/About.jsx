@@ -47,9 +47,10 @@ const About = () => {
   ]
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      {/* Header */}
-      <div className="text-center mb-12">
+    <div className="min-h-screen bg-black">
+      <div className="max-w-4xl mx-auto px-4 py-8">
+        {/* Header */}
+        <div className="text-center mb-12">
         <h1 className="text-4xl md:text-5xl font-bold text-yellow-400 mb-6">
           About Simple Tools
         </h1>
@@ -258,11 +259,12 @@ const About = () => {
         </div>
       </div>
       
-      {/* Email Modal */}
-      <EmailModal 
-        isOpen={isEmailModalOpen} 
-        onClose={() => setIsEmailModalOpen(false)} 
-      />
+        {/* Email Modal */}
+        <EmailModal 
+          isOpen={isEmailModalOpen} 
+          onClose={() => setIsEmailModalOpen(false)} 
+        />
+      </div>
     </div>
   )
 }
