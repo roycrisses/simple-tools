@@ -63,14 +63,14 @@ const FAQ = () => {
   }
 
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16 bg-black">
       <div className="clean-container">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-10">
             <h2 className="clean-h2 mb-3">
               Frequently Asked Questions
             </h2>
-            <p className="text-base text-gray-600">
+            <p className="text-base text-gray-400">
               Everything you need to know about Simple Tools
             </p>
           </div>
@@ -80,9 +80,9 @@ const FAQ = () => {
               <div key={index} className="clean-card">
                 <button
                   onClick={() => toggleItem(index)}
-                  className="w-full p-5 text-left flex justify-between items-center hover:bg-gray-50 transition-colors"
+                  className="w-full p-5 text-left flex justify-between items-center hover:bg-gray-800 transition-colors"
                 >
-                  <h3 className="text-base font-semibold text-gray-900 pr-4">
+                  <h3 className="text-base font-semibold text-white pr-4">
                     {faq.question}
                   </h3>
                   {openItems[index] ? (
@@ -94,7 +94,7 @@ const FAQ = () => {
                 
                 {openItems[index] && (
                   <div className="px-5 pb-5">
-                    <p className="text-gray-600 text-sm leading-relaxed">
+                    <p className="text-gray-400 text-sm leading-relaxed">
                       {faq.answer}
                     </p>
                   </div>
@@ -104,11 +104,11 @@ const FAQ = () => {
           </div>
 
           <div className="text-center mt-10">
-            <div className="bg-yellow-50 p-6 border-2 border-yellow-400">
-              <h3 className="font-bold text-black mb-2">
+            <div className="bg-gray-900 p-6 border-2 border-yellow-400">
+              <h3 className="font-bold text-white mb-2">
                 Still have questions?
               </h3>
-              <p className="text-gray-700 mb-4 text-sm">
+              <p className="text-gray-400 mb-4 text-sm">
                 Can't find the answer you're looking for? We're here to help!
               </p>
               <a

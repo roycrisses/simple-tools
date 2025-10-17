@@ -30,7 +30,7 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b-2 border-gray-200">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-black border-b-2 border-gray-800">
       <div className="clean-container">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -38,7 +38,7 @@ const Navbar = () => {
             <div className="clean-icon w-10 h-10">
               <Sparkles className="h-5 w-5" />
             </div>
-            <span className="text-xl font-bold text-black">
+            <span className="text-xl font-bold text-white">
               Simple Tools
             </span>
           </Link>
@@ -52,7 +52,7 @@ const Navbar = () => {
                 className={`px-5 py-2 font-medium transition-colors ${
                   isActive(item.href)
                     ? 'text-black bg-yellow-400'
-                    : 'text-gray-700 hover:text-black hover:bg-yellow-50'
+                    : 'text-gray-400 hover:text-white hover:bg-gray-900'
                 }`}
               >
                 {item.name}
@@ -81,7 +81,7 @@ const Navbar = () => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 right-0 bg-white border-b-2 border-gray-200">
+          <div className="md:hidden absolute top-full left-0 right-0 bg-black border-b-2 border-gray-800">
             <div className="clean-container py-4">
               <div className="space-y-2">
                 {navigation.map((item) => (
@@ -92,14 +92,14 @@ const Navbar = () => {
                     className={`block px-4 py-3 font-medium ${
                       isActive(item.href)
                         ? 'text-black bg-yellow-400'
-                        : 'text-gray-700 hover:text-black hover:bg-yellow-50'
+                        : 'text-gray-400 hover:text-white hover:bg-gray-900'
                     }`}
                   >
                     {item.name}
                   </Link>
                 ))}
                 
-                <div className="pt-3 border-t-2 border-gray-200 mt-3">
+                <div className="pt-3 border-t-2 border-gray-800 mt-3">
                   <Link
                     to="/tools"
                     onClick={() => setIsMenuOpen(false)}

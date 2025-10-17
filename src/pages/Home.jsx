@@ -51,36 +51,36 @@ const Home = () => {
               <span className="text-black text-sm font-medium">120+ Free Tools</span>
             </div>
             
-            <h1 className="text-5xl md:text-7xl font-black text-black mb-6 leading-tight">
+            <h1 className="text-5xl md:text-7xl font-black text-white mb-6 leading-tight">
               Simple Tools
             </h1>
             
-            <p className="text-lg md:text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
-              Professional online utilities. No sign-up. No limits. <span className="text-black font-semibold">{toolsCount} tools</span> ready to use.
+            <p className="text-lg md:text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
+              Professional online utilities. No sign-up. No limits. <span className="text-yellow-400 font-semibold">{toolsCount} tools</span> ready to use.
             </p>
             
             {/* Feature Highlights */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12 max-w-3xl mx-auto">
-              <div className="bg-white border-2 border-black p-6">
+              <div className="bg-gray-900 border-2 border-gray-800 p-6">
                 <div className="w-10 h-10 bg-yellow-400 flex items-center justify-center mx-auto mb-3">
                   <Zap className="h-5 w-5 text-black" />
                 </div>
-                <h3 className="text-black font-semibold mb-1">Fast</h3>
-                <p className="text-gray-600 text-sm">Instant results</p>
+                <h3 className="text-white font-semibold mb-1">Fast</h3>
+                <p className="text-gray-400 text-sm">Instant results</p>
               </div>
-              <div className="bg-white border-2 border-black p-6">
+              <div className="bg-gray-900 border-2 border-gray-800 p-6">
                 <div className="w-10 h-10 bg-yellow-400 flex items-center justify-center mx-auto mb-3">
                   <Shield className="h-5 w-5 text-black" />
                 </div>
-                <h3 className="text-black font-semibold mb-1">Secure</h3>
-                <p className="text-gray-600 text-sm">Privacy first</p>
+                <h3 className="text-white font-semibold mb-1">Secure</h3>
+                <p className="text-gray-400 text-sm">Privacy first</p>
               </div>
-              <div className="bg-white border-2 border-black p-6">
+              <div className="bg-gray-900 border-2 border-gray-800 p-6">
                 <div className="w-10 h-10 bg-yellow-400 flex items-center justify-center mx-auto mb-3">
                   <Users className="h-5 w-5 text-black" />
                 </div>
-                <h3 className="text-black font-semibold mb-1">Free</h3>
-                <p className="text-gray-600 text-sm">Always free</p>
+                <h3 className="text-white font-semibold mb-1">Free</h3>
+                <p className="text-gray-400 text-sm">Always free</p>
               </div>
             </div>
             
@@ -108,13 +108,13 @@ const Home = () => {
         </div>
       </section>
       {/* Tools Section */}
-      <section id="tools" className="py-20 bg-gray-50">
+      <section id="tools" className="py-20 bg-black">
         <div className="clean-container">
           <div className="text-center mb-12">
             <h2 className="clean-h2 mb-4">
               All Tools
             </h2>
-            <p className="text-base text-gray-600 max-w-2xl mx-auto">
+            <p className="text-base text-gray-400 max-w-2xl mx-auto">
               Professional utilities for everyday tasks.
             </p>
           </div>
@@ -136,13 +136,13 @@ const Home = () => {
                       <h3 className="clean-h3 mb-1">
                         {tool.name}
                       </h3>
-                      <p className="text-gray-600 text-sm">
+                      <p className="text-gray-400 text-sm">
                         {tool.description}
                       </p>
                     </div>
                   </div>
                   
-                  <div className="flex items-center text-black font-medium text-sm">
+                  <div className="flex items-center text-yellow-400 font-medium text-sm">
                     <span>Use tool</span>
                     <ArrowRight className="h-4 w-4 ml-1" />
                   </div>
@@ -153,9 +153,9 @@ const Home = () => {
           
           {/* Call to Action */}
           <div className="text-center">
-            <div className="bg-white border-2 border-gray-200 p-8 max-w-xl mx-auto">
+            <div className="bg-gray-900 border-2 border-gray-800 p-8 max-w-xl mx-auto">
               <h3 className="clean-h3 mb-3">Need More Tools?</h3>
-              <p className="text-gray-600 mb-6 text-sm">
+              <p className="text-gray-400 mb-6 text-sm">
                 Browse our complete collection.
               </p>
               <Link
@@ -171,7 +171,7 @@ const Home = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-gray-900">
         <div className="clean-container">
           <div className="text-center mb-10">
             <h2 className="clean-h2 mb-3">
@@ -187,7 +187,7 @@ const Home = () => {
               <h3 className="clean-h3 mb-2">
                 Fast & Simple
               </h3>
-              <p className="text-gray-600 text-sm">
+              <p className="text-gray-400 text-sm">
                 No registration. Just use.
               </p>
             </div>
@@ -199,7 +199,7 @@ const Home = () => {
               <h3 className="clean-h3 mb-2">
                 Privacy First
               </h3>
-              <p className="text-gray-600 text-sm">
+              <p className="text-gray-400 text-sm">
                 Local processing. No data storage.
               </p>
             </div>
@@ -211,7 +211,7 @@ const Home = () => {
               <h3 className="clean-h3 mb-2">
                 Free
               </h3>
-              <p className="text-gray-600 text-sm">
+              <p className="text-gray-400 text-sm">
                 No limits. No costs.
               </p>
             </div>
@@ -244,7 +244,7 @@ const Home = () => {
       </section>
 
       {/* Content Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-black">
         <div className="award-container">
           <div className="max-w-4xl mx-auto">
             <h2 className="award-heading-2 text-center mb-12">
@@ -318,9 +318,9 @@ const Home = () => {
                 has earned us recognition as the go-to solution for productivity tools.
               </p>
               
-              <div className="bg-yellow-50 p-6 border-2 border-yellow-400">
-                <h4 className="font-bold text-black mb-3">Ready to Boost Your Productivity?</h4>
-                <p className="text-gray-700">
+              <div className="bg-gray-900 p-6 border-2 border-yellow-400">
+                <h4 className="font-bold text-white mb-3">Ready to Boost Your Productivity?</h4>
+                <p className="text-gray-300">
                   Join millions of users who trust Simple Tools for their daily productivity needs. 
                   Start exploring our comprehensive collection of free online utilities today and experience 
                   the difference that professional-grade tools can make in your workflow.

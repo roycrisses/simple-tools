@@ -229,7 +229,7 @@ const Tools = () => {
       </div>
 
       {/* Tools Grid */}
-      <div className="py-16 bg-gray-50">
+      <div className="py-16 bg-black">
         <div className="clean-container">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {tools.map((tool, index) => {
@@ -302,7 +302,7 @@ const Tools = () => {
                   Love Our Tools?
                 </h2>
               </div>
-              <p className="text-gray-600 mb-6 text-sm">
+              <p className="text-gray-400 mb-6 text-sm">
                 All tools are completely free. Bookmark and share!
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
