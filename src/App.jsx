@@ -35,9 +35,9 @@ function App() {
   return (
     <HelmetProvider>
       <Router>
-        <div className="min-h-screen bg-white transition-colors duration-300">
+        <div className="min-h-screen bg-black transition-colors duration-300">
           <Navbar />
-          <main className="pt-20">
+          <main className="pt-20 bg-black">
             <Layout>
               <Routes>
               <Route path="/" element={<Home />} />
