@@ -4,9 +4,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 :root {
-  /* Simple Grayscale Palette */
+  /* Yellow, White, Black Palette */
   --white: #ffffff;
   --black: #000000;
+  --yellow-50: #fefce8;
+  --yellow-100: #fef9c3;
+  --yellow-200: #fef08a;
+  --yellow-300: #fde047;
+  --yellow-400: #facc15;
+  --yellow-500: #eab308;
+  --yellow-600: #ca8a04;
+  --yellow-700: #a16207;
+  --yellow-800: #854d0e;
+  --yellow-900: #713f12;
   --gray-50: #fafafa;
   --gray-100: #f4f4f4;
   --gray-200: #e5e5e5;
@@ -136,13 +146,13 @@ body {
 }
 
 .clean-btn-primary {
-  background-color: var(--black);
-  color: var(--white);
-  border-color: var(--black);
+  background-color: var(--yellow-400);
+  color: var(--black);
+  border-color: var(--yellow-400);
 }
 
 .clean-btn-primary:hover {
-  background-color: var(--gray-800);
+  background-color: var(--yellow-500);
 }
 
 .clean-btn-secondary {
@@ -271,13 +281,13 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--black);
-  color: var(--white);
+  background-color: var(--yellow-400);
+  color: var(--black);
   transition: background-color var(--transition);
 }
 
 .clean-icon:hover {
-  background-color: var(--gray-800);
+  background-color: var(--yellow-500);
 }
 
 .clean-icon-outline {
@@ -300,9 +310,9 @@ body {
   border-radius: var(--radius-sm);
   font-size: 0.875rem;
   font-weight: 500;
-  background-color: var(--gray-100);
-  color: var(--gray-700);
-  border: 1px solid var(--gray-200);
+  background-color: var(--yellow-100);
+  color: var(--black);
+  border: 1px solid var(--yellow-300);
 }
 
 /* Divider */
@@ -392,7 +402,7 @@ body {
 
 .clean-progress-fill {
   height: 100%;
-  background-color: var(--black);
+  background-color: var(--yellow-400);
   transition: width 0.3s ease;
 }
 
@@ -401,7 +411,7 @@ body {
   width: 1.5rem;
   height: 1.5rem;
   border: 3px solid var(--gray-200);
-  border-top: 3px solid var(--black);
+  border-top: 3px solid var(--yellow-400);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }

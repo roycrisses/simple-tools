@@ -104,7 +104,7 @@ const FAQ = () => {
           </div>
 
           <div className="text-center mt-10">
-            <div className="bg-gray-100 p-6 border-2 border-gray-200">
+            <div className="bg-yellow-50 p-6 border-2 border-yellow-400">
               <h3 className="font-bold text-black mb-2">
                 Still have questions?
               </h3>

@@ -172,9 +172,9 @@ const Tools = () => {
 
   const getStatusColor = (status) => {
     switch (status) {
-      case 'Popular': return 'bg-black text-white'
-      case 'New': return 'bg-gray-800 text-white'
-      case 'Fun': return 'bg-gray-600 text-white'
+      case 'Popular': return 'bg-yellow-400 text-black'
+      case 'New': return 'bg-black text-white'
+      case 'Fun': return 'bg-yellow-200 text-black'
       case 'Coming Soon': return 'bg-gray-400 text-white'
       default: return 'bg-gray-700 text-white'
     }
@@ -295,7 +295,9 @@ const Tools = () => {
           <div className="mt-12 text-center">
             <div className="clean-card max-w-xl mx-auto p-8">
               <div className="flex items-center justify-center mb-3">
-                <Heart className="h-5 w-5 text-black mr-2" />
+                <div className="w-8 h-8 bg-yellow-400 flex items-center justify-center mr-2">
+                  <Heart className="h-4 w-4 text-black" />
+                </div>
                 <h2 className="clean-h3 mb-0">
                   Love Our Tools?
                 </h2>

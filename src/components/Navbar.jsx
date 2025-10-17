@@ -51,8 +51,8 @@ const Navbar = () => {
                 to={item.href}
                 className={`px-5 py-2 font-medium transition-colors ${
                   isActive(item.href)
-                    ? 'text-white bg-black'
-                    : 'text-gray-700 hover:text-black hover:bg-gray-100'
+                    ? 'text-black bg-yellow-400'
+                    : 'text-gray-700 hover:text-black hover:bg-yellow-50'
                 }`}
               >
                 {item.name}
@@ -91,8 +91,8 @@ const Navbar = () => {
                     onClick={() => setIsMenuOpen(false)}
                     className={`block px-4 py-3 font-medium ${
                       isActive(item.href)
-                        ? 'text-white bg-black'
-                        : 'text-gray-700 hover:text-black hover:bg-gray-100'
+                        ? 'text-black bg-yellow-400'
+                        : 'text-gray-700 hover:text-black hover:bg-yellow-50'
                     }`}
                   >
                     {item.name}

@@ -47,8 +47,8 @@ const Home = () => {
         <div className="clean-container">
           <div className="text-center max-w-4xl mx-auto">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-gray-100 border border-gray-300 px-5 py-2 mb-8">
-              <span className="text-gray-700 text-sm font-medium">120+ Free Tools</span>
+            <div className="inline-flex items-center gap-2 bg-yellow-100 border border-yellow-400 px-5 py-2 mb-8">
+              <span className="text-black text-sm font-medium">120+ Free Tools</span>
             </div>
             
             <h1 className="text-5xl md:text-7xl font-black text-black mb-6 leading-tight">
@@ -61,18 +61,24 @@ const Home = () => {
             
             {/* Feature Highlights */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12 max-w-3xl mx-auto">
-              <div className="bg-white border-2 border-gray-200 p-6">
-                <Zap className="h-7 w-7 text-black mx-auto mb-3" />
+              <div className="bg-white border-2 border-black p-6">
+                <div className="w-10 h-10 bg-yellow-400 flex items-center justify-center mx-auto mb-3">
+                  <Zap className="h-5 w-5 text-black" />
+                </div>
                 <h3 className="text-black font-semibold mb-1">Fast</h3>
                 <p className="text-gray-600 text-sm">Instant results</p>
               </div>
-              <div className="bg-white border-2 border-gray-200 p-6">
-                <Shield className="h-7 w-7 text-black mx-auto mb-3" />
+              <div className="bg-white border-2 border-black p-6">
+                <div className="w-10 h-10 bg-yellow-400 flex items-center justify-center mx-auto mb-3">
+                  <Shield className="h-5 w-5 text-black" />
+                </div>
                 <h3 className="text-black font-semibold mb-1">Secure</h3>
                 <p className="text-gray-600 text-sm">Privacy first</p>
               </div>
-              <div className="bg-white border-2 border-gray-200 p-6">
-                <Users className="h-7 w-7 text-black mx-auto mb-3" />
+              <div className="bg-white border-2 border-black p-6">
+                <div className="w-10 h-10 bg-yellow-400 flex items-center justify-center mx-auto mb-3">
+                  <Users className="h-5 w-5 text-black" />
+                </div>
                 <h3 className="text-black font-semibold mb-1">Free</h3>
                 <p className="text-gray-600 text-sm">Always free</p>
               </div>
@@ -175,8 +181,8 @@ const Home = () => {
           
           <div className="clean-grid clean-grid-3">
             <div className="clean-card text-center">
-              <div className="w-10 h-10 bg-black flex items-center justify-center mx-auto mb-3">
-                <span className="text-lg text-white">⚡</span>
+              <div className="w-10 h-10 bg-yellow-400 flex items-center justify-center mx-auto mb-3">
+                <span className="text-lg text-black">⚡</span>
               </div>
               <h3 className="clean-h3 mb-2">
                 Fast & Simple
@@ -187,8 +193,8 @@ const Home = () => {
             </div>
             
             <div className="clean-card text-center">
-              <div className="w-10 h-10 bg-black flex items-center justify-center mx-auto mb-3">
-                <span className="text-lg text-white">🔒</span>
+              <div className="w-10 h-10 bg-yellow-400 flex items-center justify-center mx-auto mb-3">
+                <span className="text-lg text-black">🔒</span>
               </div>
               <h3 className="clean-h3 mb-2">
                 Privacy First
@@ -199,8 +205,8 @@ const Home = () => {
             </div>
             
             <div className="clean-card text-center">
-              <div className="w-10 h-10 bg-black flex items-center justify-center mx-auto mb-3">
-                <span className="text-lg text-white">💯</span>
+              <div className="w-10 h-10 bg-yellow-400 flex items-center justify-center mx-auto mb-3">
+                <span className="text-lg text-black">💯</span>
               </div>
               <h3 className="clean-h3 mb-2">
                 Free
@@ -312,7 +318,7 @@ const Home = () => {
                 has earned us recognition as the go-to solution for productivity tools.
               </p>
               
-              <div className="bg-gray-50 p-6 border-2 border-gray-200">
+              <div className="bg-yellow-50 p-6 border-2 border-yellow-400">
                 <h4 className="font-bold text-black mb-3">Ready to Boost Your Productivity?</h4>
                 <p className="text-gray-700">
                   Join millions of users who trust Simple Tools for their daily productivity needs. 
