@@ -141,42 +141,43 @@ const ImageResizer = () => {
   ]
 
   return (
-    <div className="max-w-6xl mx-auto p-4">
-      {/* Modern Hero Section */}
-      <div className="hero-modern mb-12">
-        <div className="max-w-4xl mx-auto">
-          <div className="icon-container mx-auto mb-6">
-            <Maximize2 className="h-8 w-8" />
-          </div>
-          <h1 className="heading-1 text-white mb-4">
-            Image Resizer
-          </h1>
-          <p className="text-xl text-white/90 mb-6">
-            Resize your images to any dimensions while maintaining perfect quality
-          </p>
-          <div className="glass-modern rounded-xl p-4 inline-block">
-            <p className="text-white/80 text-sm">
-              ✨ Maintain aspect ratio • Social media presets • Instant preview • High quality output
+    <div className="min-h-screen bg-black">
+      <div className="max-w-6xl mx-auto p-4">
+        {/* Hero Section */}
+        <div className="clean-hero mb-12">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="clean-icon w-16 h-16 mx-auto mb-6">
+              <Maximize2 className="h-8 w-8" />
+            </div>
+            <h1 className="clean-h1 mb-4">
+              Image Resizer
+            </h1>
+            <p className="text-xl text-white mb-6">
+              Resize your images to any dimensions while maintaining perfect quality
             </p>
+            <div className="bg-gray-900 border border-gray-800 p-4 inline-block">
+              <p className="text-white text-sm">
+                ✨ Maintain aspect ratio • Social media presets • Instant preview • High quality output
+              </p>
+            </div>
           </div>
         </div>
-      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Upload and Settings Section */}
         <div className="space-y-6">
           {/* File Upload */}
-          <div className="modern-card p-6">
+          <div className="clean-card p-6">
             <div className="flex items-center gap-3 mb-6">
-              <div className="icon-container w-12 h-12">
+              <div className="clean-icon w-12 h-12">
                 <Upload className="h-6 w-6" />
               </div>
-              <h2 className="heading-3 mb-0">
+              <h2 className="clean-h3 mb-0">
                 Upload Image
               </h2>
             </div>
             
-            <div className="border-2 border-dashed border-gray-300 bg-gray-50 rounded-xl p-8 text-center hover:border-blue-400 hover:bg-blue-50 transition-all">
+            <div className="border-2 border-dashed border-gray-700 bg-gray-900 p-8 text-center hover:border-yellow-400 transition-all">
               <input
                 type="file"
                 ref={fileInputRef}
@@ -190,21 +191,21 @@ const ImageResizer = () => {
                 htmlFor="imageUpload"
                 className="cursor-pointer flex flex-col items-center space-y-3"
               >
-                <Upload className="h-16 w-16 text-gray-400" />
-                <span className="text-xl font-semibold text-gray-700">
+                <Upload className="h-16 w-16 text-gray-500" />
+                <span className="text-xl font-semibold text-white">
                   Click to upload an image
                 </span>
-                <span className="text-sm text-gray-500">
+                <span className="text-sm text-gray-400">
                   Supports JPG, PNG, GIF, WebP • Drag & drop supported
                 </span>
               </label>
             </div>
 
             {error && (
-              <div className="bg-gradient-to-r from-red-50 to-pink-50 border border-red-200 rounded-xl p-4">
+              <div className="bg-red-900 border border-red-700 p-4 mt-4">
                 <div className="flex items-center gap-2">
-                  <span className="text-red-600">⚠️</span>
-                  <p className="text-red-700 text-sm font-medium">{error}</p>
+                  <span className="text-red-400">⚠️</span>
+                  <p className="text-red-300 text-sm font-medium">{error}</p>
                 </div>
               </div>
             )}
@@ -212,49 +213,49 @@ const ImageResizer = () => {
 
           {/* Resize Settings */}
           {selectedFile && (
-            <div className="modern-card p-6">
+            <div className="clean-card p-6">
               <div className="flex items-center gap-3 mb-6">
-                <div className="icon-container w-12 h-12 bg-gradient-to-br from-purple-500 to-indigo-500">
+                <div className="clean-icon w-12 h-12">
                   <Maximize2 className="h-6 w-6" />
                 </div>
-                <h2 className="heading-3 mb-0">
+                <h2 className="clean-h3 mb-0">
                   Resize Settings
                 </h2>
               </div>
               
               <div className="space-y-6">
-                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-200">
-                  <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                <div className="bg-gray-800 p-6 border border-gray-700">
+                  <h3 className="font-semibold text-yellow-400 mb-4 flex items-center gap-2">
                     <span>📐</span> Dimensions
                   </h3>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-3">
+                      <label className="block text-sm font-semibold text-white mb-3">
                         Width (px)
                       </label>
                       <input
                         type="number"
                         value={width}
                         onChange={handleWidthChange}
-                        className="input-modern"
+                        className="clean-input"
                         placeholder="Auto"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-3">
+                      <label className="block text-sm font-semibold text-white mb-3">
                         Height (px)
                       </label>
                       <input
                         type="number"
                         value={height}
                         onChange={handleHeightChange}
-                        className="input-modern"
+                        className="clean-input"
                         placeholder="Auto"
                       />
                     </div>
                   </div>
 
-                  <div className="flex items-center space-x-3 mt-4 p-3 bg-white/50 rounded-lg">
+                  <div className="flex items-center space-x-3 mt-4 p-3 bg-gray-900">
                     <input
                       type="checkbox"
                       id="maintainAspect"
@@ -262,15 +263,15 @@ const ImageResizer = () => {
                       onChange={(e) => setMaintainAspect(e.target.checked)}
                       className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 focus:ring-2"
                     />
-                    <label htmlFor="maintainAspect" className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                    <label htmlFor="maintainAspect" className="text-sm font-semibold text-white flex items-center gap-2">
                       <span>🔗</span> Maintain aspect ratio
                     </label>
                   </div>
                 </div>
 
                 {/* Quick Presets */}
-                <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-xl border border-purple-200">
-                  <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                <div className="bg-gray-800 p-6 border border-gray-700">
+                  <h3 className="font-semibold text-yellow-400 mb-4 flex items-center gap-2">
                     <span>⚡</span> Quick Presets
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -281,10 +282,10 @@ const ImageResizer = () => {
                           setWidth(preset.width.toString())
                           setHeight(preset.height.toString())
                         }}
-                        className="p-3 text-sm bg-white/70 hover:bg-white rounded-lg transition-all border border-purple-200/50 hover:border-purple-300 hover:shadow-md"
+                        className="p-3 text-sm bg-gray-900 hover:bg-gray-800 transition-all border border-gray-700 hover:border-yellow-400"
                       >
-                        <div className="font-semibold text-gray-800">{preset.name}</div>
-                        <div className="text-xs text-gray-600">{preset.width}×{preset.height}px</div>
+                        <div className="font-semibold text-white">{preset.name}</div>
+                        <div className="text-xs text-gray-400">{preset.width}×{preset.height}px</div>
                       </button>
                     ))}
                   </div>
@@ -294,11 +295,11 @@ const ImageResizer = () => {
                   <button
                     onClick={resizeImage}
                     disabled={loading || !selectedFile || (!width && !height)}
-                    className="btn-modern btn-modern-primary flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="clean-btn clean-btn-primary flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {loading ? (
                       <>
-                        <div className="spinner-modern"></div>
+                        <div className="clean-spinner"></div>
                         <span>Processing...</span>
                       </>
                     ) : (
@@ -311,7 +312,7 @@ const ImageResizer = () => {
                   
                   <button
                     onClick={clearAll}
-                    className="btn-modern btn-modern-secondary"
+                    className="clean-btn clean-btn-secondary"
                   >
                     <RotateCcw className="h-4 w-4" />
                     <span>Clear</span>
@@ -326,23 +327,23 @@ const ImageResizer = () => {
         <div className="space-y-6">
           {/* Original Preview */}
           {preview && (
-            <div className="modern-card p-6">
+            <div className="clean-card p-6">
               <div className="flex items-center gap-3 mb-6">
-                <div className="icon-container w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500">
+                <div className="clean-icon w-12 h-12">
                   <ImageIcon className="h-6 w-6" />
                 </div>
-                <h2 className="heading-3 mb-0">
+                <h2 className="clean-h3 mb-0">
                   Original Image
                 </h2>
               </div>
-              <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-6 border border-gray-200">
+              <div className="bg-gray-900 p-6 border border-gray-800">
                 <img
                   src={preview}
                   alt="Original"
-                  className="max-w-full h-auto mx-auto rounded-lg shadow-lg"
+                  className="max-w-full h-auto mx-auto"
                 />
-                <div className="mt-4 p-3 bg-white/50 rounded-lg">
-                  <p className="text-sm text-gray-600 text-center font-medium">
+                <div className="mt-4 p-3 bg-gray-800">
+                  <p className="text-sm text-white text-center font-medium">
                     📁 {selectedFile?.name}
                   </p>
                 </div>
@@ -352,34 +353,34 @@ const ImageResizer = () => {
 
           {/* Resized Result */}
           {result && (
-            <div className="modern-card p-6">
+            <div className="clean-card p-6">
               <div className="flex items-center gap-3 mb-6">
-                <div className="icon-container w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500">
+                <div className="clean-icon w-12 h-12">
                   <Download className="h-6 w-6" />
                 </div>
-                <h2 className="heading-3 mb-0">
+                <h2 className="clean-h3 mb-0">
                   Resized Image
                 </h2>
               </div>
-              <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-6 border border-gray-200">
+              <div className="bg-gray-900 p-6 border border-gray-800">
                 <img
                   src={result.url}
                   alt="Resized"
-                  className="max-w-full h-auto mx-auto rounded-lg shadow-lg"
+                  className="max-w-full h-auto mx-auto"
                 />
                 <div className="mt-6 space-y-4">
-                  <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-4 rounded-xl border border-green-200">
+                  <div className="bg-green-900 p-4 border border-green-700">
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="text-green-600">✓</span>
-                      <span className="font-semibold text-green-800">Resize Complete!</span>
+                      <span className="text-green-400">✓</span>
+                      <span className="font-semibold text-green-300">Resize Complete!</span>
                     </div>
-                    <p className="text-sm text-green-700">
+                    <p className="text-sm text-green-200">
                       New dimensions: {result.width} × {result.height} pixels
                     </p>
                   </div>
                   <button
                     onClick={downloadResult}
-                    className="btn-modern btn-modern-primary w-full"
+                    className="clean-btn clean-btn-primary w-full"
                   >
                     <Download className="h-5 w-5" />
                     <span>Download Resized Image</span>
@@ -389,6 +390,7 @@ const ImageResizer = () => {
             </div>
           )}
         </div>
+      </div>
       </div>
     </div>
   )
