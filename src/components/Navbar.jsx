@@ -38,7 +38,7 @@ const Navbar = () => {
             <div className="clean-icon w-10 h-10">
               <Sparkles className="h-5 w-5" />
             </div>
-            <span className="text-xl font-bold text-white">
+            <span className="text-xl font-bold text-yellow-400">
               Simple Tools
             </span>
           </Link>
@@ -52,7 +52,7 @@ const Navbar = () => {
                 className={`px-5 py-2 font-medium transition-colors ${
                   isActive(item.href)
                     ? 'text-black bg-yellow-400'
-                    : 'text-gray-400 hover:text-white hover:bg-gray-900'
+                    : 'text-white hover:text-yellow-400 hover:bg-gray-900'
                 }`}
               >
                 {item.name}
@@ -92,7 +92,7 @@ const Navbar = () => {
                     className={`block px-4 py-3 font-medium ${
                       isActive(item.href)
                         ? 'text-black bg-yellow-400'
-                        : 'text-gray-400 hover:text-white hover:bg-gray-900'
+                        : 'text-white hover:text-yellow-400 hover:bg-gray-900'
                     }`}
                   >
                     {item.name}

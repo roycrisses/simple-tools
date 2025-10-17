@@ -51,11 +51,11 @@ const Home = () => {
               <span className="text-black text-sm font-medium">120+ Free Tools</span>
             </div>
             
-            <h1 className="text-5xl md:text-7xl font-black text-white mb-6 leading-tight">
+            <h1 className="text-5xl md:text-7xl font-black text-yellow-400 mb-6 leading-tight">
               Simple Tools
             </h1>
             
-            <p className="text-lg md:text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl text-white mb-12 max-w-2xl mx-auto">
               Professional online utilities. No sign-up. No limits. <span className="text-yellow-400 font-semibold">{toolsCount} tools</span> ready to use.
             </p>
             
@@ -65,22 +65,22 @@ const Home = () => {
                 <div className="w-10 h-10 bg-yellow-400 flex items-center justify-center mx-auto mb-3">
                   <Zap className="h-5 w-5 text-black" />
                 </div>
-                <h3 className="text-white font-semibold mb-1">Fast</h3>
-                <p className="text-gray-400 text-sm">Instant results</p>
+                <h3 className="text-yellow-400 font-semibold mb-1">Fast</h3>
+                <p className="text-white text-sm">Instant results</p>
               </div>
               <div className="bg-gray-900 border-2 border-gray-800 p-6">
                 <div className="w-10 h-10 bg-yellow-400 flex items-center justify-center mx-auto mb-3">
                   <Shield className="h-5 w-5 text-black" />
                 </div>
-                <h3 className="text-white font-semibold mb-1">Secure</h3>
-                <p className="text-gray-400 text-sm">Privacy first</p>
+                <h3 className="text-yellow-400 font-semibold mb-1">Secure</h3>
+                <p className="text-white text-sm">Privacy first</p>
               </div>
               <div className="bg-gray-900 border-2 border-gray-800 p-6">
                 <div className="w-10 h-10 bg-yellow-400 flex items-center justify-center mx-auto mb-3">
                   <Users className="h-5 w-5 text-black" />
                 </div>
-                <h3 className="text-white font-semibold mb-1">Free</h3>
-                <p className="text-gray-400 text-sm">Always free</p>
+                <h3 className="text-yellow-400 font-semibold mb-1">Free</h3>
+                <p className="text-white text-sm">Always free</p>
               </div>
             </div>
             
@@ -114,7 +114,7 @@ const Home = () => {
             <h2 className="clean-h2 mb-4">
               All Tools
             </h2>
-            <p className="text-base text-gray-400 max-w-2xl mx-auto">
+            <p className="text-base text-white max-w-2xl mx-auto">
               Professional utilities for everyday tasks.
             </p>
           </div>
@@ -136,7 +136,7 @@ const Home = () => {
                       <h3 className="clean-h3 mb-1">
                         {tool.name}
                       </h3>
-                      <p className="text-gray-400 text-sm">
+                      <p className="text-white text-sm">
                         {tool.description}
                       </p>
                     </div>
@@ -155,7 +155,7 @@ const Home = () => {
           <div className="text-center">
             <div className="bg-gray-900 border-2 border-gray-800 p-8 max-w-xl mx-auto">
               <h3 className="clean-h3 mb-3">Need More Tools?</h3>
-              <p className="text-gray-400 mb-6 text-sm">
+              <p className="text-white mb-6 text-sm">
                 Browse our complete collection.
               </p>
               <Link
@@ -187,7 +187,7 @@ const Home = () => {
               <h3 className="clean-h3 mb-2">
                 Fast & Simple
               </h3>
-              <p className="text-gray-400 text-sm">
+              <p className="text-white text-sm">
                 No registration. Just use.
               </p>
             </div>
@@ -199,7 +199,7 @@ const Home = () => {
               <h3 className="clean-h3 mb-2">
                 Privacy First
               </h3>
-              <p className="text-gray-400 text-sm">
+              <p className="text-white text-sm">
                 Local processing. No data storage.
               </p>
             </div>
@@ -211,7 +211,7 @@ const Home = () => {
               <h3 className="clean-h3 mb-2">
                 Free
               </h3>
-              <p className="text-gray-400 text-sm">
+              <p className="text-white text-sm">
                 No limits. No costs.
               </p>
             </div>
@@ -225,19 +225,19 @@ const Home = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             <div>
               <div className="text-3xl font-bold text-white mb-1">120+</div>
-              <div className="text-gray-400 text-sm">Tools</div>
+              <div className="text-white text-sm">Tools</div>
             </div>
             <div>
               <div className="text-3xl font-bold text-white mb-1">10M+</div>
-              <div className="text-gray-400 text-sm">Users</div>
+              <div className="text-white text-sm">Users</div>
             </div>
             <div>
               <div className="text-3xl font-bold text-white mb-1">99.9%</div>
-              <div className="text-gray-400 text-sm">Uptime</div>
+              <div className="text-white text-sm">Uptime</div>
             </div>
             <div>
               <div className="text-3xl font-bold text-white mb-1">24/7</div>
-              <div className="text-gray-400 text-sm">Available</div>
+              <div className="text-white text-sm">Available</div>
             </div>
           </div>
         </div>
@@ -247,26 +247,26 @@ const Home = () => {
       <section className="py-16 bg-black">
         <div className="award-container">
           <div className="max-w-4xl mx-auto">
-            <h2 className="award-heading-2 text-center mb-12">
+            <h2 className="text-4xl font-bold text-yellow-400 text-center mb-12">
               Simple Tools for Everyone
             </h2>
             
             <div className="prose prose-lg max-w-none">
-              <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+              <p className="text-lg text-white mb-6 leading-relaxed">
                 In today's fast-paced digital world, having access to reliable, efficient tools can make all the difference 
                 in your productivity. Simple Tools has emerged as the leading platform for free online utilities, offering 
                 a comprehensive suite of professional-grade tools that cater to every aspect of your digital workflow.
               </p>
               
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+              <h3 className="text-2xl font-bold text-yellow-400 mb-4">
                 Comprehensive Tool Categories
               </h3>
               
-              <p className="text-gray-600 mb-4">
+              <p className="text-white mb-4">
                 Our platform is organized into several key categories, each designed to address specific needs:
               </p>
               
-              <ul className="list-disc pl-6 text-gray-600 mb-6 space-y-2">
+              <ul className="list-disc pl-6 text-white mb-6 space-y-2">
                 <li><strong>Image Processing Tools:</strong> QR code generator, image resizer, image compressor, and color tools for all your visual content needs</li>
                 <li><strong>Document Management:</strong> PDF tools for merging, splitting, and converting documents with ease</li>
                 <li><strong>SEO & Marketing Tools:</strong> Domain authority checker, backlink analyzer, website SEO checker, and keyword research tools</li>
@@ -275,15 +275,15 @@ const Home = () => {
                 <li><strong>Utility Tools:</strong> Unit converter, coin flip, and other everyday productivity tools</li>
               </ul>
               
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+              <h3 className="text-2xl font-bold text-yellow-400 mb-4">
                 Advanced Features That Set Us Apart
               </h3>
               
-              <p className="text-gray-600 mb-4">
+              <p className="text-white mb-4">
                 What makes Simple Tools the preferred choice for millions of users worldwide?
               </p>
               
-              <ul className="list-disc pl-6 text-gray-600 mb-6 space-y-2">
+              <ul className="list-disc pl-6 text-white mb-6 space-y-2">
                 <li><strong>Lightning-Fast Processing:</strong> All tools are optimized for speed, delivering results in seconds</li>
                 <li><strong>Privacy-First Approach:</strong> Your data never leaves your device for most operations, ensuring complete privacy</li>
                 <li><strong>No Registration Required:</strong> Start using any tool immediately without creating accounts or providing personal information</li>
@@ -292,15 +292,15 @@ const Home = () => {
                 <li><strong>Regular Updates:</strong> We continuously add new tools and improve existing ones based on user feedback</li>
               </ul>
               
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+              <h3 className="text-2xl font-bold text-yellow-400 mb-4">
                 Perfect for Every User Type
               </h3>
               
-              <p className="text-gray-600 mb-4">
+              <p className="text-white mb-4">
                 Whether you're a content creator, digital marketer, student, or business professional, our tools are designed to enhance your workflow:
               </p>
               
-              <ul className="list-disc pl-6 text-gray-600 mb-6 space-y-2">
+              <ul className="list-disc pl-6 text-white mb-6 space-y-2">
                 <li><strong>Content Creators:</strong> Generate QR codes, resize images, and download media content for your projects</li>
                 <li><strong>Digital Marketers:</strong> Analyze website performance, research keywords, and check domain authority for SEO campaigns</li>
                 <li><strong>Students & Educators:</strong> Check grammar, detect plagiarism, and convert documents for academic work</li>
@@ -308,11 +308,11 @@ const Home = () => {
                 <li><strong>Web Developers:</strong> Optimize images, generate QR codes, and analyze website performance</li>
               </ul>
               
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+              <h3 className="text-2xl font-bold text-yellow-400 mb-4">
                 Trusted by Millions Worldwide
               </h3>
               
-              <p className="text-gray-600 mb-6">
+              <p className="text-white mb-6">
                 With over 10 million satisfied users and 99.9% uptime, Simple Tools has established itself as the most 
                 reliable platform for free online utilities. Our commitment to quality, privacy, and user experience 
                 has earned us recognition as the go-to solution for productivity tools.
@@ -320,7 +320,7 @@ const Home = () => {
               
               <div className="bg-gray-900 p-6 border-2 border-yellow-400">
                 <h4 className="font-bold text-white mb-3">Ready to Boost Your Productivity?</h4>
-                <p className="text-gray-300">
+                <p className="text-white">
                   Join millions of users who trust Simple Tools for their daily productivity needs. 
                   Start exploring our comprehensive collection of free online utilities today and experience 
                   the difference that professional-grade tools can make in your workflow.

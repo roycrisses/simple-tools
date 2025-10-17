@@ -302,7 +302,7 @@ const Tools = () => {
                   Love Our Tools?
                 </h2>
               </div>
-              <p className="text-gray-400 mb-6 text-sm">
+              <p className="text-white mb-6 text-sm">
                 All tools are completely free. Bookmark and share!
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">

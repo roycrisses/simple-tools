@@ -70,7 +70,7 @@ const FAQ = () => {
             <h2 className="clean-h2 mb-3">
               Frequently Asked Questions
             </h2>
-            <p className="text-base text-gray-400">
+            <p className="text-base text-white">
               Everything you need to know about Simple Tools
             </p>
           </div>
@@ -94,7 +94,7 @@ const FAQ = () => {
                 
                 {openItems[index] && (
                   <div className="px-5 pb-5">
-                    <p className="text-gray-400 text-sm leading-relaxed">
+                    <p className="text-white text-sm leading-relaxed">
                       {faq.answer}
                     </p>
                   </div>
@@ -108,7 +108,7 @@ const FAQ = () => {
               <h3 className="font-bold text-white mb-2">
                 Still have questions?
               </h3>
-              <p className="text-gray-400 mb-4 text-sm">
+              <p className="text-white mb-4 text-sm">
                 Can't find the answer you're looking for? We're here to help!
               </p>
               <a

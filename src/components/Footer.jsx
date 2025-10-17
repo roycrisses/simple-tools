@@ -13,10 +13,10 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand Section */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-white">
+            <h3 className="text-lg font-semibold text-yellow-400">
               Simple Tools
             </h3>
-            <p className="text-gray-400 text-sm">
+            <p className="text-white text-sm">
               Free, fast, and privacy-focused online tools for everyone. No registration required.
             </p>
             <div className="flex space-x-3">
@@ -41,14 +41,14 @@ const Footer = () => {
 
           {/* Tools Section */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-white">
+            <h3 className="text-lg font-semibold text-yellow-400">
               Popular Tools
             </h3>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link
                   to="/qr-generator"
-                  className="text-gray-400 hover:text-yellow-400 transition-colors"
+                  className="text-white hover:text-yellow-400 transition-colors"
                 >
                   QR Code Generator
                 </Link>
@@ -56,7 +56,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/image-resizer"
-                  className="text-gray-400 hover:text-yellow-400 transition-colors"
+                  className="text-white hover:text-yellow-400 transition-colors"
                 >
                   Image Resizer
                 </Link>
@@ -64,7 +64,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/youtube-downloader"
-                  className="text-gray-400 hover:text-yellow-400 transition-colors"
+                  className="text-white hover:text-yellow-400 transition-colors"
                 >
                   YouTube Downloader
                 </Link>
@@ -72,7 +72,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/pdf-tools"
-                  className="text-gray-400 hover:text-yellow-400 transition-colors"
+                  className="text-white hover:text-yellow-400 transition-colors"
                 >
                   PDF Tools
                 </Link>
@@ -80,7 +80,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/tools"
-                  className="text-gray-400 hover:text-yellow-400 transition-colors"
+                  className="text-white hover:text-yellow-400 transition-colors"
                 >
                   View All Tools
                 </Link>
@@ -90,7 +90,7 @@ const Footer = () => {
 
           {/* Legal Section */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-white">
+            <h3 className="text-lg font-semibold text-yellow-400">
               Legal & Support
             </h3>
             <ul className="space-y-2 text-sm">
@@ -124,7 +124,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/about"
-                  className="text-gray-400 hover:text-yellow-400 transition-colors"
+                  className="text-white hover:text-yellow-400 transition-colors"
                 >
                   About Us
                 </Link>
@@ -134,10 +134,10 @@ const Footer = () => {
 
           {/* Developer Section */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-white">
+            <h3 className="text-lg font-semibold text-yellow-400">
               Developer
             </h3>
-            <div className="text-sm text-gray-400 space-y-2">
+            <div className="text-sm text-white space-y-2">
               <p>
                 <strong>Krishna Karki</strong>
               </p>
@@ -156,7 +156,7 @@ const Footer = () => {
         {/* Bottom Section */}
         <div className="mt-12 pt-8 border-t-2 border-gray-800">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="text-sm text-gray-400">
+            <div className="text-sm text-white">
               <p className="flex items-center space-x-1">
                 <span>© {currentYear} Simple Tools. Made with</span>
                 <Heart className="w-4 h-4 text-red-500" />
